@@ -3,12 +3,20 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <div class="card-header d-flex justify-content-between align-items-center">
+    {{-- <div class="card-header d-flex justify-content-between align-items-center">
         <h3 class="col">All Discounts</h3>
-        <a href="{{ route('dashboard.discounts.create') }}" class="btn btn-primary ">
+        <a href="{{ route('dashboard.discounts.create') }}" class="btn btn-success ">
             <i class="fas fa-plus"></i> <span class="ml-2">Create</span>
         </a>
-    </div>
+    </div> --}}
+    <x-header :title="'All Discounts'">
+        <x-slot:actions>
+            <a href="{{ route('dashboard.discounts.create') }}" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i> <span>{{ __('Create') }}</span>
+            </a>
+        </x-slot:actions>
+    </x-header>
+    @include('dashboard.discount.partials.filter')
 @stop
 
 @section('content')

@@ -5,10 +5,11 @@
 @section('content_header')
     <div class="card-header d-flex justify-content-between align-items-center">
         <h3 class="col">All Categories</h3>
-        <a href="{{ route('dashboard.categories.create') }}" class="btn btn-primary ">
+        <a href="{{ route('dashboard.categories.create') }}" class="btn btn-success ">
             <i class="fas fa-plus"></i> <span class="ml-2">Create</span>
         </a>
     </div>
+    @include('dashboard.category.partials.filter')
 @stop
 
 @section('content')

@@ -257,7 +257,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'dashboardcart',
+    'dashboard_url' => 'dashboard',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -327,15 +327,91 @@ return [
         //     'label' => 4,
         //     'label_color' => 'success',
         // ],
+
+        [
+            'text'=> 'language',
+            'topnav_right' => true,
+            'submenu' =>[
+                [
+                    'text'=>'Arabic',
+                    'icon'=>'flag-icon flag-icon-eg',
+                    'url' => 'dashboard/change-language/ar'
+                ],
+                [
+                    'text'=>'English',
+                    'icon'=>'flag-icon flag-icon-us',
+                    'url' => 'dashboard/change-language/en'
+                ],
+            ],
+        ],
+
         [
             'text' => 'Discounts',
             'url' => 'dashboard/discounts',
-            'icon' => 'fas fa-percent',
+            'icon' => 'fas fa-tag',
+            'submenu' =>[
+                [
+                    'text'=>'Discounts',
+                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'url' => 'dashboard/discounts'
+                ],
+                [
+                    'text'=>'Create Discount',
+                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'url' => 'dashboard/discounts/create'
+                ],
+            ],
         ],
         [
             'text' => 'Categories',
             'url' => 'dashboard/categories',
             'icon' => 'fas fa-layer-group',
+            'submenu' =>[
+                [
+                    'text'=>'Categories',
+                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'url' => 'dashboard/categories'
+                ],
+                [
+                    'text'=>'Create Category',
+                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'url' => 'dashboard/categories/create'
+                ],
+            ],
+        ],
+        [
+            'text' => 'Publishers',
+            'url' => 'dashboard/publishers',
+            'icon' => 'fas fa-user-tie',
+            'submenu' =>[
+                [
+                    'text'=>'Publishers',
+                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'url' => 'dashboard/publishers'
+                ],
+                [
+                    'text'=>'Create Publisher',
+                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'url' => 'dashboard/publishers/create'
+                ],
+            ],
+        ],
+        [
+            'text' => 'Authors',
+            'url' => 'dashboard/authors',
+            'icon' => 'fas fa-magic',
+            'submenu' =>[
+                [
+                    'text'=>'Authors',
+                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'url' => 'dashboard/authors'
+                ],
+                [
+                    'text'=>'Create Author',
+                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'url' => 'dashboard/authors/create'
+                ],
+            ],
         ],
         // ['header' => 'account_settings'],
         // [
@@ -464,7 +540,7 @@ return [
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
                 ],
                 [
@@ -506,6 +582,16 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'FlagIconCss' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/flag-icon-css/css/flag-icons.min.css',
                 ],
             ],
         ],

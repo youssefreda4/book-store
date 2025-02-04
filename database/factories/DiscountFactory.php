@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class DiscountFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'code' => Str::upper(fake()->unique()->lexify('DISCOUNT????')),
+            'quantity' => fake()->numberBetween(1, 100),
+            'precentage' => fake()->numberBetween(10, 90),
+            'expiry_date' => fake()->dateTimeBetween('now', '+1 year'),
         ];
     }
 }

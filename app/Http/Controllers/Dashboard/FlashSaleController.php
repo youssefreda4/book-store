@@ -11,7 +11,7 @@ class FlashSaleController extends Controller
 {
     public function index()
     {
-       $flash_sales = FlashSale::filter(request()->all())
+        $flash_sales = FlashSale::filter(request()->all())
             ->latest('id')
             ->paginate();
         return view('dashboard.flash-sale.index', compact('flash_sales'));
@@ -49,8 +49,9 @@ class FlashSaleController extends Controller
         return redirect()->route('dashboard.flashsales.index')->with('success', __('flashsale.flash_sale_updated_successfully'));
     }
 
-    public function destroy(FlashSale $flash_sale)
+    public function destroy($flash_sale)
     {
+        $flash_sale = FlashSale::findOrFail($flash_sale);
         $flash_sale->delete();
         return redirect()->route('dashboard.flashsales.index')->with('success', __('flashsale.flash_sale_deleted_successfully'));
     }

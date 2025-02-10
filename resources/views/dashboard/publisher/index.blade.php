@@ -17,6 +17,10 @@
 @section('content')
     <div class="mb-3">
         <x-delete-selected model="Publisher"></x-delete-selected>
+
+        <x-import-excel model="Publisher"></x-import-excel>
+
+        <x-export-excel model="Publisher"></x-export-excel>
     </div>
     <div class="card">
         <table class="table table-bordered ">

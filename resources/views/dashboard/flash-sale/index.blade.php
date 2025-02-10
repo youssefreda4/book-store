@@ -17,7 +17,12 @@
 @section('content')
     <div class="mb-3">
         <x-delete-selected model="Flashsale"></x-delete-selected>
+
+        <x-import-excel model="Flashsale"></x-import-excel>
+
+        <x-export-excel model="Flashsale"></x-export-excel>
     </div>
+    
     <div class="card">
         <table class="table table-bordered ">
             <thead>
@@ -26,6 +31,7 @@
                     <th class="text-center">{{ __('flashsale.id') }}</th>
                     <th class="text-center">{{ __('flashsale.name') }}</th>
                     <th class="text-center">{{ __('flashsale.description') }}</th>
+                    <th class="text-center">{{ __('flashsale.is_active') }}</th>
                     <th class="text-center">{{ __('flashsale.date') }}</th>
                     <th class="text-center">{{ __('flashsale.time') }}</th>
                     <th class="text-center">{{ __('flashsale.create_at') }}</th>
@@ -44,6 +50,7 @@
                             {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($flash_sale->id) : $flash_sale->id }}</th>
                         <td class="text-center">{{ $flash_sale->name }}</td>
                         <td class="text-center">{{ $flash_sale->description }}</td>
+                        <td class="text-center">{{ $flash_sale->is_active }}</td>
                         <td class="text-center">{{ $flash_sale->date }}</td>
                         <td class="text-center">{{ $flash_sale->time }}</td>
                         <td class="text-center">

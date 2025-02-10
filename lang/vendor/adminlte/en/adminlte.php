@@ -33,10 +33,10 @@ return [
     'success' => 'Success',
     'deleted' => 'Deleted!',
     'delete_selected' => 'Delete Selected',
-    'succes_selected'=>'Selected items have been deleted successfully.',
-    'error_selected'=> 'Failed to delete items. Please try again.',
+    'succes_selected' => 'Selected items have been deleted successfully.',
+    'error_selected' => 'Failed to delete items. Please try again.',
 
-    'error'=>'Error!',
+    'error' => 'Error!',
     'something_went_wrong' => 'Something went wrong.',
 
 
@@ -44,7 +44,19 @@ return [
     'no_items_selected' => 'No items selected',
     'please_select_at_least_one_item_to_delete' => 'Please select at least one item to delete.',
     'are_you_sure' => 'Are you sure?',
-    'you_are_about_to_delete_selected_items'=>'You are about to delete selected items!',
-    'Yes_delete_them'=>'Yes, delete them!',
-    'No_cancel'=>'No, cancel!',
+    'you_are_about_to_delete_selected_items' => 'You are about to delete selected items!',
+    'Yes_delete_them' => 'Yes, delete them!',
+    'No_cancel' => 'No, cancel!',
+    'import' => 'Import',
+    'model_import_not_exist' => 'Model import not exist!',
+    'imported_successfully' => 'Imported successfully',
+
+    'import_excel_file' => 'Import Excel File',
+    'select_excel_file' => 'Select Excel File',
+    'close' => 'Close',
+    'upload' => 'Upload',
+
+    'export' => 'Export',
+    'model_export_not_exist' => 'Model export not exist!',
+    'exported_successfully' => 'Exported successfully',
 ];

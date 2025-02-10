@@ -7,12 +7,16 @@ use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\DiscountController;
 use App\Http\Controllers\Dashboard\FlashSaleController;
 use App\Http\Controllers\Dashboard\PublisherController;
-
+use App\Http\Controllers\Dashboard\ExportExcelController;
+use App\Http\Controllers\Dashboard\ImportExcelController;
 
 Route::middleware('dashboard')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
     Route::get('change-language/{lang}', [HomeController::class, 'changeLanguage'])->name('change.language');
     Route::post('/delete-items', [HomeController::class, 'bulkDelete'])->name('items.bulkdelete');
+    Route::post('/import/excel', ImportExcelController::class)->name('import.excel');
+    Route::get('/import/export', ExportExcelController::class)->name('export.excel');
+
 
     Route::name('discounts.')->prefix('discounts')->controller(DiscountController::class)->group(function () {
         Route::get('/',  'index')->name('index');

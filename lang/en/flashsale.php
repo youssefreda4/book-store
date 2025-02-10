@@ -37,5 +37,6 @@ return [
     "time_identifier" => 'Hours',
     "is_active" => 'Status',
     "active_dropdown" => 'Active',
+    
     "inactive_dropdown" => 'Inactive',
 ];

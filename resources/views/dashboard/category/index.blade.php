@@ -18,6 +18,9 @@
     <div class="mb-3">
         <x-delete-selected model="Category"></x-delete-selected>
 
+        <x-import-excel model="Category"></x-import-excel>
+
+        <x-export-excel model="Category"></x-export-excel>
     </div>
 
     <div class="card">

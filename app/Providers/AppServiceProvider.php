@@ -6,6 +6,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Alkoumi\LaravelArabicNumbers\LaravelArabicNumbersServiceProvider;
 use App\Faker\CategoryProvider;
+use Maatwebsite\Excel\ExcelServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     {
         fake()->addProvider(new CategoryProvider(fake()));
         Paginator::useBootstrapFive();
+        ExcelServiceProvider::class;
         LaravelArabicNumbersServiceProvider::class;
     }
 }

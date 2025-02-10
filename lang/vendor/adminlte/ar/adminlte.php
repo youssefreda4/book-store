@@ -38,4 +38,16 @@ return [
     'you_are_about_to_delete_selected_items' => 'أنت على وشك حذف العناصر المحددة!',
     'Yes_delete_them' => 'نعم، احذفها!',
     'No_cancel' => 'لا، إلغاء!',
+
+    'import' => 'يستورد',
+    'model_import_not_exist' => 'استيراد النموذج غير موجود!',
+    'imported_successfully' => 'تم الاستيراد بنجاح',
+    'import_excel_file' => 'استيراد ملف Excel',
+    'select_excel_file' => 'تحديد ملف Excel',
+    'close' => 'إغلاق',
+    'upload' => 'تحميل',
+
+    'export' => 'تصدير',
+    'model_export_not_exist' => 'تصدير النموذج غير موجود!',
+    'exported_successfully' => 'تم التصدير بنجاح',
 ];

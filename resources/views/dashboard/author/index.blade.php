@@ -10,14 +10,19 @@
             </a>
         </x-slot:actions>
     </x-header>
-    
+
     @include('dashboard.author.partials.filter')
 @stop
 
 @section('content')
     <div class="mb-3">
         <x-delete-selected model="Author"></x-delete-selected>
+
+        <x-import-excel model="Author"></x-import-excel>
+
+        <x-export-excel model="Author"></x-export-excel>
     </div>
+
     <div class="card">
         <table class="table table-bordered ">
             <thead>

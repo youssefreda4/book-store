@@ -18,4 +18,24 @@ return [
     'password_reset_message' => 'تم إعادة تعيين كلمة المرور',
     'reset_password' => 'إعادة تعيين كلمة السر',
     'send_password_reset_link' => 'إرسال رابط إعادة تعيين كلمة السر',
+
+    'upload_image' => 'تحميل الصورة',
+    'no_image' => 'لا يوجد صورة',
+    'no_discount' => 'لا يوجد خصم',
+    'success' => 'نجاح',
+    'deleted' => 'محذوف!',
+
+    'delete_selected' => 'حذف المحدد',
+    'succes_selected' => 'تم حذف العناصر المحددة بنجاح.',
+    'error_selected' => 'فشل حذف العناصر. يرجى المحاولة مرة أخرى.',
+
+    'error' => 'خطأ!',
+    'something_went_wrong' => 'حدث خطأ ما.',
+    'no_items_selected_for_deletion' => 'لم يتم تحديد أي عناصر للحذف.',
+    'no_items_selected' => 'لم يتم تحديد أي عناصر',
+    'please_select_at_least_one_item_to_delete' => 'يرجى تحديد عنصر واحد على الأقل للحذف.',
+    'are_you_sure' => 'هل أنت متأكد؟',
+    'you_are_about_to_delete_selected_items' => 'أنت على وشك حذف العناصر المحددة!',
+    'Yes_delete_them' => 'نعم، احذفها!',
+    'No_cancel' => 'لا، إلغاء!',
 ];

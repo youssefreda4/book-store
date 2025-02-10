@@ -1,9 +1,9 @@
-@extends('adminlte::page')
+@extends('dashboard.layout')
 
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1 class="card-header">Discounts Edit</h1>
+    <h1 class="card-header">{{ __('discount.edit_discount') }}</h1>
 @stop
 
 @section('content')
@@ -14,16 +14,16 @@
             <div class="card-body">
                 <div class="form-group">
                     <div class="row">
-                        <x-adminlte-input name="code" label="Code" value="{{ $discount->code }}" type="text"
+                        <x-adminlte-input name="code" label="{{ __('discount.code') }}" value="{{ $discount->code }}" type="text"
                             placeholder="ex: DISCOUNT******" fgroup-class="col-md-6" />
 
-                        <x-adminlte-input name="quantity" label="Quantity" value="{{ $discount->quantity }}" type="number"
+                        <x-adminlte-input name="quantity" label="{{ __('discount.quantity') }}" value="{{ $discount->quantity }}" type="number"
                             placeholder="1 - 100" fgroup-class="col-md-6" />
 
-                        <x-adminlte-input name="precentage" label="Precentage" value="{{ $discount->precentage }}"
+                        <x-adminlte-input name="precentage" label="{{ __('discount.precentage') }}" value="{{ $discount->precentage }}"
                             type="test" placeholder="ex: max-90" fgroup-class="col-md-6" />
 
-                        <x-adminlte-input name="expiry_date" label="Expiry Date" value="{{ $discount->expiry_date }}"
+                        <x-adminlte-input name="expiry_date" label="{{ __('discount.expiry_date') }}" value="{{ $discount->expiry_date }}"
                             type="datetime-local" fgroup-class="col-md-6" />
 
                         <x-adminlte-input name="discount_id" value="{{ $discount->id }}" type="hidden" />
@@ -32,7 +32,7 @@
             </div>
 
             <div class="card-footer">
-                <x-adminlte-button type="submit" theme="primary" label="Update" />
+                <x-adminlte-button type="submit" theme="primary" label="{{ __('discount.update') }}" />
             </div>
         </form>
     </div>

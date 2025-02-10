@@ -11,7 +11,9 @@ class AuthorController extends Controller
 {
     public function index()
     {
-        $authors = Author::filter(request()->all())->orderBy('id', 'DESC')->paginate();
+        $authors = Author::filter(request()->all())
+            ->latest('id')
+            ->paginate();
         return view('dashboard.author.index', compact('authors'));
     }
     public function show(Author $author)
@@ -29,7 +31,7 @@ class AuthorController extends Controller
     {
         $data = $request->validated();
         Author::create($data);
-        return redirect()->route('dashboard.authors.index')->with('success', 'Author created successfully');
+        return redirect()->route('dashboard.authors.index')->with('success', __('author.author_created_successfully'));
     }
 
     public function edit(Author $author)
@@ -41,12 +43,12 @@ class AuthorController extends Controller
     {
         $data = $request->validated();
         $author->update($data);
-        return redirect()->route('dashboard.authors.index')->with('success', 'Author updated successfully');
+        return redirect()->route('dashboard.authors.index')->with('success', __('author.author_updated_successfully'));
     }
 
     public function destroy(Author $author)
     {
         $author->delete();
-        return redirect()->route('dashboard.authors.index')->with('success', 'Author deleted successfully');
+        return redirect()->route('dashboard.authors.index')->with('success', __('author.author_deleted_successfully'));
     }
 }

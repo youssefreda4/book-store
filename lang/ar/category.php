@@ -1,0 +1,31 @@
+<?php
+
+
+return[
+    'all_categories' => 'كل الفئات',
+    'create' => 'إنشاء',
+    'create_category' => 'إنشاء فئة',
+    'category_name' => 'اسم الفئة',
+    'enter_category_name' => 'أدخل اسم الفئة',
+    'discount' => 'خصم',
+    'discount_code' => 'كود الخصم',
+    'filter' => 'تصفية',
+    'resert' => 'إعادة تعيين',
+    'id' => 'معرف',
+    'name' => 'اسم',
+    'image' => 'صوره',
+    'create_at' => 'إنشاء في',
+    'updated_at' => 'تحديث في',
+    'actions' => 'الإجراءات',
+    'add' => 'إضافة',
+    'select_discount' => 'اختر الخصم',
+    'category_edit' => 'تعديل الفئة',
+    'update' => 'تحديث',
+    'name_category_en' => 'الاسم (إنجليزي)',
+    'name_category_ar' => 'الاسم (عربي)',
+    'success' => 'نجاح',
+    'category_created_successfully' => 'تم إنشاء الفئة بنجاح',
+    'category_updated_successfully' => 'تم تحديث الفئة بنجاح',
+    'category_deleted_successfully' => 'تم حذف الفئة بنجاح',
+    'discount_added_successfully' => 'تمت إضافة الخصم بنجاح',
+];

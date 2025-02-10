@@ -24,11 +24,25 @@ class DiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required','string','size:12',
-            Rule::unique(Discount::class)->ignore(request()->discount_id)],
+            'code' => [
+                'required',
+                'string',
+                'size:12',
+                Rule::unique(Discount::class)->ignore(request()->discount_id)
+            ],
             'quantity' => 'required|numeric|min:1|max:100',
             'precentage' => 'required|numeric|min:1|max:90',
             'expiry_date' => 'required|after:now',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'code' => __('discount.code'),
+            'quantity' => __('discount.quantity'),
+            'precentage' => __('discount.precentage'),
+            'expiry_date' => __('discount.expiry_date'),
         ];
     }
 }

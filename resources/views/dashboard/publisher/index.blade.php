@@ -1,71 +1,60 @@
-@extends('adminlte::page')
+@extends('dashboard.layout')
 
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h3 class="col">All Publisher</h3>
-        <a href="{{ route('dashboard.publishers.create') }}" class="btn btn-success ">
-            <i class="fas fa-plus"></i> <span class="ml-2">Create</span>
-        </a>
-    </div>
+    <x-header :title="__('publisher.all_publisher')">
+        <x-slot:actions>
+            <a href="{{ route('dashboard.publishers.create') }}" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i> <span>{{ __('publisher.create') }}</span>
+            </a>
+        </x-slot:actions>
+    </x-header>
+
     @include('dashboard.publisher.partials.filter')
 @stop
 
 @section('content')
-
-    @if (session()->get('success') !== null)
-        <x-adminlte-alert theme="success" title="Success">
-            {{ session()->get('success') }}
-        </x-adminlte-alert>
-    @endif
-
-    <div class="card col-12">
-        <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
+    <div class="mb-3">
+        <x-delete-selected model="Publisher"></x-delete-selected>
+    </div>
+    <div class="card">
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center"><input type="checkbox" id="select-all"></th>
+                    <th class="text-center">{{ __('publisher.id') }}</th>
+                    <th class="text-center">{{ __('publisher.name') }}</th>
+                    <th class="text-center">{{ __('publisher.create_at') }}</th>
+                    <th class="text-center">{{ __('publisher.updated_at') }}</th>
+                    <th class="text-center">{{ __('publisher.actions') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $locale = session()->get('locale');
+                @endphp
+                @foreach ($publishers as $publisher)
                     <tr>
-                        <th class="text-center">Id</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Create At</th>
-                        <th class="text-center">Updated At</th>
-                        <th class="text-center">Actions</th>
+                        <td class="text-center "><input class="row-checkbox" type="checkbox" value="{{ $publisher->id }}">
+                        <th class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($publisher->id) : $publisher->id }}</th>
+                        <td class="text-center">{{ $publisher->name }}</td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($publisher->created_at) : $publisher->created_at }}
+                        </td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($publisher->updated_at) : $publisher->updated_at }}
+                        </td>
+                        <td class="text-center">
+                            <x-crud-action-button route="publishers" model="{{ $publisher->id }}"></x-crud-action-button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($publishers as $publisher)
-                        <tr>
-                            <th class="text-center">{{ $publisher->id }}</th>
-                            <td class="text-center">{{ $publisher->name }}</td>
-                            <td class="text-center">{{ $publisher->created_at }}</td>
-                            <td class="text-center">{{ $publisher->updated_at }}</td>
-                            <td class="text-center">
-
-                                <div class="d-flex justify-content-between ">
-
-                                    <a href="{{ route('dashboard.publishers.edit', $publisher->id) }}"
-                                        class="btn btn-warning">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-
-                                    <a href="{{ route('dashboard.publishers.show', $publisher->id) }}" class="btn btn-info">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <form action="{{ route('dashboard.publishers.destroy', $publisher->id) }}"
-                                        method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-adminlte-button type="submit" theme="danger" icon="fas fa-trash-alt" />
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer clearfix">
-            {{ $publishers->links() }}
-        </div>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div>
+        {{ $publishers->links() }}
     </div>
 @stop

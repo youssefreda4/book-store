@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+@extends('dashboard.layout')
 
 @section('title', 'Dashboard')
 
@@ -11,20 +11,28 @@
         <div class="card-body">
             <table class="table table-bordered">
                 <thead>
+                    @php
+                        $locale = session()->get('locale');
+                    @endphp
                     <tr>
-                        <th class="text-center">Id</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Create At</th>
-                        <th class="text-center">Updated At</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center">{{ __('author.id') }}</th>
+                        <th class="text-center">{{ __('author.name') }}</th>
+                        <th class="text-center">{{ __('author.created_at') }}</th>
+                        <th class="text-center">{{ __('author.updated_at') }}</th>
+                        <th class="text-center">{{ __('author.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th class="text-center">{{ $author->id }}</th>
+                        <th class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($author->id) : $author->id }}</th>
                         <td class="text-center">{{ $author->name }}</td>
-                        <td class="text-center">{{ $author->created_at }}</td>
-                        <td class="text-center">{{ $author->updated_at }}</td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($author->created_at) : $author->created_at }}
+                        </td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($author->updated_at) : $author->updated_at }}
+                        </td>
                         <td class="text-center">
                             <div class="d-flex justify-content-between">
 

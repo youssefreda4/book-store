@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use App\Models\Category;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class CategorySeeder extends Seeder
 {
@@ -13,6 +15,6 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::factory(100)->create();
+        Category::factory(50)->create();
     }
 }

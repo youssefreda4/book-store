@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\FlashSale;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class FlashSaleSeeder extends Seeder
 {
@@ -12,6 +13,6 @@ class FlashSaleSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        FlashSale::factory(50)->create();
     }
 }

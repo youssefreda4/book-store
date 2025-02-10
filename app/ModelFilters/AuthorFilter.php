@@ -17,7 +17,8 @@ class AuthorFilter extends ModelFilter
     public function authorName($name)
     {
         return $this->where(function ($q) use ($name) {
-            return $q->where('name', 'LIKE', "%$name%");
+            $q->where('name->ar', 'LIKE', "%$name%")
+                ->orWhere('name->en', 'LIKE', "%$name%");
         });
     }
 }

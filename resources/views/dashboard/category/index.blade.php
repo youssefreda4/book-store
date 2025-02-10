@@ -1,73 +1,77 @@
-@extends('adminlte::page')
+@extends('dashboard.layout')
 
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h3 class="col">All Categories</h3>
-        <a href="{{ route('dashboard.categories.create') }}" class="btn btn-success ">
-            <i class="fas fa-plus"></i> <span class="ml-2">Create</span>
-        </a>
-    </div>
+    <x-header :title="__('category.all_categories')">
+        <x-slot:actions>
+            <a href="{{ route('dashboard.categories.create') }}" class="btn btn-success">
+                <i class="fas fa-plus me-2"></i> <span>{{ __('category.create') }}</span>
+            </a>
+        </x-slot:actions>
+    </x-header>
+
     @include('dashboard.category.partials.filter')
 @stop
 
 @section('content')
+    <div class="mb-3">
+        <x-delete-selected model="Category"></x-delete-selected>
 
-    @if (session()->get('success') !== null)
-        <x-adminlte-alert theme="success" title="Success">
-            {{ session()->get('success') }}
-        </x-adminlte-alert>
-    @endif
+    </div>
 
-    <div class="card col-12">
-        <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
+    <div class="card">
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center"><input type="checkbox" id="select-all"></th>
+                    <th class="text-center">{{ __('category.id') }}</th>
+                    <th class="text-center">{{ __('category.name') }}</th>
+                    <th class="text-center">{{ __('category.discount_code') }}</th>
+                    <th class="text-center">{{ __('category.image') }}</th>
+                    <th class="text-center">{{ __('category.create_at') }}</th>
+                    <th class="text-center">{{ __('category.updated_at') }}</th>
+                    <th class="text-center">{{ __('category.actions') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $locale = session()->get('locale');
+                @endphp
+                @foreach ($categories as $category)
                     <tr>
-                        <th class="text-center">Id</th>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Discount</th>
-                        <th class="text-center">Create At</th>
-                        <th class="text-center">Updated At</th>
-                        <th class="text-center">Actions</th>
+                        <td class="text-center "><input class="row-checkbox" type="checkbox" value="{{ $category->id }}">
+                        </td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($category->id) : $category->id }}</td>
+                        <td class="text-center">{{ $category->name }}</td>
+                        <td class="text-center">
+                            {!! $category->discount->code ??
+                                '<span class="badge bg-danger rounded">' . __('adminlte::adminlte.no_discount') . '</span>' !!}</td>
+
+                        <td class="text-center">
+                            @if ($category->getFirstMediaUrl('image', 'preview'))
+                                <img src="{{ $category->getFirstMediaUrl('image', 'preview') }}" alt="Thumbnail"
+                                    style="width: 200px; height: 100px; object-fit: contain;">
+                            @else
+                                <span class="badge bg-danger rounded">{{ __('adminlte::adminlte.no_image') }}</span>
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($category->created_at) : $category->created_at }}
+                        </td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($category->updated_at) : $category->updated_at }}
+                        </td>
+                        <td class="text-center">
+                            <x-crud-action-button route="categories" model="{{ $category->id }}"></x-crud-action-button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($categories as $category)
-                        <tr>
-                            <th class="text-center">{{ $category->id }}</th>
-                            <td class="text-center">{{ $category->name }}</td>
-                            <td class="text-center">{{ $category->discount?->code }}</td>
-                            <td class="text-center">{{ $category->created_at }}</td>
-                            <td class="text-center">{{ $category->updated_at }}</td>
-                            <td class="text-center">
-
-                                <div class="d-flex justify-content-between ">
-
-                                    <a href="{{ route('dashboard.categories.edit', $category->id) }}"
-                                        class="btn btn-warning">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-
-                                    <a href="{{ route('dashboard.categories.show', $category->id) }}" class="btn btn-info">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <form action="{{ route('dashboard.categories.destroy', $category->id) }}"
-                                        method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-adminlte-button type="submit" theme="danger" icon="fas fa-trash-alt" />
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer clearfix">
-            {{ $categories->links() }}
-        </div>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div>
+        {{ $categories->links() }}
     </div>
 @stop

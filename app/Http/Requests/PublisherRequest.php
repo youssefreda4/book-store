@@ -22,7 +22,16 @@ class PublisherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:publishers,name'
+            'name.en' => 'required|unique:publishers,name',
+            'name.ar' => 'required|unique:publishers,name',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name.en' => __('publisher.name_publisher_en'),
+            'name.ar' => __('publisher.name_publisher_ar'),
         ];
     }
 }

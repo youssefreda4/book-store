@@ -12,8 +12,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        //filter(request()->all())->
-        $categories = Category::filter(request()->all())->orderBy('id', 'DESC')->paginate();
+        $categories = Category::filter(request()->all())
+            ->latest('id')
+            ->paginate();
         return view('dashboard.category.index', compact('categories'));
     }
 
@@ -30,7 +31,7 @@ class CategoryController extends Controller
             'discount_id' => $request->discount_id,
         ]);
 
-        return redirect()->route('dashboard.categories.index')->with('success', 'Discount Added successfully');
+        return redirect()->route('dashboard.categories.index')->with('success', __('category.discount_added_successfully'));
     }
 
     public function create()
@@ -41,8 +42,11 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $data = $request->validated();
-        Category::create($data);
-        return redirect()->route('dashboard.categories.index')->with('success', 'Category created successfully');
+        $category = Category::create($data);
+        if ($request->hasFile('image')) {
+            $category->addMediaFromRequest('image')->toMediaCollection('image');
+        }
+        return redirect()->route('dashboard.categories.index')->with('success', __('category.category_created_successfully'));
     }
 
     public function edit(Category $category)
@@ -52,14 +56,19 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, Category $category)
     {
+        if ($request->hasFile('image')) {
+            $category->clearMediaCollection('image');
+            $category->addMediaFromRequest('image')
+                ->toMediaCollection('image');
+        }
         $data = $request->validated();
         $category->update($data);
-        return redirect()->route('dashboard.categories.index')->with('success', 'Category updated successfully');
+        return redirect()->route('dashboard.categories.index')->with('success', __('category.category_updated_successfully'));
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('dashboard.categories.index')->with('success', 'Category deleted successfully');
+        return redirect()->route('dashboard.categories.index')->with('success', __('category.category_deleted_successfully'));
     }
 }

@@ -20,4 +20,29 @@ class HomeController extends Controller
         }
         return redirect()->back();
     }
+
+    public function bulkDelete()
+    {
+        $ids = request()->input('ids');
+        $model = 'App\Models\\' . request()->model;
+        if (empty($ids)) {
+            return response()->json([
+                'success' => false,
+                'message' =>  __('adminlte::adminlte.no_items_selected_for_deletion')
+            ]);
+        }
+
+        try {
+            $model::whereIn('id', $ids)->delete();
+            return response()->json([
+                'success' =>  __('adminlte::adminlte.succes'),
+                'message' => __('adminlte::adminlte.succes_selected')
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' =>  __('adminlte::adminlte.error_selected')
+            ]);
+        }
+    }
 }

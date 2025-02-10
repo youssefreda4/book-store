@@ -26,4 +26,25 @@ return [
     'verify_request_another' => 'click here to request another',
     'confirm_password_message' => 'Please, confirm your password to continue.',
     'remember_me_hint' => 'Keep me authenticated indefinitely or until I manually logout',
+
+    'upload_image' => 'Upload image',
+    'no_image' => 'No Image',
+    'no_discount' => 'No Discount',
+    'success' => 'Success',
+    'deleted' => 'Deleted!',
+    'delete_selected' => 'Delete Selected',
+    'succes_selected'=>'Selected items have been deleted successfully.',
+    'error_selected'=> 'Failed to delete items. Please try again.',
+
+    'error'=>'Error!',
+    'something_went_wrong' => 'Something went wrong.',
+
+
+    'no_items_selected_for_deletion' => 'No items selected for deletion.',
+    'no_items_selected' => 'No items selected',
+    'please_select_at_least_one_item_to_delete' => 'Please select at least one item to delete.',
+    'are_you_sure' => 'Are you sure?',
+    'you_are_about_to_delete_selected_items'=>'You are about to delete selected items!',
+    'Yes_delete_them'=>'Yes, delete them!',
+    'No_cancel'=>'No, cancel!',
 ];

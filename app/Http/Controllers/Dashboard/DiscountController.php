@@ -12,7 +12,9 @@ class DiscountController extends Controller
 {
     public function index()
     {
-        $discounts = Discount::filter(request()->all())->orderBy('id', 'DESC')->paginate();
+        $discounts = Discount::filter(request()->all())
+            ->latest('id')
+            ->paginate();
         return view('dashboard.discount.index', compact('discounts'));
     }
 
@@ -31,7 +33,7 @@ class DiscountController extends Controller
         $data = $request->validated();
         $data['code'] =  Str::upper($request->code);
         Discount::create($data);
-        return redirect()->route('dashboard.discounts.index')->with('success', 'Discount created successfully');
+        return redirect()->route('dashboard.discounts.index')->with('success', __('discount.discount_created_successfully'));
     }
 
     public function edit(Discount $discount)
@@ -44,13 +46,13 @@ class DiscountController extends Controller
         $data = $request->validated();
         $data['code'] = Str::upper($request->code);
         $discount->update($data);
-        return redirect()->route('dashboard.discounts.index')->with('success', 'Discount updated successfully');
+        return redirect()->route('dashboard.discounts.index')->with('success', __('discount.discount_updated_successfully'));
     }
 
     public function destroy(Discount $discount)
     {
         $discount->delete();
-        return redirect()->route('dashboard.discounts.index')->with('success', 'Discount deleted successfully');
+        return redirect()->route('dashboard.discounts.index')->with('success',  __('discount.discount_deleted_successfully'));
     }
 
     public function search(Request $request)

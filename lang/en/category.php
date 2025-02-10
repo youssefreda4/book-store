@@ -1,0 +1,31 @@
+<?php
+
+return[
+    'all_categories' => 'All Categories',
+    'create' => 'Create',
+    'create_category' => 'Create Category',
+    'category_name' => 'Category Name',
+    'enter_category_name' => 'Enter category name',
+    'discount' => 'Discount',
+    'discount_code' => 'Discount Code',
+    'filter' => 'Filter',
+    'resert' => 'Resert',
+    'id' => 'Id',
+    'name' => 'Name',
+    'image' => 'Image',
+    'create_at' => 'Create At',
+    'updated_at' => 'Updated At',
+    'actions' => 'Actions',
+    'add' => 'Add',
+    'select_discount' => 'Select discount',
+    'category_edit' => 'Category Edit',
+    'update' => 'Update',
+    'name_category_en' => 'Name (English)',
+    'name_category_ar' => 'Name (Arabic)',
+    'success' => 'Success',
+
+    'category_created_successfully' => 'Category created successfully',
+    'category_updated_successfully' => 'Category updated successfully',
+    'category_deleted_successfully' => 'Category deleted successfully',
+    'discount_added_successfully' => 'Discount added successfully',
+];

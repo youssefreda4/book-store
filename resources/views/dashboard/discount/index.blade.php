@@ -1,18 +1,12 @@
-@extends('adminlte::page')
+@extends('dashboard.layout')
 
 @section('title', 'Dashboard')
 
 @section('content_header')
-    {{-- <div class="card-header d-flex justify-content-between align-items-center">
-        <h3 class="col">All Discounts</h3>
-        <a href="{{ route('dashboard.discounts.create') }}" class="btn btn-success ">
-            <i class="fas fa-plus"></i> <span class="ml-2">Create</span>
-        </a>
-    </div> --}}
-    <x-header :title="'All Discounts'">
+    <x-header :title="__('discount.all_discounts')">
         <x-slot:actions>
             <a href="{{ route('dashboard.discounts.create') }}" class="btn btn-success">
-                <i class="fas fa-plus me-2"></i> <span>{{ __('Create') }}</span>
+                <i class="fas fa-plus me-2"></i> <span>{{ __('discount.create') }}</span>
             </a>
         </x-slot:actions>
     </x-header>
@@ -20,65 +14,58 @@
 @stop
 
 @section('content')
-
-    @if (session()->get('success') !== null)
-        <x-adminlte-alert theme="success" title="Success">
-            {{ session()->get('success') }}
-        </x-adminlte-alert>
-    @endif
-
-    <div class="card col-12">
-        <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
+    <div class="mb-3">
+        <x-delete-selected model="Discount"></x-delete-selected>
+    </div>
+    <div class="card">
+        <table class="table table-bordered ">
+            <thead>
+                <tr>
+                    <th class="text-center"><input type="checkbox" id="select-all"></th>
+                    <th class="text-center">{{ __('discount.id') }}</th>
+                    <th class="text-center">{{ __('discount.code') }}</th>
+                    <th class="text-center">{{ __('discount.quantity') }}</th>
+                    <th class="text-center">{{ __('discount.precentage') }}</th>
+                    <th class="text-center">{{ __('discount.expiry_date') }}</th>
+                    <th class="text-center">{{ __('discount.create_at') }}</th>
+                    <th class="text-center">{{ __('discount.updated_at') }}</th>
+                    <th class="text-center">{{ __('discount.actions') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $locale = session()->get('locale');
+                @endphp
+                @foreach ($discounts as $discount)
                     <tr>
-                        <th class="text-center">Id</th>
-                        <th class="text-center">Code</th>
-                        <th class="text-center">Quantity</th>
-                        <th class="text-center">Precentage</th>
-                        <th class="text-center">Expiry Date</th>
-                        <th class="text-center">Create At</th>
-                        <th class="text-center">Updated At</th>
-                        <th class="text-center">Actions</th>
+                        <td class="text-center "><input class="row-checkbox" type="checkbox" value="{{ $discount->id }}">
+                        <th class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($discount->id) : $discount->id }}</th>
+                        <td class="text-center">{{ $discount->code }}</td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($discount->quantity) : $discount->quantity }}
+                        </td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($discount->precentage) : $discount->precentage }}
+                        </td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($discount->expiry_date) : $discount->expiry_date }}
+                        </td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($discount->created_at) : $discount->created_at }}
+                        </td>
+                        <td class="text-center">
+                            {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($discount->updated_at) : $discount->updated_at }}
+                        </td>
+                        <td class="text-center">
+                            <x-crud-action-button route="discounts" model="{{ $discount->id }}"></x-crud-action-button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($discounts as $discount)
-                        <tr>
-                            <th class="text-center">{{ $discount->id }}</th>
-                            <td class="text-center">{{ $discount->code }}</td>
-                            <td class="text-center">{{ $discount->quantity }}</td>
-                            <td class="text-center">{{ $discount->precentage }}</td>
-                            <td class="text-center">{{ $discount->expiry_date }}</td>
-                            <td class="text-center">{{ $discount->created_at }}</td>
-                            <td class="text-center">{{ $discount->updated_at }}</td>
-                            <td class="text-center">
-
-                                <div class="d-flex justify-content-between ">
-
-                                    <a href="{{ route('dashboard.discounts.edit', $discount->id) }}"
-                                        class="btn btn-warning">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-
-                                    <a href="{{ route('dashboard.discounts.show', $discount->id) }}" class="btn btn-info">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <form action="{{ route('dashboard.discounts.destroy', $discount->id) }}"
-                                        method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <x-adminlte-button type="submit" theme="danger" icon="fas fa-trash-alt" />
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-        <div class="card-footer clearfix">
-            {{ $discounts->links() }}
-        </div>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div>
+        {{ $discounts->links() }}
     </div>
 @stop

@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Book Store</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -329,35 +329,34 @@ return [
         // ],
 
         [
-            'text'=> 'language',
+            'text' => 'Language',
             'topnav_right' => true,
-            'submenu' =>[
+            'submenu' => [
                 [
-                    'text'=>'Arabic',
-                    'icon'=>'flag-icon flag-icon-eg',
+                    'text' => 'Arabic',
+                    'icon' => 'flag-icon flag-icon-eg',
                     'url' => 'dashboard/change-language/ar'
                 ],
                 [
-                    'text'=>'English',
-                    'icon'=>'flag-icon flag-icon-us',
+                    'text' => 'English',
+                    'icon' => 'flag-icon flag-icon-us',
                     'url' => 'dashboard/change-language/en'
                 ],
             ],
         ],
-
         [
             'text' => 'Discounts',
             'url' => 'dashboard/discounts',
             'icon' => 'fas fa-tag',
-            'submenu' =>[
+            'submenu' => [
                 [
-                    'text'=>'Discounts',
-                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'text' => 'Discounts',
+                    'icon' => 'far fa-circle',
                     'url' => 'dashboard/discounts'
                 ],
                 [
-                    'text'=>'Create Discount',
-                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'text' => 'Create Discount',
+                    'icon' => 'far fa-circle',
                     'url' => 'dashboard/discounts/create'
                 ],
             ],
@@ -366,15 +365,15 @@ return [
             'text' => 'Categories',
             'url' => 'dashboard/categories',
             'icon' => 'fas fa-layer-group',
-            'submenu' =>[
+            'submenu' => [
                 [
-                    'text'=>'Categories',
-                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'text' => 'Categories',
+                    'icon' => 'far fa-circle',
                     'url' => 'dashboard/categories'
                 ],
                 [
-                    'text'=>'Create Category',
-                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'text' => 'Create Category',
+                    'icon' => 'far fa-circle',
                     'url' => 'dashboard/categories/create'
                 ],
             ],
@@ -383,15 +382,15 @@ return [
             'text' => 'Publishers',
             'url' => 'dashboard/publishers',
             'icon' => 'fas fa-user-tie',
-            'submenu' =>[
+            'submenu' => [
                 [
-                    'text'=>'Publishers',
-                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'text' => 'Publishers',
+                    'icon' => 'far fa-circle',
                     'url' => 'dashboard/publishers'
                 ],
                 [
-                    'text'=>'Create Publisher',
-                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'text' => 'Create Publisher',
+                    'icon' => 'far fa-circle',
                     'url' => 'dashboard/publishers/create'
                 ],
             ],
@@ -399,17 +398,34 @@ return [
         [
             'text' => 'Authors',
             'url' => 'dashboard/authors',
-            'icon' => 'fas fa-magic',
-            'submenu' =>[
+            'icon' => 'fas fa-user-edit',
+            'submenu' => [
                 [
-                    'text'=>'Authors',
-                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'text' => 'Authors',
+                    'icon' => 'far fa-circle',
                     'url' => 'dashboard/authors'
                 ],
                 [
-                    'text'=>'Create Author',
-                    'icon'=>'far fa-arrow-alt-circle-right',
+                    'text' => 'Create Author',
+                    'icon' => 'far fa-circle',
                     'url' => 'dashboard/authors/create'
+                ],
+            ],
+        ],
+        [
+            'text' => 'Flash Sale',
+            'url' => 'dashboard/flash-sale',
+            'icon' => 'fas fa-bolt',
+            'submenu' => [
+                [
+                    'text' => 'Flash Sale',
+                    'icon' => 'far fa-circle',
+                    'url' => 'dashboard/flashsales'
+                ],
+                [
+                    'text' => 'Create Flash Sale',
+                    'icon' => 'far fa-circle',
+                    'url' => 'dashboard/flashsales/create'
                 ],
             ],
         ],
@@ -540,7 +556,7 @@ return [
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => true,
+                    'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
                 ],
                 [
@@ -561,11 +577,11 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
                 ],
             ],

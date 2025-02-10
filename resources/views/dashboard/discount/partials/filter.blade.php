@@ -3,24 +3,15 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name"> Discount Code </label>
-                    <input type="text" name="discount_code" class="form-control" placeholder="Enter Discount Code">
+                    <label for="name">{{__('discount.discount_code')}} </label>
+                    <input type="text" name="discount_code" class="form-control" placeholder="{{ __('discount.enter_discount_code') }}" value="{{ request()->discount_code }}">
                 </div>
-            </div>
-            <div>
-
-                {{-- <div class="col-md-6">
-                    <div class="form-group">
-                        <input class="form-check-input" type="checkbox" name="discount" value="1">
-                        <label class="form-check-label"> Discount </label>
-                    </div>
-                </div> --}}
             </div>
         </div>
         <div class="col-md-12 text-end">
-            <x-adminlte-button label="Filter" theme="primary" type="submit" />
+            <x-adminlte-button label="{{ __('discount.filter') }}" theme="primary" type="submit" />
             <a href="{{ route('dashboard.discounts.index') }}">
-                <x-adminlte-button label="Resert" theme="secondary" />
+                <x-adminlte-button label="{{ __('discount.resert') }}" theme="secondary" />
             </a>
         </div>
     </form>

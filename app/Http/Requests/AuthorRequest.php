@@ -22,7 +22,16 @@ class AuthorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:authors,name'
+            'name.en' => 'required|unique:authors,name',
+            'name.ar' => 'required|unique:authors,name',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name.en' => __('author.name_author_en'),
+            'name.ar' => __('author.name_author_ar'),
         ];
     }
 }

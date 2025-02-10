@@ -1,0 +1,27 @@
+<?php
+
+
+return [
+    'all_publisher' => 'All Publisher',
+    'create' => 'Create',
+    'id' => 'Id',
+    'name' => 'Name',
+    'create_at' => 'Create At',
+    'updated_at' => 'Updated At',
+    'actions' => 'Actions',
+    'publisher_name' => 'Publisher Name',
+    'enter_publisher_name' => 'Enter publisher name',
+    'filter' => 'Filter',
+    'resert' => 'Resert',
+    'publisher_name' => 'Publisher Name',
+    'publisher_edit' => 'Publisher Edit',
+    'update' => 'Update',
+    'name_publisher_en' => 'Name (English)',
+    'name_publisher_ar' => 'Name (Arabic)',
+    'create_publisher' => 'Create Publisher',
+    'create' => 'Create',
+    'success' => 'Success',
+    'publisher_created_successfully' => 'Publisher created successfully',
+    'publisher_updated_successfully' => 'Publisher updated successfully',
+    'publisher_deleted_successfully' => 'Publisher deleted successfully',
+];

@@ -30,7 +30,7 @@ class PublisherController extends Controller
     {
         $data = $request->validated();
         Publisher::create($data);
-        return redirect()->route('dashboard.publishers.index')->with('success', 'Publisher created successfully');
+        return redirect()->route('dashboard.publishers.index')->with('success',  __('publisher.publisher_created_successfully'));
     }
 
     public function edit(Publisher $publisher)
@@ -42,12 +42,12 @@ class PublisherController extends Controller
     {
         $data = $request->validated();
         $publisher->update($data);
-        return redirect()->route('dashboard.publishers.index')->with('success', 'Publisher updated successfully');
+        return redirect()->route('dashboard.publishers.index')->with('success',  __('publisher.publisher_updated_successfully'));
     }
 
     public function destroy(Publisher $publisher)
     {
         $publisher->delete();
-        return redirect()->route('dashboard.publishers.index')->with('success', 'Publisher deleted successfully');
+        return redirect()->route('dashboard.publishers.index')->with('success',  __('publisher.publisher_deleted_successfully'));
     }
 }

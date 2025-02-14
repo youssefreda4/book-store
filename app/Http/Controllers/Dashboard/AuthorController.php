@@ -51,4 +51,12 @@ class AuthorController extends Controller
         $author->delete();
         return redirect()->route('dashboard.authors.index')->with('success', __('author.author_deleted_successfully'));
     }
+
+    public function search(Author $request)
+    {
+        $authors = Author::whereLike('name->en', "%$request->q%")
+            ->orWhereLike('name->ar', "%$request->q%")
+            ->limit(10)->get();
+        return response()->json(['data' => ['authors' => $authors]]);
+    }
 }

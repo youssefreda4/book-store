@@ -20,7 +20,10 @@ class PublisherFactory extends Factory
         //     'name' => fake()->unique()->name(),
         // ];
         return [
-            'name' => [fake()->uniquePublisherName()]
+            'name' => [
+                'en' => fake()->unique()->name(),
+                'ar' => fake()->unique()->name(),
+            ]
         ];
     }
 }

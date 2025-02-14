@@ -50,4 +50,12 @@ class PublisherController extends Controller
         $publisher->delete();
         return redirect()->route('dashboard.publishers.index')->with('success',  __('publisher.publisher_deleted_successfully'));
     }
+
+    public function search(Publisher $request)
+    {
+        $publishers = Publisher::whereLike('name->en', "%$request->q%")
+            ->orWhereLike('name->ar', "%$request->q%")
+            ->limit(10)->get();
+        return response()->json(['data' => ['publishers' => $publishers]]);
+    }
 }

@@ -71,4 +71,12 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('dashboard.categories.index')->with('success', __('category.category_deleted_successfully'));
     }
+
+    public function search(Category $request)
+    {
+        $categories = Category::whereLike('name->en', "%$request->q%")
+            ->orWhereLike('name->ar', "%$request->q%")
+            ->limit(10)->get();
+        return response()->json(['data' => ['categories' => $categories]]);
+    }
 }

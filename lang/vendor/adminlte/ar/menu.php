@@ -18,4 +18,7 @@ return [
 
     'Flash Sale' => 'العروض',
     'Create Flash Sale' => 'إنشاء عرض',
+
+    'Book' => 'الكتب',
+    'Create Book' => 'إنشاء كتاب',
 ];

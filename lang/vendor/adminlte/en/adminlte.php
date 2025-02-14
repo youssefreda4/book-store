@@ -59,4 +59,6 @@ return [
     'export' => 'Export',
     'model_export_not_exist' => 'Model export not exist!',
     'exported_successfully' => 'Exported successfully',
+    'image' => 'Image',
+
 ];

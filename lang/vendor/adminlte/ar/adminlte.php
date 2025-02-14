@@ -50,4 +50,5 @@ return [
     'export' => 'تصدير',
     'model_export_not_exist' => 'تصدير النموذج غير موجود!',
     'exported_successfully' => 'تم التصدير بنجاح',
+    'image' => 'الصورة',
 ];

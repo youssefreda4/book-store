@@ -2,14 +2,14 @@
 
 namespace App\Exports;
 
-use App\Models\Author;
+use App\Models\Book;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class AuthorExport implements FromCollection, WithHeadings, WithMapping, WithStyles
+class BookExport implements FromCollection, WithHeadings, WithMapping, WithStyles
 {
     public function styles(Worksheet $sheet)
     {
@@ -22,36 +22,58 @@ class AuthorExport implements FromCollection, WithHeadings, WithMapping, WithSty
 
             'C' => ['font' => ['size' => 14, 'color' => ['rgb' => '333333']]],
 
+            'E' => ['font' => ['size' => 14, 'color' => ['rgb' => '333333']]],
+
             'A:Z' => [
                 'alignment' => ['horizontal' => 'center', 'vertical' => 'center'],
             ],
         ];
     }
+
     public function headings(): array
     {
         return [
             'Id',
             'Name (English)',
             'Name (Arabic)',
+            'Description (English)',
+            'Description (Arabic)',
+            'quantity',
+            'rate',
+            'publish_year',
+            'price',
+            'is_available',
+            'category_id',
+            'publisher_id',
+            'author_id',
             'Created At',
         ];
     }
-
     /**
      * @return \Illuminate\Support\Collection
      */
     public function collection()
     {
-        return Author::all();
+        return Book::all();
     }
 
-    public function map($author): array
+    public function map($book): array
     {
         return [
-            $author->id,
-            $author->getTranslation('name', 'en'),
-            $author->getTranslation('name', 'ar'),
-            $author->created_at,
+            $book->id,
+            $book->getTranslation('name', 'en'),
+            $book->getTranslation('name', 'ar'),
+            $book->getTranslation('description', 'en'),
+            $book->getTranslation('description', 'ar'),
+            $book->quantity,
+            $book->rate,
+            $book->publish_year,
+            $book->price,
+            $book->is_available == null ?? 0,
+            $book->category_id,
+            $book->publisher_id,
+            $book->author_id,
+            $book->created_at,
         ];
     }
 }

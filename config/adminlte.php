@@ -215,7 +215,7 @@ return [
     */
 
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => false,
+    'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
@@ -426,6 +426,23 @@ return [
                     'text' => 'Create Flash Sale',
                     'icon' => 'far fa-circle',
                     'url' => 'dashboard/flashsales/create'
+                ],
+            ],
+        ],
+        [
+            'text' => 'Book',
+            'url' => 'dashboard/books',
+            'icon' => 'fas fa-book',
+            'submenu' => [
+                [
+                    'text' => 'Book',
+                    'icon' => 'far fa-circle',
+                    'url' => 'dashboard/books'
+                ],
+                [
+                    'text' => 'Create Book',
+                    'icon' => 'far fa-circle',
+                    'url' => 'dashboard/books/create'
                 ],
             ],
         ],

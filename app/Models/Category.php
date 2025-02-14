@@ -35,4 +35,9 @@ class Category extends Model implements HasMedia
     {
         return $this->belongsTo(Discount::class);
     }
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

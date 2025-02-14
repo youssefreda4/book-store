@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('type',['super-admin','content-managment']);
+            $table->enum('type',['super-admin','content-management']);
             $table->timestamps();
         });
     }

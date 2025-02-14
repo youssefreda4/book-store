@@ -345,6 +345,23 @@ return [
             ],
         ],
         [
+            'text' => 'Admin Management',
+            'url' => 'dashboard/admins',
+            'icon' => 'fas fa-user-cog',
+            'submenu' => [
+                [
+                    'text' => 'Admins',
+                    'icon' => 'far fa-circle',
+                    'url' => 'dashboard/admins'
+                ],
+                [
+                    'text' => 'Create Admin',
+                    'icon' => 'far fa-circle',
+                    'url' => 'dashboard/admins/create'
+                ],
+            ],
+        ],
+        [
             'text' => 'Discounts',
             'url' => 'dashboard/discounts',
             'icon' => 'fas fa-tag',

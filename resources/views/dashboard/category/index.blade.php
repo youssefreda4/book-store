@@ -4,37 +4,44 @@
 
 @section('content_header')
     <x-header :title="__('category.all_categories')">
-        <x-slot:actions>
-            <a href="{{ route('dashboard.categories.create') }}" class="btn btn-success">
-                <i class="fas fa-plus me-2"></i> <span>{{ __('category.create') }}</span>
-            </a>
-        </x-slot:actions>
+        @can('super-admin')
+            <x-slot:actions>
+                <a href="{{ route('dashboard.categories.create') }}" class="btn btn-success">
+                    <i class="fas fa-plus me-2"></i> <span>{{ __('category.create') }}</span>
+                </a>
+            </x-slot:actions>
+        @endcan
     </x-header>
 
     @include('dashboard.category.partials.filter')
 @stop
 
 @section('content')
-    <div class="mb-3">
-        <x-delete-selected model="Category"></x-delete-selected>
+    @can('super-admin')
+        <div class="mb-3">
+            <x-delete-selected model="Category"></x-delete-selected>
 
-        <x-import-excel model="Category"></x-import-excel>
+            <x-import-excel model="Category"></x-import-excel>
 
-        <x-export-excel model="Category"></x-export-excel>
-    </div>
-
+            <x-export-excel model="Category"></x-export-excel>
+        </div>
+    @endcan
     <div class="card">
         <table class="table table-bordered ">
             <thead>
                 <tr>
-                    <th class="text-center"><input type="checkbox" id="select-all"></th>
+                    @can('super-admin')
+                        <th class="text-center"><input type="checkbox" id="select-all"></th>
+                    @endcan
                     <th class="text-center">{{ __('category.id') }}</th>
                     <th class="text-center">{{ __('category.name') }}</th>
                     <th class="text-center">{{ __('category.discount_code') }}</th>
                     <th class="text-center">{{ __('category.image') }}</th>
                     <th class="text-center">{{ __('category.create_at') }}</th>
                     <th class="text-center">{{ __('category.updated_at') }}</th>
-                    <th class="text-center">{{ __('category.actions') }}</th>
+                    @can('super-admin')
+                        <th class="text-center">{{ __('category.actions') }}</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -43,8 +50,10 @@
                 @endphp
                 @foreach ($categories as $category)
                     <tr>
-                        <td class="text-center "><input class="row-checkbox" type="checkbox" value="{{ $category->id }}">
-                        </td>
+                        @can('super-admin')
+                            <td class="text-center "><input class="row-checkbox" type="checkbox" value="{{ $category->id }}">
+                            </td>
+                        @endcan
                         <td class="text-center">
                             {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($category->id) : $category->id }}</td>
                         <td class="text-center">{{ $category->name }}</td>
@@ -66,9 +75,11 @@
                         <td class="text-center">
                             {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($category->updated_at) : $category->updated_at }}
                         </td>
-                        <td class="text-center">
-                            <x-crud-action-button route="categories" model="{{ $category->id }}"></x-crud-action-button>
-                        </td>
+                        @can('super-admin')
+                            <td class="text-center">
+                                <x-crud-action-button route="categories" model="{{ $category->id }}"></x-crud-action-button>
+                            </td>
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>

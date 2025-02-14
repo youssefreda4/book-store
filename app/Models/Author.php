@@ -17,4 +17,9 @@ class Author extends Model
     ];
 
     public $translatable = ['name'];
+
+    public function book()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

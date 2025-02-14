@@ -4,30 +4,35 @@
 
 @section('content_header')
     <x-header :title="__('flashsale.all_flash_sale')">
-        <x-slot:actions>
-            <a href="{{ route('dashboard.flashsales.create') }}" class="btn btn-success">
-                <i class="fas fa-plus me-2"></i> <span>{{ __('flashsale.create') }}</span>
-            </a>
-        </x-slot:actions>
+        @can('super-admin')
+            <x-slot:actions>
+                <a href="{{ route('dashboard.flashsales.create') }}" class="btn btn-success">
+                    <i class="fas fa-plus me-2"></i> <span>{{ __('flashsale.create') }}</span>
+                </a>
+            </x-slot:actions>
+        @endcan
     </x-header>
 
     @include('dashboard.flash-sale.partials.filter')
 @stop
 
 @section('content')
-    <div class="mb-3">
-        <x-delete-selected model="Flashsale"></x-delete-selected>
+    @can('super-admin')
+        <div class="mb-3">
+            <x-delete-selected model="Flashsale"></x-delete-selected>
 
-        <x-import-excel model="Flashsale"></x-import-excel>
+            <x-import-excel model="Flashsale"></x-import-excel>
 
-        <x-export-excel model="Flashsale"></x-export-excel>
-    </div>
-    
+            <x-export-excel model="Flashsale"></x-export-excel>
+        </div>
+    @endcan
     <div class="card">
         <table class="table table-bordered ">
             <thead>
                 <tr>
-                    <th class="text-center"><input type="checkbox" id="select-all"></th>
+                    @can('super-admin')
+                        <th class="text-center"><input type="checkbox" id="select-all"></th>
+                    @endcan
                     <th class="text-center">{{ __('flashsale.id') }}</th>
                     <th class="text-center">{{ __('flashsale.name') }}</th>
                     <th class="text-center">{{ __('flashsale.description') }}</th>
@@ -36,7 +41,9 @@
                     <th class="text-center">{{ __('flashsale.time') }}</th>
                     <th class="text-center">{{ __('flashsale.create_at') }}</th>
                     <th class="text-center">{{ __('flashsale.updated_at') }}</th>
-                    <th class="text-center">{{ __('flashsale.actions') }}</th>
+                    @can('super-admin')
+                        <th class="text-center">{{ __('flashsale.actions') }}</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +52,9 @@
                 @endphp
                 @foreach ($flash_sales as $flash_sale)
                     <tr>
-                        <td class="text-center "><input class="row-checkbox" type="checkbox" value="{{ $flash_sale->id }}">
+                        @can('super-admin')
+                            <td class="text-center "><input class="row-checkbox" type="checkbox" value="{{ $flash_sale->id }}">
+                            @endcan
                         <th class="text-center">
                             {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($flash_sale->id) : $flash_sale->id }}</th>
                         <td class="text-center">{{ $flash_sale->name }}</td>
@@ -59,9 +68,11 @@
                         <td class="text-center">
                             {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($flash_sale->updated_at) : $flash_sale->updated_at }}
                         </td>
-                        <td class="text-center">
-                            <x-crud-action-button route="flashsales" model="{{ $flash_sale->id }}"></x-crud-action-button>
-                        </td>
+                        @can('super-admin')
+                            <td class="text-center">
+                                <x-crud-action-button route="flashsales" model="{{ $flash_sale->id }}"></x-crud-action-button>
+                            </td>
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>

@@ -4,35 +4,42 @@
 
 @section('content_header')
     <x-header :title="__('author.all_authors')">
-        <x-slot:actions>
-            <a href="{{ route('dashboard.authors.create') }}" class="btn btn-success">
-                <i class="fas fa-plus me-2"></i> <span>{{ __('author.create') }}</span>
-            </a>
-        </x-slot:actions>
+        @can('super-admin')
+            <x-slot:actions>
+                <a href="{{ route('dashboard.authors.create') }}" class="btn btn-success">
+                    <i class="fas fa-plus me-2"></i> <span>{{ __('author.create') }}</span>
+                </a>
+            </x-slot:actions>
+        @endcan
     </x-header>
 
     @include('dashboard.author.partials.filter')
 @stop
 
 @section('content')
-    <div class="mb-3">
-        <x-delete-selected model="Author"></x-delete-selected>
+    @can('super-admin')
+        <div class="mb-3">
+            <x-delete-selected model="Author"></x-delete-selected>
 
-        <x-import-excel model="Author"></x-import-excel>
+            <x-import-excel model="Author"></x-import-excel>
 
-        <x-export-excel model="Author"></x-export-excel>
-    </div>
-
+            <x-export-excel model="Author"></x-export-excel>
+        </div>
+    @endcan
     <div class="card">
         <table class="table table-bordered ">
             <thead>
                 <tr>
-                    <th class="text-center"><input type="checkbox" id="select-all"></th>
+                    @can('super-admin')
+                        <th class="text-center"><input type="checkbox" id="select-all"></th>
+                    @endcan
                     <th class="text-center">{{ __('author.id') }}</th>
                     <th class="text-center">{{ __('author.name') }}</th>
                     <th class="text-center">{{ __('author.created_at') }}</th>
                     <th class="text-center">{{ __('author.updated_at') }}</th>
-                    <th class="text-center">{{ __('author.actions') }}</th>
+                    @can('super-admin')
+                        <th class="text-center">{{ __('author.actions') }}</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -41,7 +48,9 @@
                 @endphp
                 @foreach ($authors as $author)
                     <tr>
-                        <td class="text-center "><input class="row-checkbox" type="checkbox" value="{{ $author->id }}">
+                        @can('super-admin')
+                            <td class="text-center "><input class="row-checkbox" type="checkbox" value="{{ $author->id }}">
+                            @endcan
                         <th class="text-center">
                             {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($author->id) : $author->id }}</th>
                         <td class="text-center">{{ $author->name }}</td>
@@ -51,9 +60,12 @@
                         <td class="text-center">
                             {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($author->updated_at) : $author->updated_at }}
                         </td>
-                        <td class="text-center">
-                            <x-crud-action-button route="authors" model="{{ $author->id }}"></x-crud-action-button>
-                        </td>
+
+                        @can('super-admin')
+                            <td class="text-center">
+                                <x-crud-action-button route="authors" model="{{ $author->id }}"></x-crud-action-button>
+                            </td>
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>

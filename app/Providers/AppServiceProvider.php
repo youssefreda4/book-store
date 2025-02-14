@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\ServiceProvider;
-use Alkoumi\LaravelArabicNumbers\LaravelArabicNumbersServiceProvider;
 use App\Faker\CategoryProvider;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Excel\ExcelServiceProvider;
+use Alkoumi\LaravelArabicNumbers\LaravelArabicNumbersServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +29,9 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
         ExcelServiceProvider::class;
         LaravelArabicNumbersServiceProvider::class;
+
+        Gate::define('super-admin', function () {
+            return Auth::guard('admin')->user()->type === 'super-admin';
+        });
     }
 }

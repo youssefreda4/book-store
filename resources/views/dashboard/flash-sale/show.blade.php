@@ -15,6 +15,7 @@
                         <th class="text-center">{{ __('flashsale.id') }}</th>
                         <th class="text-center">{{ __('flashsale.name') }}</th>
                         <th class="text-center">{{ __('flashsale.description') }}</th>
+                        <th class="text-center">{{ __('flashsale.is_active') }}</th>
                         <th class="text-center">{{ __('flashsale.date') }}</th>
                         <th class="text-center">{{ __('flashsale.time') }}</th>
                         <th class="text-center">{{ __('flashsale.create_at') }}</th>
@@ -31,6 +32,7 @@
                             {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($flash_sale->id) : $flash_sale->id }}</th>
                         <td class="text-center">{{ $flash_sale->name }}</td>
                         <td class="text-center">{{ $flash_sale->description }}</td>
+                        <td class="text-center">{!! $flash_sale->isActive() !!}</td>
                         <td class="text-center">{{ $flash_sale->date }}</td>
                         <td class="text-center">{{ $flash_sale->time }}</td>
                         <td class="text-center">

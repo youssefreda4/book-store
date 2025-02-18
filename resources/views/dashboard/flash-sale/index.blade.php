@@ -59,7 +59,7 @@
                             {{ $locale == 'ar' ? Numbers::ShowInArabicDigits($flash_sale->id) : $flash_sale->id }}</th>
                         <td class="text-center">{{ $flash_sale->name }}</td>
                         <td class="text-center">{{ $flash_sale->description }}</td>
-                        <td class="text-center">{{ $flash_sale->is_active }}</td>
+                        <td class="text-center">{!! $flash_sale->isActive() !!}</td>
                         <td class="text-center">{{ $flash_sale->date }}</td>
                         <td class="text-center">{{ $flash_sale->time }}</td>
                         <td class="text-center">

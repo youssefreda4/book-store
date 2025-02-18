@@ -29,4 +29,12 @@ class FlashSale extends Model
     
 
     public $translatable = ['name', 'description'];
+
+    public function isActive()
+    {
+        if ($this->is_active) {
+            return '<span class="badge bg-success rounded">' . __('flashsale.active') . '</span>';
+        }
+        return '<span class="badge bg-danger rounded">' . __('flashsale.not_active') . '</span>';
+    }
 }

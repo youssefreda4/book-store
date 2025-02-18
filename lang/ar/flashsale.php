@@ -35,5 +35,8 @@ return [
     "is_active" => 'الحالة',
     "active_dropdown" => 'نشط',
     "inactive_dropdown" => 'غير نشط',
+
+    'active' => 'نشط',
+    'not_active' => 'غير نشط',
 ];
 

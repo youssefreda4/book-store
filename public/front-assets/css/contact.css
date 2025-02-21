@@ -1,0 +1,50 @@
+.hero-section {
+    min-height: 20vh;
+}
+
+.contact_icon {
+    min-width: 45px;
+    height: 45px;
+    background-color: #360303;
+    color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #00000033;
+    border-radius: 8px;
+    /* padding: 1rem; */
+}
+
+.icon-detailes {
+    color: #000000;
+}
+
+.contact_head {
+    color: #000000;
+}
+
+.contact_head h3 {
+    font-size: 40px;
+    font-weight: 700;
+    width: 60%;
+    line-height: 1.5;
+}
+
+.contact_head P {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 3rem;
+}
+
+.input_contact,
+.input_contact input,
+.input_contact textarea {
+    background-color: transparent;
+    color: #000000;
+}
+
+.input_contact input::placeholder,
+.input_contact textarea::placeholder {
+    background-color: transparent;
+    color: #000000;
+}

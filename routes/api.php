@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Dashboard\AdminManagmentController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\AuthorController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\DiscountController;
+use App\Http\Controllers\Dashboard\FlashSaleController;
 use App\Http\Controllers\Dashboard\PublisherController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -15,6 +17,10 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('discount')->name('discounts.')->group(function(){
     Route::get('/search',[DiscountController::class, 'search'])->name('search');
+});
+
+Route::prefix('flashsale')->name('flashsales.')->group(function(){
+    Route::get('/search',[FlashSaleController::class, 'search'])->name('search');
 });
 
 Route::prefix('catrgory')->name('categories.')->group(function(){

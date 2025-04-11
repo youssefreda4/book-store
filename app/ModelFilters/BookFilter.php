@@ -29,4 +29,8 @@ class BookFilter extends ModelFilter
                 ->orWhere('description->ar', 'LIKE', "%$description%");
         });
     }
+
+    public function category($value){
+        return $this->whereIn('category_id',$value);
+    }
 }

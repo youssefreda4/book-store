@@ -61,7 +61,7 @@
     </div>
 @stop
 
-@section('js')
+@push('js')
     <script>
         $('#discount-select2').select2({
              //minimumInputLength: 1,
@@ -81,4 +81,4 @@
             }
         });
     </script>
-@stop
+@endpush

@@ -26,6 +26,8 @@ class FlashSaleFactory extends Factory
                 'ar' => fake()->sentence(),
             ],
             "date" => fake()->dateTimeBetween('now','+1 year')->format('Y-m-d'),
+            "start_time" =>fake()->time(),
+            'percentage' => fake()->numberBetween(10, 90),
             "time" => fake()->randomDigit(),
             "is_active" => true,
         ];

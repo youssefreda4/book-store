@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-use Spatie\Image\Enums\Fit;
-use Spatie\Sluggable\HasSlug;
+use App\Models\Discount;
+use Carbon\Carbon;
 use EloquentFilter\Filterable;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
+use Spatie\Translatable\HasTranslations;
 
 class Book extends Model implements HasMedia
 {
@@ -32,6 +34,8 @@ class Book extends Model implements HasMedia
         'category_id',
         'publisher_id',
         'author_id',
+        'discountable_type',
+        'discountable_id',
     ];
 
     public $translatable = ['name', 'description'];
@@ -76,12 +80,47 @@ class Book extends Model implements HasMedia
     {
         return $this->belongsTo(Category::class);
     }
+
     public function publisher()
     {
         return $this->belongsTo(Publisher::class);
     }
+
     public function author()
     {
         return $this->belongsTo(Author::class);
+    }
+
+    public function discountable()
+    {
+        return $this->morphTo();
+    }
+
+    public function getActiveDiscountValue()
+    {
+        $discount = $this->getValidDiscount();
+
+        return $discount?->percentage;
+    }
+
+    public function getValidDiscount()
+    {
+        $discount = $this->discountable;
+        //apply check if discount is currntly active
+        if ($discount && !$this->isDiscountExpired($discount)) return $discount;
+
+        $category_discount =  $this->category->discount ?? null;
+
+        if ($category_discount && !$this->isDiscountExpired($discount)) return $category_discount;
+    }
+
+    public function isDiscountExpired($discount)
+    {
+        //discount
+        if ($discount instanceof Discount)  return $discount->quantity <= 0 || $discount->expiry_date->isPast();
+
+        //flashsale
+        $expiry_date = Carbon::createFromFormat("Y-m-d H:i:s", "$discount->date $discount->start_time")->addHours($discount->time);
+        return !$discount->is_active || $expiry_date->isPast();
     }
 }

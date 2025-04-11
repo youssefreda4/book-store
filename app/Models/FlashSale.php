@@ -17,9 +17,9 @@ class FlashSale extends Model
         'description',
         'date',
         'time',
-        'is_active',
         'start_time',
-        'percentage'
+        'is_active',
+        'percentage',
     ];
 
     protected $casts = [
@@ -36,5 +36,10 @@ class FlashSale extends Model
             return '<span class="badge bg-success rounded">' . __('flashsale.active') . '</span>';
         }
         return '<span class="badge bg-danger rounded">' . __('flashsale.not_active') . '</span>';
+    }
+
+    public function books()
+    {
+        return $this->morphMany(Book::class, 'discountable');
     }
 }

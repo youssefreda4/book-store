@@ -31,6 +31,9 @@ return [
     'is_active' => 'Status',
     'active_dropdown' => 'Active',
     'inactive_dropdown' => 'Inactive',
+    
+    'discount'=>'Discount',
+
 
     'slug' => 'Slug',
     'quantity' => 'Quantity',
@@ -42,11 +45,18 @@ return [
     'category' => 'Category',
     'publisher' => 'Publisher',
     'author' => 'Author',
+    'flashsale' => 'Flashsale',
+
 
     'available' => 'Available',
     'not_available' => 'Not Available',
 
+    'select_discount_type'=> 'Select Discount Type',
     'select_category' => 'Select Category',
     'select_author' => 'Select Author',
     'select_publisher' => 'Select Publisher',
+    'select_discount'=>'Select Discount',
+    'select_flashsale'=>'Select FlashSale',
+
+
 ];

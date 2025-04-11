@@ -16,8 +16,10 @@ return new class extends Migration
             $table->json('name');
             $table->json('description');
             $table->date('date');
+            $table->time('start_time');
             $table->unsignedSmallInteger('time');
             $table->boolean('is_active');
+            $table->decimal('percentage', 5, 2);
             $table->timestamps();
         });
     }

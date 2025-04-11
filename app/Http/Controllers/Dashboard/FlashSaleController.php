@@ -55,4 +55,12 @@ class FlashSaleController extends Controller
         $flash_sale->delete();
         return redirect()->route('dashboard.flashsales.index')->with('success', __('flashsale.flash_sale_deleted_successfully'));
     }
+
+    public function search(Request $request)
+    {
+        $flashsales = FlashSale::select('name','id')->whereLike('name->en', "%$request->q%")
+            ->orWhereLike('name->ar', "%$request->q%")
+            ->limit(10)->get();
+        return response()->json(['data' => ['flashsales' => $flashsales]]);
+    }
 }

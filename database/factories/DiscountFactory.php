@@ -20,7 +20,7 @@ class DiscountFactory extends Factory
         return [
             'code' => Str::upper(fake()->unique()->lexify('DISCOUNT????')),
             'quantity' => fake()->numberBetween(1, 100),
-            'precentage' => fake()->numberBetween(10, 90),
+            'percentage' => fake()->numberBetween(10, 90),
             'expiry_date' => fake()->dateTimeBetween('now', '+1 year'),
         ];
     }

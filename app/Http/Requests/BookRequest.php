@@ -35,6 +35,8 @@ class BookRequest extends FormRequest
             'category_id' => 'required|numeric|exists:categories,id',
             'publisher_id' => 'required|numeric|exists:publishers,id',
             'author_id' => 'required|numeric|exists:authors,id',
+            'discountable_type'=> 'string',
+            'discountable_id' => 'required|numeric|exists:discounts,id',
             'image' => 'required',
         ];
     }
@@ -54,6 +56,7 @@ class BookRequest extends FormRequest
             'category_id' => __('book.category'),
             'publisher_id' => __('book.publisher'),
             'author_id' => __('book.author'),
+            'discountable_id'=>__('book.discount'),
             'image' => __('adminlte::adminlte.image'),
         ];
     }

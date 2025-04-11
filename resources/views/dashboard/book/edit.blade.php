@@ -97,6 +97,27 @@
                 </div>
 
                 <div class="row mt-3">
+                    <label class="form-label ml-2">{{ (__('book.select_discount_type')) }} :</label>
+                    <div>
+                        <input type="radio" class="ml-3" name="discountable_type" value="App\Models\Discount"
+                            id="discount_discountable">{{ __('book.discount') }}
+    
+                        <input type="radio" class="ml-3" name="discountable_type" value="App\Models\Flashsale"
+                            id="flashsale_discountable">{{ __('book.flashsale') }}
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <select id="discount-select2" class="col-md-6 js-states form-control" style="display: none;"
+                            name="discountable_id">
+                            <option></option>
+                        </select>
+                        <x-error-input name="discountable"></x-error-input>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
 
                     <x-image-preview name='image' fgroup-class="col-md-6"
                         value="{{ $book->getFirstMediaUrl('book') }}" />
@@ -204,5 +225,68 @@
                 $('#publisher-select2').append(selectedOption).trigger('change');
             }
         });
+
+
+        const discountRadio = document.querySelector('#discount_discountable')
+        const flashSaleRadio = document.querySelector('#flashsale_discountable')
+        const discountSelect2 = document.querySelector('#discount-select2')
+        let placeholder = ''
+        let local="{{ session()->get('locale') }}" ?? 'en'
+
+        discountRadio.addEventListener('change',showDiscountDropDown)
+        flashSaleRadio.addEventListener('change',showDiscountDropDown)
+
+        function showDiscountDropDown(){
+            discountSelect2.style.display='block'
+            
+            if(this.id == 'discount_discountable') {
+                placeholder="{{ __('book.select_discount') }}"
+                enableSelect2()
+            }else{
+                placeholder="{{ __('book.select_flashsale') }}"
+                enableFlashSaleSelect2()
+            } 
+        }
+
+        function enableSelect2(){
+            $('#discount-select2').select2({
+                //minimumInputLength: 1,
+                placeholder: placeholder,
+                allowClear: true,
+                ajax: {
+                    url: "{{ route('dashboard.discounts.search') }}",
+                    dataType: 'json',
+                    processResults: function(data) {
+                        return {
+                            results: data.data.discounts.map(discount => ({
+                                id: discount.id,
+                                text: discount.code + ' - ' + discount.percentage + '%',
+                            }))
+                        }
+                    }
+                }
+            });
+        }
+        function enableFlashSaleSelect2(){
+            $('#discount-select2').select2({
+                //minimumInputLength: 1,
+                placeholder: placeholder,
+                allowClear: true,
+                ajax: {
+                    url: "{{ route('dashboard.flashsales.search') }}",
+                    dataType: 'json',
+                    processResults: function(data) {
+                        return {
+                            results: data.data.flashsales.map(flashsale => ({
+                                id: flashsale.id,
+                                text: flashsale.name[local],
+                            }))
+                        }
+                    }
+                }
+            });
+        }
     </script>
+
+
 @stop

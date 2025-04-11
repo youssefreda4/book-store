@@ -39,7 +39,7 @@
                 <a href="wishlist.html" class="wishlist-link">
                     <span>1</span>
                     <i class="fa-regular fa-heart fs-3"></i></a>
-                <a href="cart.html" class="cart-link">
+                <a href="{{ route('front.cart.index') }}" class="cart-link">
                     <span>1</span>
 
                     <i class="fa-solid fa-cart-shopping fs-3"></i></a>

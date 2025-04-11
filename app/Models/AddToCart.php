@@ -5,8 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AddToCard extends Model
+class AddToCart extends Model
 {
     /** @use HasFactory<\Database\Factories\AddToCardFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'book_id',
+        'user_id',
+        'quantity',
+    ];
 }

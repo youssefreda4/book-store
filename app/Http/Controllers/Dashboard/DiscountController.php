@@ -58,7 +58,7 @@ class DiscountController extends Controller
     public function search(Request $request)
     {
         $discounts = Discount::whereLike('code', "%$request->q%")
-            ->orWhereLike('precentage', "%$request->q%")
+            ->orWhereLike('percentage', "%$request->q%")
             ->limit(10)->get();
         return response()->json(['data' => ['discounts' => $discounts]]);
     }

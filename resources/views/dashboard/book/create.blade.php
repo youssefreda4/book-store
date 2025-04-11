@@ -195,7 +195,7 @@
         const flashSaleRadio = document.querySelector('#flashsale_discountable')
         const discountSelect2 = document.querySelector('#discount-select2')
         let placeholder = ''
-        let local="{{ session()->get('locale') }}"
+        let local="{{ session()->get('locale') }}" ?? 'en'
 
         discountRadio.addEventListener('change',showDiscountDropDown)
         flashSaleRadio.addEventListener('change',showDiscountDropDown)
@@ -224,7 +224,7 @@
                         return {
                             results: data.data.discounts.map(discount => ({
                                 id: discount.id,
-                                text: discount.code + ' - ' + discount.precentage + '%',
+                                text: discount.code + ' - ' + discount.percentage + '%',
                             }))
                         }
                     }

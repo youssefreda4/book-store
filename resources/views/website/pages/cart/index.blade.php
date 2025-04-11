@@ -6,6 +6,7 @@
 
 @section('content')
 
+@if($books->isNotEmpty())
 <section class="my-5">
     <div class="container">
         <div class="row py-4 table_head">
@@ -80,10 +81,13 @@
                     <p class="fw-bold fs-5 mt-3">$40</p>
                 </div>
                 <div class="col-lg-1 col-md-4 col-sm-4 d-flex align-items-center">
-                    <div class="fs-5 mt-3 del-item">
-                        <i class="fa-solid fa-trash-can main_text"></i>
-                        <p class="remove">Remove</p>
-                    </div>
+                    <form action="{{ route('front.cart.remove',$book) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="fs-5 mt-3 btn btn-danger">
+                            <i class="fa-solid fa-trash-can  "></i>
+                        </button>
+                    </form>
                 </div>
             </div>
             @endforeach
@@ -141,4 +145,17 @@
     </div>
 </section>
 
+@else
+
+<section class="my-5 d-flex justify-content-center align-items-center" style="min-height: 50vh;">
+    <div class="container">
+        <div class="col-12">
+            <h1 class="text-center text-danger fw-bold display-4">
+                No Book Added Yet!
+            </h1>
+        </div>
+    </div>
+</section>
+
+@endif
 @endsection

@@ -153,34 +153,8 @@
                         <div class="flex-grow-1">
                             <div class="recommended_card__price">
                                 <p class="text-end mb-4">$ {{ $book->price }}</p>
-                                <div class="d-flex flex-wrap gap-5 mt-auto justify-content-end">
-                                    @if ($book->quantity)
-                                        @if (  session()->get('cart')[$book->id] ?? null)
-                                                {{-- <button class="text-center main_btn light cart-btn w-50 flex-grow-1">
-                                                    <span>Added To Cart</span>
-                                                    <i class="fa-solid fa-cart-shopping"></i>
-                                                </button> --}}
-                                            <span class="text-center main_btn light cart-btn w-50">
-                                                Added To Cart
-                                                <i class="fa-solid fa-cart-shopping"></i>
-                                            </span>
-                                        @else
-                                            <form action="{{ route('front.cart.add',$book) }}" method="POST">
-                                                @csrf
-                                                <button class="text-center main_btn cart-btn w-100  flex-grow-1">
-                                                    <span>Add To Cart</span>
-                                                    <i class="fa-solid fa-cart-shopping"></i>
-                                                </button>
-                                            </form>
-                                        @endif
-                                    @else
-                                    <span class="text-center main_btn light cart-btn w-50">Not Available</span>
-                                    @endif
-
-                                    <button class="primary_btn">
-                                        <i class="fa-regular fa-heart"></i>
-                                    </button>
-                                </div>
+                                <livewire:add-to-cart-component bookId='{{ $book->id }}'
+                                    bookQuantity='{{ $book->quantity }}' />
                             </div>
                         </div>
                     </div>

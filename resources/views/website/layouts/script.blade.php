@@ -3,6 +3,18 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+     document.addEventListener('successAlert', (event) => {
+            const message = event.detail[0].message;
+            console.log('Message:', message);
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: event.detail[0].message,
+                timer: 3000,
+                showConfirmButton: false
+            });
+        });
+
     @if (session('success'))
         Swal.fire({
             icon: 'success',

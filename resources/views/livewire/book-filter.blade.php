@@ -8,7 +8,8 @@
                         Categories
                     </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                {{-- class="accordion-collapse collapse show" --}}
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body d-flex flex-column gap-3">
                         <div class="d-flex justify-content-between align-items-center">

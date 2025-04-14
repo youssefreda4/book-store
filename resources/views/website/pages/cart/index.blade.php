@@ -68,17 +68,17 @@
                 <div class="col-lg-2 col-md-4 col-sm-4 d-flex align-items-center">
                     <div class="d-flex gap-3 align-items-center mt-3">
                         <div class="books_count d-flex gap-3 align-items-center">
-                            <span>-</span>
-                            <p>1</p>
-                            <span>+</span>
+                            <span class="decrement">-</span>
+                            <p class="quantity">1</p>
+                            <span class="increment">+</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-4 d-flex align-items-center">
-                    <p class="fw-bold fs-5 mt-3">$40</p>
+                    <p class="fw-bold fs-5 mt-3 book-price">${{ $discount ? $book->price*$discount->percentage/100 : $book->price }}</p>
                 </div>
                 <div class="sell-price col-lg-2 col-md-4 col-sm-4 d-flex align-items-center">
-                    <p class="fw-bold fs-5 mt-3">$40</p>
+                    <p class="fw-bold fs-5 mt-3 total-price"></p>
                 </div>
                 <div class="col-lg-1 col-md-4 col-sm-4 d-flex align-items-center">
                     <form action="{{ route('front.cart.remove',$book) }}" method="POST">
@@ -122,20 +122,20 @@
             <div class="col-12 col-lg-6">
                 <div class="total p-3">
                     <div class="d-flex justify-content-between align-items-center">
-                        <p class="text-secondary fs-5">Subtotal</p>
-                        <p class="fs-4 fw-bold">$120</p>
+                        <p class="text-secondary fs-5 ">Subtotal</p>
+                        <p class="fs-4 fw-bold subtotal-amount"></p>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <p class="text-secondary fs-5">Shipping</p>
                         <p class="fs-4 fw-bold">Free Delivery</p>
                     </div>
                     <div class="d-flex justify-content-between align-items-center py-3">
-                        <p class="text-secondary fs-5">Tax</p>
-                        <p class="fs-4 fw-bold">$4</p>
+                        <p class="text-secondary fs-5 ">Tax</p>
+                        <p class="fs-4 fw-bold tax-amount"></p>
                     </div>
                     <div class="d-flex justify-content-between align-items-center border-top py-3">
-                        <p class="text-secondary fs-5">Total</p>
-                        <p class="fs-3 fw-bold main_text">$124</p>
+                        <p class="text-secondary fs-5 ">Total</p>
+                        <p class="fs-3 fw-bold main_text total-amount"></p>
                     </div>
                 </div>
                 <button class="main_btn w-100">Check out</button>
@@ -159,3 +159,61 @@
 
 @endif
 @endsection
+
+@push('js')
+<script>
+    function updateCartTotal(){
+        let subtotal = 0;
+
+        document.querySelectorAll('.item-cart').forEach(cartItem => {
+            const totalPrice = cartItem.querySelector('.total-price');
+            const priceValue = parseFloat(totalPrice.textContent.replace('$', '')) || 0;
+            subtotal += priceValue;
+        });
+
+        const tax = 4; 
+        const total = subtotal + tax;
+
+        document.querySelector('.subtotal-amount').textContent = `$${subtotal.toFixed(2)}`;
+        document.querySelector('.tax-amount').textContent = `$${tax.toFixed(2)}`;
+        document.querySelector('.total-amount').textContent = `$${total.toFixed(2)}`;
+        
+    }
+    
+    document.querySelectorAll('.item-cart').forEach(cartItem => {
+        const decrement = cartItem.querySelector('.decrement');
+        const increment = cartItem.querySelector('.increment');
+        const valueOfQuantity = cartItem.querySelector('.quantity');
+        const bookPrice = cartItem.querySelector('.book-price');
+        const totalPrice = cartItem.querySelector('.total-price');
+
+        let quantity = parseInt(valueOfQuantity.textContent);
+        const bookPriceValue = parseFloat(bookPrice.textContent.replace('$', ''));
+
+        function calcTotalPrice() {
+            const finalPrice = quantity * bookPriceValue;
+            totalPrice.textContent = `$${finalPrice.toFixed(2)}`;
+            updateCartTotal()
+        }
+
+        increment.addEventListener('click', () => {
+            quantity++;
+            valueOfQuantity.textContent = quantity;
+            calcTotalPrice();
+        });
+
+        decrement.addEventListener('click', () => {
+            if (quantity > 1) {
+                quantity--;
+                valueOfQuantity.textContent = quantity;
+                calcTotalPrice();
+            }
+        });
+
+        calcTotalPrice();
+    });
+
+    updateCartTotal()
+</script>
+
+@endpush

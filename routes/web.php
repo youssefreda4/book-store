@@ -14,13 +14,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('front.')->group(function () {
 
-    Route::name('auth.')->group(function () {
-        Route::get('/login',[LoginController::class,'index'])->name('login');
-        Route::get('/register',[RegisterController::class,'index'])->name('register');
-        Route::post('/register',[RegisterController::class,'create'])->name('register.store');
-        Route::post('/logout',[LoginController::class,'logout'])->name('logout');
-    });
-
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('home.index');
     });
@@ -36,12 +29,14 @@ Route::name('front.')->group(function () {
     Route::name('contact.')->controller(ContactController::class)->group(function () {
         Route::get('/contact', 'index')->name('index');
     });
-    
+
     Route::name('cart.')->prefix('cart')->controller(CartController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('item/{book}', 'addItem')->name('add');
         Route::delete('item/{book}', 'removeItem')->name('remove');
     });
+
+    require __DIR__ . '/auth.php';
 });
 
 // Auth::routes();

@@ -36,14 +36,14 @@
                     <button class="dropdown-toggle d-flex align-items-center border-0 profile_dropdown gap-2"
                         type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="profile_image">
-                            <img src="{{ asset('front-assets') }}/images/commentimage.jpeg" alt=""
+                            <img src="{{ auth()->user()->image ?? "https://fakeimg.pl/100x100" }}" alt=""
                                 class="w-100 h-100" />
                         </div>
                         <div class="flex-column align-items-start">
                             <p class="fs-6 fw-bold text-light text-start">
-                                Ahmed Fawzy
+                                {{ auth()->user()->username }}
                             </p>
-                            <p class="text-secondary">fawzy@gmail.com</p>
+                            <p class="text-secondary">{{ auth()->user()->email }}</p>
                         </div>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">

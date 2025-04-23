@@ -2,13 +2,15 @@
 
 namespace App\Providers;
 
+use Alkoumi\LaravelArabicNumbers\LaravelArabicNumbersServiceProvider;
 use App\Faker\CategoryProvider;
+use App\Models\AddToCart;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Maatwebsite\Excel\ExcelServiceProvider;
-use Alkoumi\LaravelArabicNumbers\LaravelArabicNumbersServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,15 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('super-admin', function () {
             return Auth::guard('admin')->user()->type === 'super-admin';
+        });
+
+        View::composer('website.layouts.nav', function ($view) {
+            if (Auth::guard('web')->check()) {
+                $cartCount  = AddToCart::where('user_id', auth('web')->id())->count();
+            } else {
+                $cartCount  = count(session('cart', []));
+            }
+            $view->with('cartCount', $cartCount);
         });
     }
 }

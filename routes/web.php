@@ -33,6 +33,7 @@ Route::name('front.')->group(function () {
     Route::name('cart.')->prefix('cart')->controller(CartController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('item/{book}', 'addItem')->name('add');
+        Route::put('item/{book}', 'updateItem')->name('update');
         Route::delete('item/{book}', 'removeItem')->name('remove');
     });
 

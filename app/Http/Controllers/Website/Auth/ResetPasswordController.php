@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\DB;
 
 class ResetPasswordController extends Controller
 {
-    public function index()
+    public function index($token)
     {
-        return view('website.auth.reset-password');
+        return view('website.auth.reset-password',compact('token'));
     }
 
     public function resetPassword(ResetPasswordRequest $request)

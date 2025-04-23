@@ -15,13 +15,18 @@ class CartController extends Controller
     public function index()
     {
         $user_id = Auth::guard('web')->id();
-        if (Auth::check()) {
-            $cart = AddToCart::where('user_id', $user_id)->get();
+        if (Auth::guard('web')->check()) {
+            $this->syncCartFromSessionToDatabase();
+            $carts = AddToCart::where('user_id', $user_id)->get() ?? null;
+            $cartItems = [];
+            foreach ($carts as $cart) {
+                $cartItems[$cart->book_id] =  $cart->quantity;
+            }
         } else {
-            $cart = Session::get('cart', []);
+            $cartItems = Session::get('cart', []);
         }
-        $books = Book::whereIn('id', array_keys($cart))->get();
-        return view('website.pages.cart.index', compact('books'));
+        $books = Book::whereIn('id', array_keys($cartItems))->get();
+        return view('website.pages.cart.index', compact('books', 'cartItems'));
     }
 
     public function addItem(Book $book, Request $request)
@@ -44,6 +49,32 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Book added to cart');
     }
 
+    public function updateItem(Request $request, Book $book)
+    {
+        $quantity = $request->validate([
+            'quantity' => 'required|numeric',
+        ]);
+        $user_id = Auth::guard('web')->id();
+        $book_id = $book->id;
+
+        if (Auth::guard('web')->check()) {
+            AddToCart::where('user_id', $user_id)
+                ->where('book_id', $book_id)
+                ->update(['quantity' => $quantity['quantity']]);
+        } else {
+            //else store item in session
+            $cart = Session::get('cart', []);
+            $cart[$book_id] = $quantity['quantity'];
+            Session::put('cart', $cart);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Quantity updated successfully',
+            'quantity' => $quantity['quantity'],
+        ]);
+    }
+
     public function removeItem(Book $book)
     {
         $user_id = Auth::guard('web')->id();
@@ -59,5 +90,22 @@ class CartController extends Controller
             Session::put('cart', $cart);
         }
         return redirect()->back()->with('success', 'Book deleted from cart');
+    }
+
+
+    public function syncCartFromSessionToDatabase()
+    {
+        $user_id = Auth::guard('web')->id();
+        $cartItems = Session::get('cart', []);
+
+        if (!empty($cartItems)) {
+            foreach ($cartItems as $bookId => $quantity) {
+                AddToCart::updateOrCreate(
+                    ['user_id' => $user_id, 'book_id' => $bookId],
+                    ['quantity' => $quantity]
+                );
+            }
+            Session::forget('cart');
+        }
     }
 }

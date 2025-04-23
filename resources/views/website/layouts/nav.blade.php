@@ -36,7 +36,7 @@
                     <button class="dropdown-toggle d-flex align-items-center border-0 profile_dropdown gap-2"
                         type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="profile_image">
-                            <img src="{{ auth()->user()->image ?? "https://fakeimg.pl/100x100" }}" alt=""
+                            <img src="{{ auth()->user()->image ?? " https://fakeimg.pl/100x100" }}" alt=""
                                 class="w-100 h-100" />
                         </div>
                         <div class="flex-column align-items-start">
@@ -69,7 +69,9 @@
                     <span>1</span>
                     <i class="fa-regular fa-heart fs-3"></i></a>
                 <a href="{{ route('front.cart.index') }}" class="cart-link">
-                    <span>1</span>
+                    @if($cartCount > 0)
+                    <span >{{ $cartCount }}</span>
+                    @endif
                     <i class="fa-solid fa-cart-shopping fs-3"></i></a>
             </div>
 

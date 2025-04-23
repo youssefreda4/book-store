@@ -15,4 +15,8 @@ class AddToCart extends Model
         'user_id',
         'quantity',
     ];
+
+    public function user(){
+        return $this->hasMany(User::class);
+    }
 }

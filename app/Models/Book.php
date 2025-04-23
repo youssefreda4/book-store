@@ -96,6 +96,10 @@ class Book extends Model implements HasMedia
         return $this->morphTo();
     }
 
+    public function addToCart(){
+        return $this->hasOne(AddToCart::class);
+    }
+
     public function getActiveDiscountValue()
     {
         $discount = $this->getValidDiscount();

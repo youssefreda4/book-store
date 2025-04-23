@@ -1,6 +1,7 @@
 @extends('website.layouts.main')
 @push('css')
 <link rel="stylesheet" href="{{ asset('front-assets') }}/css/cart.css" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endpush
 @section('title', 'Cart')
 
@@ -30,7 +31,11 @@
             <div class="item-cart row">
                 <div class="col-lg-2 col-md-4 col-sm-6">
                     <div class="item-image">
-                        <img src="{{ $book->getFirstMediaUrl('book', 'preview') }}" alt="" class="w-100 h-100" />
+                        @if (empty($book->getFirstMediaUrl('book', 'preview')))
+                        <img src="https://dummyimage.com/512x768/000/fff" alt="" class="w-100 h-100" />
+                        @else
+                        <img src="{{  $book->getFirstMediaUrl('book', 'preview') }}" alt="" class="w-100 h-100" />
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6">
@@ -69,13 +74,14 @@
                     <div class="d-flex gap-3 align-items-center mt-3">
                         <div class="books_count d-flex gap-3 align-items-center">
                             <span class="decrement">-</span>
-                            <p class="quantity">1</p>
+                            <p class="quantity">{{ $cartItems[$book->id] }}</p>
                             <span class="increment">+</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-4 col-sm-4 d-flex align-items-center">
-                    <p class="fw-bold fs-5 mt-3 book-price">${{ $discount ? $book->price*$discount->percentage/100 : $book->price }}</p>
+                    <p class="fw-bold fs-5 mt-3 book-price">${{ $discount ? $book->price*$discount->percentage/100 :
+                        $book->price }}</p>
                 </div>
                 <div class="sell-price col-lg-2 col-md-4 col-sm-4 d-flex align-items-center">
                     <p class="fw-bold fs-5 mt-3 total-price"></p>
@@ -161,6 +167,7 @@
 @endsection
 
 @push('js')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function updateCartTotal(){
         let subtotal = 0;
@@ -174,10 +181,13 @@
         const tax = 4; 
         const total = subtotal + tax;
 
-        document.querySelector('.subtotal-amount').textContent = `$${subtotal.toFixed(2)}`;
-        document.querySelector('.tax-amount').textContent = `$${tax.toFixed(2)}`;
-        document.querySelector('.total-amount').textContent = `$${total.toFixed(2)}`;
+        const subtotalAmount= document.querySelector('.subtotal-amount');
+        const taxAmount= document.querySelector('.tax-amount');
+        const totalAmount= document.querySelector('.total-amount');
         
+        if (subtotalAmount) subtotalAmount.textContent = `$${(subtotal || 0).toFixed(2)}`;
+        if (taxAmount) taxAmount.textContent = `$${(tax || 0).toFixed(2)}`;
+        if (totalAmount) totalAmount.textContent = `$${(total || 0).toFixed(2)}`;
     }
     
     document.querySelectorAll('.item-cart').forEach(cartItem => {
@@ -196,10 +206,33 @@
             updateCartTotal()
         }
 
+        const updateCartUrl = @if(isset($book)) '{{ route('front.cart.update', $book) }}' @else '#' @endif;
+
         increment.addEventListener('click', () => {
             quantity++;
             valueOfQuantity.textContent = quantity;
             calcTotalPrice();
+            
+            
+            $.ajax({
+                url: updateCartUrl,
+                method: 'PUT',
+                data: {
+                        quantity: quantity,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            valueOfQuantity.textContent = response.quantity;
+                            console.log('Quantity updated successfully');
+                        } else {
+                            console.error('Update failed:', response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Ajax error:', error);
+                    }
+            });
         });
 
         decrement.addEventListener('click', () => {
@@ -207,6 +240,26 @@
                 quantity--;
                 valueOfQuantity.textContent = quantity;
                 calcTotalPrice();
+
+                $.ajax({
+                    url: updateCartUrl,
+                    method: 'PUT',
+                    data: {
+                        quantity: quantity,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            valueOfQuantity.textContent = response.quantity;
+                            console.log('Quantity updated successfully');
+                        } else {
+                            console.error('Update failed:', response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Ajax error:', error);
+                    }
+                });
             }
         });
 

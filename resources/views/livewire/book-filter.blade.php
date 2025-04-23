@@ -96,7 +96,11 @@
         <div class="row books_book">
             <div class="col-lg-3">
                 <div class="book_image">
-                    <img src="{{ asset('front-assets') }}/images/book-8.png" alt="book image" class="w-100" />
+                    @if (empty($book->getFirstMediaUrl('book', 'preview')))
+                    <img src="https://dummyimage.com/512x768/000/fff" alt="" class="w-100 h-100" />
+                    @else
+                    <img src="{{  $book->getFirstMediaUrl('book', 'preview') }}" alt="" class="w-100 h-100" />
+                    @endif
                 </div>
             </div>
             <div class="col-12 col-lg-9">
@@ -155,11 +159,7 @@
                                 <p class="text-end mb-4">$ {{ $book->price }}</p>
                                 <div class="d-flex flex-wrap gap-5 mt-auto justify-content-end">
                                     @if ($book->quantity)
-                                        @if (  session()->get('cart')[$book->id] ?? null)
-                                                {{-- <button class="text-center main_btn light cart-btn w-50 flex-grow-1">
-                                                    <span>Added To Cart</span>
-                                                    <i class="fa-solid fa-cart-shopping"></i>
-                                                </button> --}}
+                                        @if ( session()->get('cart')[$book->id] ?? null && $book->addToCart)
                                             <span class="text-center main_btn light cart-btn w-50">
                                                 Added To Cart
                                                 <i class="fa-solid fa-cart-shopping"></i>

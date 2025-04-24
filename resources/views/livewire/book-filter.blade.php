@@ -158,8 +158,10 @@
                             <div class="recommended_card__price">
                                 <p class="text-end mb-4">$ {{ $book->price }}</p>
                                 <div class="d-flex flex-wrap gap-5 mt-auto justify-content-end">
+
+                                    {{-- Cart --}}
                                     @if ($book->quantity)
-                                        @if ( session()->get('cart')[$book->id] ?? null && $book->addToCart)
+                                        @if ( session()->get('cart')[$book->id] ?? null || $book->addToCart()->where('user_id', auth('web')->id())->exists())
                                             <span class="text-center main_btn light cart-btn w-50">
                                                 Added To Cart
                                                 <i class="fa-solid fa-cart-shopping"></i>
@@ -174,12 +176,29 @@
                                             </form>
                                         @endif
                                     @else
-                                    <span class="text-center main_btn light cart-btn w-50">Not Available</span>
+                                        <span class="text-center main_btn light cart-btn w-50">Not Available</span>
                                     @endif
 
-                                    <button class="primary_btn">
-                                        <i class="fa-regular fa-heart"></i>
-                                    </button>
+                                    {{-- Favorite --}}
+                                    @php
+                                        $isInSessionFavorite = session('favorite') && in_array($book->id, session('favorite'));
+                                        $isInDbFavorite = auth('web')->check() && $book->favorite()->where('user_id', auth()->id())->exists();
+                                    @endphp
+                                    @if ($isInSessionFavorite || $isInDbFavorite)
+                                        <form action="{{ route('front.favorite.action',$book) }}" method="POST">
+                                            @csrf
+                                            <button class="primary_btn">
+                                                <i class="fa-solid fa-heart-circle-minus"></i>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('front.favorite.action',$book) }}" method="POST">
+                                            @csrf
+                                            <button class="primary_btn">
+                                                <i class="fa-regular fa-heart"></i>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>

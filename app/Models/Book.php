@@ -100,6 +100,10 @@ class Book extends Model implements HasMedia
         return $this->hasOne(AddToCart::class);
     }
 
+    public function favorite(){
+        return $this->hasMany(AddToFavorite::class);
+    }
+
     public function getActiveDiscountValue()
     {
         $discount = $this->getValidDiscount();

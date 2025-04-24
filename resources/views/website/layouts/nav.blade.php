@@ -65,8 +65,10 @@
             @endauth
 
             <div class="me-5 d-flex gap-4 align-items-center">
-                <a href="wishlist.html" class="wishlist-link">
-                    <span>1</span>
+                <a href="{{ route('front.favorite.index') }}" class="wishlist-link">
+                    @if($favoriteCount > 0)
+                    <span >{{ $favoriteCount }}</span>
+                    @endif
                     <i class="fa-regular fa-heart fs-3"></i></a>
                 <a href="{{ route('front.cart.index') }}" class="cart-link">
                     @if($cartCount > 0)

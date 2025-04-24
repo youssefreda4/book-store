@@ -6,6 +6,7 @@ use App\Http\Controllers\Website\Auth\RegisterController;
 use App\Http\Controllers\Website\BookController;
 use App\Http\Controllers\Website\CartController;
 use App\Http\Controllers\Website\ContactController;
+use App\Http\Controllers\Website\FavoriteController;
 use App\Http\Controllers\Website\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,11 @@ Route::name('front.')->group(function () {
         Route::post('item/{book}', 'addItem')->name('add');
         Route::put('item/{book}', 'updateItem')->name('update');
         Route::delete('item/{book}', 'removeItem')->name('remove');
+    });
+
+    Route::name('favorite.')->prefix('favorite')->controller(FavoriteController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('item/{book}', 'favoriteActionButton')->name('action');
     });
 
     require __DIR__ . '/auth.php';

@@ -75,6 +75,7 @@
                         <div class="books_count d-flex gap-3 align-items-center">
                             <span class="decrement">-</span>
                             <p class="quantity">{{ $cartItems[$book->id] }}</p>
+                            <input type="hidden" value="{{ $book->slug }}" id="book"></input>
                             <span class="increment">+</span>
                         </div>
                     </div>
@@ -206,9 +207,11 @@
             updateCartTotal()
         }
 
-        const updateCartUrl = @if(isset($book)) '{{ route('front.cart.update', $book) }}' @else '#' @endif;
+        // const updateCartUrl = @if(isset($book)) '{{ route('front.cart.update', $book) }}' @else '#' @endif;
 
         increment.addEventListener('click', () => {
+            const bookSlug = cartItem.querySelector('#book').value;
+            const updateCartUrl =  `/cart/item/${bookSlug}`
             quantity++;
             valueOfQuantity.textContent = quantity;
             calcTotalPrice();

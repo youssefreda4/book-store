@@ -51,27 +51,29 @@ class CartController extends Controller
 
     public function updateItem(Request $request, Book $book)
     {
-        $quantity = $request->validate([
-            'quantity' => 'required|numeric',
+        $validated = $request->validate([
+            'quantity' => 'required|numeric|min:1',
         ]);
+
+        $quantity = $validated['quantity'];
         $user_id = Auth::guard('web')->id();
         $book_id = $book->id;
 
         if (Auth::guard('web')->check()) {
             AddToCart::where('user_id', $user_id)
                 ->where('book_id', $book_id)
-                ->update(['quantity' => $quantity['quantity']]);
+                ->update(['quantity' => $quantity]);
         } else {
             //else store item in session
             $cart = Session::get('cart', []);
-            $cart[$book_id] = $quantity['quantity'];
+            $cart[$book_id] = $quantity;
             Session::put('cart', $cart);
         }
 
         return response()->json([
             'status' => 'success',
             'message' => 'Quantity updated successfully',
-            'quantity' => $quantity['quantity'],
+            'quantity' => $quantity,
         ]);
     }
 

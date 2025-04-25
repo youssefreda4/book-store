@@ -41,6 +41,8 @@ Route::name('front.')->group(function () {
     Route::name('favorite.')->prefix('favorite')->controller(FavoriteController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('item/{book}', 'favoriteActionButton')->name('action');
+        Route::put('item/{book}', 'updateItem')->name('update');
+        Route::post('item/move/cart', 'moveToCart')->name('move');
     });
 
     require __DIR__ . '/auth.php';

@@ -181,7 +181,7 @@
 
                                     {{-- Favorite --}}
                                     @php
-                                        $isInSessionFavorite = session('favorite') && in_array($book->id, session('favorite'));
+                                        $isInSessionFavorite = session('favorite') && array_key_exists($book->id, session('favorite'));
                                         $isInDbFavorite = auth('web')->check() && $book->favorite()->where('user_id', auth()->id())->exists();
                                     @endphp
                                     @if ($isInSessionFavorite || $isInDbFavorite)

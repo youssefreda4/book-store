@@ -173,10 +173,10 @@
             updateCartTotal()
         }
 
+        const bookSlug = cartItem.querySelector('#book').value;
+        const updateCartUrl =  `/favorite/item/${bookSlug}`
         
         increment.addEventListener('click', () => {
-            const bookSlug = cartItem.querySelector('#book').value;
-            const updateCartUrl =  `/favorite/item/${bookSlug}`
             quantity++;
             valueOfQuantity.textContent = quantity;
             calcTotalPrice();

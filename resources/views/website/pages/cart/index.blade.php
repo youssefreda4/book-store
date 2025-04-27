@@ -209,9 +209,10 @@
 
         // const updateCartUrl = @if(isset($book)) '{{ route('front.cart.update', $book) }}' @else '#' @endif;
 
+        const bookSlug = cartItem.querySelector('#book').value;
+        const updateCartUrl =  `/cart/item/${bookSlug}`
+        
         increment.addEventListener('click', () => {
-            const bookSlug = cartItem.querySelector('#book').value;
-            const updateCartUrl =  `/cart/item/${bookSlug}`
             quantity++;
             valueOfQuantity.textContent = quantity;
             calcTotalPrice();

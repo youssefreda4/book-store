@@ -18,10 +18,7 @@ class FavoriteController extends Controller
         if (Auth::guard('web')->check()) {
             $this->syncFavoriteFromSessionToDatabase();
             $favorites = AddToFavorite::where('user_id', $user_id)->get() ?? null;
-            $favoriteItems = [];
-            foreach ($favorites as $favorite) {
-                $favoriteItems[$favorite->book_id] =  1;
-            }
+            $favoriteItems = $favorites->mapWithKeys(fn($item) => [$item->book_id => $item->quantity])->toArray();
         } else {
             $favoriteItems = Session::get('favorite', []);
         }

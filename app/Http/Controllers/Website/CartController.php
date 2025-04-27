@@ -18,10 +18,7 @@ class CartController extends Controller
         if (Auth::guard('web')->check()) {
             $this->syncCartFromSessionToDatabase();
             $carts = AddToCart::where('user_id', $user_id)->get() ?? null;
-            $cartItems = [];
-            foreach ($carts as $cart) {
-                $cartItems[$cart->book_id] =  $cart->quantity;
-            }
+            $cartItems = $carts->mapWithKeys(fn($item) => [$item->book_id => $item->quantity])->toArray();
         } else {
             $cartItems = Session::get('cart', []);
         }

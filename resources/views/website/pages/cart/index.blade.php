@@ -145,8 +145,13 @@
                         <p class="fs-3 fw-bold main_text total-amount"></p>
                     </div>
                 </div>
-                <button class="main_btn w-100">Check out</button>
-                <button class="primary_btn w-100 mt-3">Keep Shopping</button>
+                <form action="" method="POST">
+                    @csrf
+                    <button class="main_btn w-100">Check out</button>
+                </form>
+                <a href="{{ route('front.books.index') }}">
+                    <button class="primary_btn w-100 mt-3">Keep Shopping</button>
+                </a>
             </div>
         </div>
     </div>

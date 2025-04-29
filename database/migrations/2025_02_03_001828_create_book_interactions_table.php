@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Book::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->float('rate');
-            $table->string('interaction_type');
+            $table->float('rate')->nullable();
+            $table->unsignedSmallInteger('quantity')->nullable();
+            $table->enum('interaction_type', [0, 1, 2, 3, 4]);
             $table->timestamps();
         });
     }

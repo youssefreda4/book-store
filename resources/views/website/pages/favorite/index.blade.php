@@ -8,7 +8,6 @@
 @section('content')
 
 @if($books->isNotEmpty())
-@dump($favoriteItems)
 <section class="my-5">
     <div class="container">
         <div class="row py-4 table_head">

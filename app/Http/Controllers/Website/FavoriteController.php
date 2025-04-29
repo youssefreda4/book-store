@@ -96,7 +96,7 @@ class FavoriteController extends Controller
                 if ($book->favorite()->where('user_id', $user_id)->exists()) {
                     $favorite = Session::get('favorite', []);
 
-                    $favoriteRecord  = AddToFavorite::where('user_id', $user_id)->where('book_id', $book_id)->fisrt();
+                    $favoriteRecord  = AddToFavorite::where('user_id', $user_id)->where('book_id', $book_id)->firstOrFail();
                     $bookQuantity = $favoriteRecord->quantity;
                     AddToCart::updateOrCreate(['user_id' => $user_id, 'book_id' => $book_id], [
                         'quantity' => $bookQuantity,

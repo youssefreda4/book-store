@@ -38,6 +38,8 @@ class Book extends Model implements HasMedia
         'discountable_id',
     ];
 
+    protected $with = ['media'];
+
     public $translatable = ['name', 'description'];
 
     /**

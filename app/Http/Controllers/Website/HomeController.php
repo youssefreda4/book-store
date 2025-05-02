@@ -14,7 +14,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $bestSellingBooks = Book::with('media')->select('books.id', 'books.name')
+        $bestSellingBooks = Book::select('books.id', 'books.name')
             ->join('book_orders', 'books.id', '=', 'book_orders.book_id')
             ->selectRaw('SUM(book_orders.quantity) as total_quantity_sold')
             ->groupBy('books.id')
@@ -23,7 +23,7 @@ class HomeController extends Controller
             ->get();
 
 
-        $books = Book::with('author','media')->where('discountable_type', 'App\Models\FlashSale')
+        $books = Book::with('author')->where('discountable_type', 'App\Models\FlashSale')
         ->join('flash_sales','flash_sales.id','=','books.discountable_id')
         ->where('flash_sales.is_active',true)
         ->get();

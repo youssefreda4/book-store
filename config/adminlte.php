@@ -463,6 +463,57 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'Reports',
+            'url' => 'dashboard/reports',
+            'icon' => 'fas fa-print',
+            'submenu' => [
+                [
+                    'text' => 'Sales',
+                    'url' => 'dashboard/reports/sales/books',
+                    'icon' => 'fas fa-hand-holding-usd',
+                    'submenu' => [
+                        [
+                            'text' => 'Books',
+                            'icon' => 'far fa-circle',
+                            'url' => 'dashboard/reports/sales/books'
+                        ],
+                        [
+                            'text' => 'Total Revenue',
+                            'icon' => 'far fa-circle',
+                            'url' => 'dashboard/reports/sales/revenue'
+                        ],
+                        [
+                            'text' => 'Sales Trends Over Time',
+                            'icon' => 'far fa-circle',
+                            'url' => 'dashboard/reports/sales/trends'
+                        ],
+                    ],
+                ],
+                [
+                    'text' => 'Best Selling',
+                    'url' => 'dashboard/reports/selling',
+                    'icon' => 'fas fa-cart-plus',
+                    'submenu' => [
+                        [
+                            'text' => 'Most Book Sold',
+                            'icon' => 'far fa-circle',
+                            'url' => 'dashboard/reports/selling/book'
+                        ],
+                        [
+                            'text' => 'Most Category Sold',
+                            'icon' => 'far fa-circle',
+                            'url' => 'dashboard/reports/selling/category'
+                        ],
+                        [
+                            'text' => 'Most Author Sold',
+                            'icon' => 'far fa-circle',
+                            'url' => 'dashboard/reports/selling/author'
+                        ],
+                    ],
+                ],
+            ],
+        ],
         // ['header' => 'account_settings'],
         // [
         //     'text' => 'profile',
@@ -601,12 +652,17 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/chart.js/Chart.bundle.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/chart.js/Chart.min.css',
                 ],
             ],
         ],

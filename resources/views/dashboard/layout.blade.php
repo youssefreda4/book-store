@@ -31,7 +31,7 @@
     {{-- <script>
         const checkCodeUrl = "{{route('discount.check.code')}}" ;
     </script> --}}
-    <script src="{{ asset('js/main.js') }}"></script>
+    {{-- <script src="{{ asset('js/main.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         @if (session('success'))

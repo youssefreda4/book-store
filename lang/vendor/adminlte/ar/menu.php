@@ -21,4 +21,18 @@ return [
 
     'Book' => 'الكتب',
     'Create Book' => 'إنشاء كتاب',
+
+    'Reports' => 'التقارير',
+
+    'Sales' => 'المبيعات',
+    'Books' => 'الكتب',
+    'Total Revenue' => 'إجمالي الإيرادات',
+    'Sales Trends Over Time' => 'اتجاهات المبيعات على مر الزمن',
+
+    'Best Selling' => 'الأكثر مبيعًا',
+    'Most Book Sold' => 'أكثر الكتب مبيعًا',
+    'Most Category Sold' => 'أكثر الكتب مبيعًا حسب الفئة',
+    'Most Author Sold' => 'أكثر الكتب مبيعًا حسب المؤلف',
+
+    
 ];

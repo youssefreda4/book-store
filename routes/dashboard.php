@@ -1,17 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\BookController;
-use App\Http\Controllers\Dashboard\HomeController;
+use App\Http\Controllers\Dashboard\AdminManagementController;
 use App\Http\Controllers\Dashboard\AuthorController;
+use App\Http\Controllers\Dashboard\BookController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\DiscountController;
-use App\Http\Controllers\Dashboard\FlashSaleController;
-use App\Http\Controllers\Dashboard\PublisherController;
 use App\Http\Controllers\Dashboard\ExportExcelController;
+use App\Http\Controllers\Dashboard\FlashSaleController;
+use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\ImportExcelController;
-use App\Http\Controllers\Dashboard\AdminManagementController;
+use App\Http\Controllers\Dashboard\PublisherController;
+use App\Http\Controllers\Dashboard\ReportController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 
 Route::middleware('dashboard')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
@@ -105,6 +107,14 @@ Route::middleware('dashboard')->group(function () {
             Route::get('/{admin}/edit',  'edit')->name('edit');
             Route::put('/{admin}',  'update')->name('update');
             Route::delete('/{admin}',  'destroy')->name('destroy');
+        });
+    });
+
+    Route::prefix('reports')->name('report.')->controller(ReportController::class)->group(function () {
+        Route::prefix('sales')->name('sales.')->group(function () {
+            Route::get('/books', 'books')->name('books');
+            Route::get('/revenue', 'revenue')->name('revenue');
+            Route::get('/trends', 'trends')->name('trends');
         });
     });
 });

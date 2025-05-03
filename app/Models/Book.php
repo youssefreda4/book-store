@@ -96,11 +96,13 @@ class Book extends Model implements HasMedia
         return $this->morphTo();
     }
 
-    public function addToCart(){
-        return $this->hasOne(AddToCart::class);
+    public function addToCart()
+    {
+        return $this->hasMany(AddToCart::class);
     }
 
-    public function favorite(){
+    public function favorite()
+    {
         return $this->hasMany(AddToFavorite::class);
     }
 

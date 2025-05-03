@@ -8,6 +8,7 @@ use App\Http\Controllers\Website\CartController;
 use App\Http\Controllers\Website\ContactController;
 use App\Http\Controllers\Website\FavoriteController;
 use App\Http\Controllers\Website\HomeController;
+use App\Models\Book;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

@@ -161,7 +161,7 @@
 
                                     {{-- Cart --}}
                                     @if ($book->quantity)
-                                        @if ( session()->get('cart')[$book->id] ?? null || $book->addToCart()->where('user_id', auth('web')->id())->exists())
+                                        @if ( session()->get('cart')[$book->id] ?? null || $book->addToCart()->where('user_id', auth('web')->id())->first())
                                             <span class="text-center main_btn light cart-btn w-50">
                                                 Added To Cart
                                                 <i class="fa-solid fa-cart-shopping"></i>
@@ -182,7 +182,7 @@
                                     {{-- Favorite --}}
                                     @php
                                         $isInSessionFavorite = session('favorite') && array_key_exists($book->id, session('favorite'));
-                                        $isInDbFavorite = auth('web')->check() && $book->favorite()->where('user_id', auth()->id())->exists();
+                                        $isInDbFavorite = auth('web')->check() && $book->favorite->isNotEmpty();
                                     @endphp
                                     @if ($isInSessionFavorite || $isInDbFavorite)
                                         <form action="{{ route('front.favorite.action',$book) }}" method="POST">

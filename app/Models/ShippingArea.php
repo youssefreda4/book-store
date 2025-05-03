@@ -9,4 +9,9 @@ class ShippingArea extends Model
 {
     /** @use HasFactory<\Database\Factories\ShippingAreaFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'fee',
+    ];
 }

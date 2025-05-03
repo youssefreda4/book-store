@@ -14,7 +14,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $bestSellingBooks = Book::select('books.id', 'books.name')
+        $bestSellingBooks = Book::with('media')->select('books.id', 'books.name')
             ->join('book_orders', 'books.id', '=', 'book_orders.book_id')
             ->selectRaw('SUM(book_orders.quantity) as total_quantity_sold')
             ->groupBy('books.id')
@@ -22,17 +22,16 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
 
-
-        $books = Book::with('author')->where('discountable_type', 'App\Models\FlashSale')
-        ->join('flash_sales','flash_sales.id','=','books.discountable_id')
-        ->where('flash_sales.is_active',true)
-        ->get();
+        $books = Book::with('author', 'media')->where('discountable_type', 'App\Models\FlashSale')
+            ->join('flash_sales', 'flash_sales.id', '=', 'books.discountable_id')
+            ->where('flash_sales.is_active', true)
+            ->get();
 
         $recommended_books = [];
         if (Auth::check()) {
             $recommended_books = $this->getRecommendedBooks(Auth::id());
         }
-        return view('website.pages.index',compact('bestSellingBooks','books','recommended_books'));
+        return view('website.pages.index', compact('bestSellingBooks', 'books', 'recommended_books'));
     }
 
     public function getBooksFromPreferences($userId, $interests)

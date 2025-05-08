@@ -35,8 +35,8 @@ class BookRequest extends FormRequest
             'category_id' => 'required|numeric|exists:categories,id',
             'publisher_id' => 'required|numeric|exists:publishers,id',
             'author_id' => 'required|numeric|exists:authors,id',
-            'discountable_type'=> 'string',
-            'discountable_id' => 'required|numeric|exists:discounts,id',
+            'discountable_type' => 'nullable|in:App\Models\Discount,App\Models\Flashsale',
+            'discountable_id' => 'nullable|exists:discounts,id',
             'image' => 'required',
         ];
     }

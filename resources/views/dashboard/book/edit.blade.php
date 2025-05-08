@@ -113,7 +113,7 @@
                             name="discountable_id">
                             <option></option>
                         </select>
-                        <x-error-input name="discountable"></x-error-input>
+                        <x-error-input name="discountable_id"></x-error-input>
                     </div>
                 </div>
 

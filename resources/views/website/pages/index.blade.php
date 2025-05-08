@@ -4,16 +4,7 @@
 @endpush
 @section('title', 'Home')
 @section('hero_content')
-<div class="search">
-    <form action="POST">
-        <div class="search_input">
-            <input type="text" placeholder="Search" />
-            <button class="search_btn">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </div>
-    </form>
-</div>
+    @livewire('home-search-component')
 @endsection
 
 @section('content')
@@ -121,7 +112,7 @@
 </section>
 @endif
 
-@if(empty($recommended_books))
+@if($recommended_books->isNotempty())
 <section class="recommended my-5 py-5 border-bottom">
     <div class="container">
         <p class="recommended_title mb-5">Recomended For You</p>
@@ -181,6 +172,7 @@
 </section>
 @endif
 
+@if($books->isNotempty())
 <section class="books-sale">
     <div class="container">
         <div class="d-flex flex-wrap justify-content-between align-items-center">
@@ -269,6 +261,7 @@
         </div>
     </div>
 </section>
+@endif
 @endsection
 
 @push('js')

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Discount;
+use App\Traits\FullTextSearch;
 use Carbon\Carbon;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +20,7 @@ use Spatie\Translatable\HasTranslations;
 class Book extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\BookFactory> */
-    use HasFactory, Filterable, HasTranslations, HasSlug, InteractsWithMedia;
+    use HasFactory, Filterable, HasTranslations, HasSlug, InteractsWithMedia, FullTextSearch;
 
     protected $fillable = [
         'name',
@@ -37,6 +38,17 @@ class Book extends Model implements HasMedia
         'discountable_type',
         'discountable_id',
     ];
+
+    public function getSearchable()
+    {
+        $locale = session()->get('locale', 'en');
+
+        if ($locale === 'ar') {
+            return ['name_ar', 'description_ar'];
+        }
+
+        return ['name_en', 'description_en'];
+    }
 
     public $translatable = ['name', 'description'];
 

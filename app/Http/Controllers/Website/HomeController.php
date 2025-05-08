@@ -9,9 +9,19 @@ use App\Models\UserPrefrence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+
+use function PHPSTORM_META\map;
 
 class HomeController extends Controller
 {
+    private $locale;
+
+    public function __construct()
+    {
+        $this->locale = session()->get('locale') ?? 'en';
+    }
+
     public function index()
     {
         $bestSellingBooks = Book::with('media')->select('books.id', 'books.name')
@@ -82,8 +92,93 @@ class HomeController extends Controller
             return $recommendations->take(10);
         });
     }
+
     private function getUserInterests($user_id)
     {
         return BookInteraction::where('user_id', $user_id)->pluck('book_id');
+    }
+
+    public function searchForBooks(Request $request)
+    {
+        ['search' => $searchParam, 'limit' => $limit] = $request->all();
+        $nameMatches = $this->searchBooksByName($searchParam, $limit);
+        $nameMatches = $nameMatches->map(fn($book) => ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->name]);
+
+        $remainingCount = $limit - $nameMatches->count();
+        if ($remainingCount) {
+            $descriptionMatches = $this->searchBooksByDescription($searchParam, $remainingCount);
+
+            $descriptionMatches = $descriptionMatches->map(function ($book) use ($searchParam) {
+                $sentences = preg_split('/[.?,()]|\s+--\s+/', $book->description);
+
+                foreach ($sentences as $sentence) {
+                    if (stripos($sentence, $searchParam) !== false) {
+                        $book->text = $book->name . ' - ' . $sentence;
+                    }
+                }
+                return ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->text];
+            });
+        }
+
+        $books = $nameMatches->merge($descriptionMatches ?? null);
+
+        $remainingCount = $limit - $books->count();
+        if ($remainingCount) {
+            $authorMatches = $this->searchBooksByAuthors($searchParam, $remainingCount);
+            $authorMatches = $authorMatches->map(fn($book) => [
+                'id' => $book->id,
+                'slug' => $book->slug,
+                'text' => "{$book->name} By {$book->author_name}"
+            ]);
+        };
+
+        $books = $books->merge($authorMatches ?? null);
+
+        return $books;
+    }
+
+    private function searchBooksByName($search, $limit)
+    {
+        return DB::table('books')
+            ->whereLike('name', "%$search%")
+            ->selectRaw("id , JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"{$this->locale}\"')) as name  ,slug")
+            ->limit($limit)
+            ->get();
+    }
+
+    private function searchBooksByDescription($search, $count)
+    {
+        return DB::table('books')
+            ->whereLike('description', "%$search%")
+            ->selectRaw(
+                "id ,
+                JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"{$this->locale}\"')) as name,
+                slug ,
+                JSON_UNQUOTE(JSON_EXTRACT(description, '$.\"{$this->locale}\"')) as description"
+            )
+            ->limit($count)
+            ->get();
+    }
+
+    private function searchBooksByAuthors($search, $count)
+    {
+        return DB::table('books')
+            ->join('authors', 'authors.id', '=', 'books.author_id')
+            ->whereLike('authors.name', "%$search%")
+            ->selectRaw(
+                "books.id as id ,
+                JSON_UNQUOTE(JSON_EXTRACT(books.name, '$.\"{$this->locale}\"')) as name,
+                books.slug as slug, 
+                JSON_UNQUOTE(JSON_EXTRACT(authors.name, '$.\"{$this->locale}\"')) as author_name"
+            )
+            ->limit($count)
+            ->get();
+    }
+
+    function searchForBooksUsingFulltext()
+    {
+        ['search' => $searchParam, 'limit' => $limit] = request()->all();
+        $books = Book::search($searchParam)->select('id', 'slug', 'name_' . $this->locale, 'description_' . $this->locale)->limit($limit)->get();
+        return $books;
     }
 }

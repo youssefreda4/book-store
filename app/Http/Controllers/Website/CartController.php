@@ -22,7 +22,7 @@ class CartController extends Controller
         } else {
             $cartItems = Session::get('cart', []);
         }
-        $books = Book::whereIn('id', array_keys($cartItems))->get();
+        $books = Book::with(['author', 'category', 'media'])->whereIn('id', array_keys($cartItems))->get();
         return view('website.pages.cart.index', compact('books', 'cartItems'));
     }
 

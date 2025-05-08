@@ -18,6 +18,7 @@ Route::name('front.')->group(function () {
 
     Route::controller(HomeController::class)->group(function () {
         Route::get('/', 'index')->name('home.index');
+        Route::get('/search', 'searchForBooks')->name('home.search');
     });
 
     Route::name('books.')->prefix('books')->controller(BookController::class)->group(function () {

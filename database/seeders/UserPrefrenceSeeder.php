@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\UserPrefrence;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class UserPrefrenceSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        UserPrefrence::factory(200)->create();
     }
 }

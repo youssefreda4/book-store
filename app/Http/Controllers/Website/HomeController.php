@@ -37,7 +37,7 @@ class HomeController extends Controller
             ->where('flash_sales.is_active', true)
             ->get();
 
-        $recommended_books = [];
+        $recommended_books = collect([]);
         if (Auth::check()) {
             $recommended_books = $this->getRecommendedBooks(Auth::id());
         }

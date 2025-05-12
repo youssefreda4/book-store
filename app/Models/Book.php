@@ -118,6 +118,11 @@ class Book extends Model implements HasMedia
         return $this->hasMany(AddToFavorite::class);
     }
 
+    public function cartForCurrentUser()
+    {
+        return $this->hasOne(AddToCart::class)->where('user_id', auth('web')->id());
+    }
+
     public function getActiveDiscountValue()
     {
         $discount = $this->getValidDiscount();

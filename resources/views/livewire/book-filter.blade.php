@@ -39,16 +39,16 @@
                 </h2>
                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                     data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <strong>This is the second item's accordion body.</strong>
-                        It is hidden by default, until the collapse plugin adds the
-                        appropriate classes that we use to style each element. These
-                        classes control the overall appearance, as well as the
-                        showing and hiding via CSS transitions. You can modify any
-                        of this with custom CSS or overriding our default variables.
-                        It's also worth noting that just about any HTML can go
-                        within the <code>.accordion-body</code>, though the
-                        transition does limit overflow.
+                    <div class="accordion-body d-flex flex-column gap-3">
+                        @foreach ($this->publishers as $publisher)
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex gap-3 align-items-center">
+                                <input type="checkbox" value="{{ $publisher->id }}" wire:model.live="publishers_id" />
+                                <label for="business">{{$publisher->name}}</label>
+                            </div>
+                            <p>({{$publisher->books_count}})</p>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -62,15 +62,16 @@
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <strong>This is the third item's accordion body.</strong> It
-                        is hidden by default, until the collapse plugin adds the
-                        appropriate classes that we use to style each element. These
-                        classes control the overall appearance, as well as the
-                        showing and hiding via CSS transitions. You can modify any
-                        of this with custom CSS or overriding our default variables.
-                        It's also worth noting that just about any HTML can go
-                        within the <code>.accordion-body</code>, though the
-                        transition does limit overflow.
+                        <div class="mb-3">
+                            <label for="startYear" class="form-label">Start Year</label>
+                            <input type="number" class="form-control" id="startYear" wire:model.blur="start_year"
+                                placeholder="e.g. 2015">
+                        </div>
+                        <div class="mb-3">
+                            <label for="endYear" class="form-label">End Year</label>
+                            <input type="number" class="form-control" id="endYear" wire:model.blur="end_year"
+                                placeholder="e.g. 2025">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -161,7 +162,7 @@
 
                                     {{-- Cart --}}
                                     @if ($book->quantity)
-                                        @if ( session()->get('cart')[$book->id] ?? null || $book->addToCart()->where('user_id', auth('web')->id())->first())
+                                        @if ( session()->get('cart')[$book->id] ?? false || $book->cartForCurrentUser)
                                             <span class="text-center main_btn light cart-btn w-50">
                                                 Added To Cart
                                                 <i class="fa-solid fa-cart-shopping"></i>
@@ -181,7 +182,8 @@
 
                                     {{-- Favorite --}}
                                     @php
-                                        $isInSessionFavorite = session('favorite') && array_key_exists($book->id, session('favorite'));
+                                        $isInSessionFavorite = session('favorite') && array_key_exists($book->id,
+                                        session('favorite'));
                                         $isInDbFavorite = auth('web')->check() && $book->favorite->isNotEmpty();
                                     @endphp
                                     @if ($isInSessionFavorite || $isInDbFavorite)

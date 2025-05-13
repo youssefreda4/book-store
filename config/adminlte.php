@@ -464,6 +464,11 @@ return [
             ],
         ],
         [
+            'text' => 'Orders',
+            'url' => 'dashboard/orders',
+            'icon' => 'fas fa-shopping-cart',
+        ],
+        [
             'text' => 'Reports',
             'url' => 'dashboard/reports',
             'icon' => 'fas fa-print',

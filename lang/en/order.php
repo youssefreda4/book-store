@@ -1,0 +1,47 @@
+<?php
+
+return [
+    'all_orders' => 'All Orders',
+    'id' => 'Order ID',
+    'number' => 'Order Number',
+    'shipping_fee' => 'Shipping Fee',
+    'books_total' => 'Books Total',
+    'total' => 'Total',
+    'status' => 'Order Status',
+    'payment_status' => 'Payment Status',
+    'payment_type' => 'Payment Type',
+    'tax_amount' => 'Tax Amount',
+    'transaction_reference' => 'Transaction Reference',
+    'address' => 'Shipping Address',
+    'shipping_area_id' => 'Shipping Area',
+    'user_id' => 'User',
+    'status_pending' => 'Pending',
+    'status_out_for_delivery' => 'Out for Delivery',
+    'status_confirmed' => 'Confirmed',
+    'status_delivered' => 'Delivered',
+    'status_cancelled' => 'Cancelled',
+    'status_unknown' => 'Unknown',
+
+    'payment_status_cash'     => 'Cash',
+    'payment_status_unpaid'   => 'Unpaid',
+    'payment_status_paid'     => 'Paid',
+    'payment_status_refunded' => 'Refunded',
+    'payment_status_unknown'  => 'Unknown',
+
+    'payment_type_cash'       => 'Cash',
+    'payment_type_visa'       => 'Visa',
+    'payment_type_unknown'    => 'Unknown',
+
+    'enter_order_number' => 'Enter order number',
+    'select_status' => 'Select order status',
+    'select_payment_status' => 'Select payment status',
+    'select_payment_type' => 'Select payment type',
+    'select_user' => 'Select user',
+    'shipping_area_name' => 'Shipping Area Name',
+    'enter_shipping_area_name' => 'Enter shipping area name',
+    'filter' => 'Filter',
+    'reset' => 'Reset',
+    'user_name' => 'User Name',
+    'enter_user_name' => 'Enter user name',
+
+];

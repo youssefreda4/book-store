@@ -15,6 +15,7 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::filter(request()->all())
+            ->with(['media', 'author', 'category', 'favorite', 'publisher', 'discountable'])
             ->latest('id')
             ->paginate();
         return view('dashboard.book.index', compact('books'));

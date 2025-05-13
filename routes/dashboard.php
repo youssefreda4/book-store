@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\ExportExcelController;
 use App\Http\Controllers\Dashboard\FlashSaleController;
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\ImportExcelController;
+use App\Http\Controllers\Dashboard\OrderController;
 use App\Http\Controllers\Dashboard\PublisherController;
 use App\Http\Controllers\Dashboard\ReportController;
 use Illuminate\Support\Facades\Auth;
@@ -96,6 +97,10 @@ Route::middleware('dashboard')->group(function () {
             Route::put('/{book}',  'update')->name('update');
             Route::delete('/{book}',  'destroy')->name('destroy');
         });
+    });
+
+    Route::name('orders.')->prefix('orders')->controller(OrderController::class)->group(function () {
+        Route::get('/',  'index')->name('index');
     });
 
     Route::name('admins.')->prefix('admins')->controller(AdminManagementController::class)->group(function () {

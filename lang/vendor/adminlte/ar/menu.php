@@ -10,6 +10,10 @@ return [
     'Categories' => 'الفئات',
     'Create Category' => 'إنشاء فئة',
 
+    'Shipping Areas' => 'مناطق الشحن',
+    'Areas' => 'المناطق',
+    'Create Area' => 'إنشاء منطقة',
+
     'Publishers' => 'الناشرون',
     'Create Publisher' => 'إنشاء ناشر',
 

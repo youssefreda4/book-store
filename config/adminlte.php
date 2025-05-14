@@ -396,6 +396,23 @@ return [
             ],
         ],
         [
+            'text' => 'Shipping Areas',
+            'url' => 'dashboard/areas',
+            'icon' => 'fas fa-map-marker-alt',
+            'submenu' => [
+                [
+                    'text' => 'Areas',
+                    'icon' => 'far fa-circle',
+                    'url' => 'dashboard/areas'
+                ],
+                [
+                    'text' => 'Create Area',
+                    'icon' => 'far fa-circle',
+                    'url' => 'dashboard/areas/create'
+                ],
+            ],
+        ],
+        [
             'text' => 'Publishers',
             'url' => 'dashboard/publishers',
             'icon' => 'fas fa-user-tie',

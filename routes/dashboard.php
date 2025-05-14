@@ -12,6 +12,7 @@ use App\Http\Controllers\Dashboard\ImportExcelController;
 use App\Http\Controllers\Dashboard\OrderController;
 use App\Http\Controllers\Dashboard\PublisherController;
 use App\Http\Controllers\Dashboard\ReportController;
+use App\Http\Controllers\Dashboard\ShippingAreaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -48,6 +49,18 @@ Route::middleware('dashboard')->group(function () {
             Route::get('/{category}/edit',  'edit')->name('edit');
             Route::put('/{category}',  'update')->name('update');
             Route::delete('/{category}',  'destroy')->name('destroy');
+        });
+    });
+
+    Route::name('areas.')->prefix('areas')->controller(ShippingAreaController::class)->group(function () {
+        Route::get('/',  'index')->name('index');
+        Route::middleware(['can:super-admin'])->group(function () {
+            Route::get('/{area}/show',  'show')->name('show');
+            Route::get('/create',  'create')->name('create');
+            Route::post('/',  'store')->name('store');
+            Route::get('/{area}/edit',  'edit')->name('edit');
+            Route::put('/{area}',  'update')->name('update');
+            Route::delete('/{area}',  'destroy')->name('destroy');
         });
     });
 

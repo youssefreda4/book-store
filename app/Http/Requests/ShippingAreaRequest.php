@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class ShippingAreaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +22,18 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name.en' => 'required|unique:categories,name->en',
-            'name.ar' => 'required|unique:categories,name->ar',
+            'name.en' => 'required|unique:shipping_areas,name->en',
+            'name.ar' => 'required|unique:shipping_areas,name->ar',
+            'fee' => 'required|numeric|min:1',
         ];
     }
 
     public function attributes()
     {
         return [
-            'name.en' => __('category.name_category_en'),
-            'name.ar' => __('category.name_category_ar'),
+            'name.en' => __('area.name_area_en'),
+            'name.ar' => __('area.name_area_ar'),
+            'fee' => __('area.fee'),
         ];
     }
 }

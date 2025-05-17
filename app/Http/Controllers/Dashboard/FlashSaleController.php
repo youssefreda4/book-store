@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\FlashSale;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FlashSaleRequest;
+use App\Models\FlashSale;
+use Illuminate\Http\Request;
 
 class FlashSaleController extends Controller
 {
@@ -14,12 +14,14 @@ class FlashSaleController extends Controller
         $flash_sales = FlashSale::filter(request()->all())
             ->latest('id')
             ->paginate();
+
         return view('dashboard.flash-sale.index', compact('flash_sales'));
     }
 
     public function show($flash_sale)
     {
         $flash_sale = FlashSale::findOrFail($flash_sale);
+
         return view('dashboard.flash-sale.show', compact('flash_sale'));
     }
 
@@ -32,12 +34,14 @@ class FlashSaleController extends Controller
     {
         $data = $request->validated();
         FlashSale::create($data);
+
         return redirect()->route('dashboard.flashsales.index')->with('success', __('flashsale.flash_sale_created_successfully'));
     }
 
     public function edit($flash_sale)
     {
         $flash_sale = FlashSale::findOrFail($flash_sale);
+
         return view('dashboard.flash-sale.edit', compact('flash_sale'));
     }
 
@@ -46,6 +50,7 @@ class FlashSaleController extends Controller
         $data = $request->validated();
         $flash_sale = FlashSale::findOrFail($flash_sale);
         $flash_sale->update($data);
+
         return redirect()->route('dashboard.flashsales.index')->with('success', __('flashsale.flash_sale_updated_successfully'));
     }
 
@@ -53,14 +58,16 @@ class FlashSaleController extends Controller
     {
         $flash_sale = FlashSale::findOrFail($flash_sale);
         $flash_sale->delete();
+
         return redirect()->route('dashboard.flashsales.index')->with('success', __('flashsale.flash_sale_deleted_successfully'));
     }
 
     public function search(Request $request)
     {
-        $flashsales = FlashSale::select('name','id')->whereLike('name->en', "%$request->q%")
+        $flashsales = FlashSale::select('name', 'id')->whereLike('name->en', "%$request->q%")
             ->orWhereLike('name->ar', "%$request->q%")
             ->limit(10)->get();
+
         return response()->json(['data' => ['flashsales' => $flashsales]]);
     }
 }

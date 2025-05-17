@@ -10,7 +10,7 @@ use Spatie\Translatable\HasTranslations;
 class ShippingArea extends Model
 {
     /** @use HasFactory<\Database\Factories\ShippingAreaFactory> */
-    use HasFactory, Filterable, HasTranslations;
+    use Filterable, HasFactory, HasTranslations;
 
     public $translatable = ['name'];
 

@@ -25,12 +25,13 @@ class AddToFavorite extends Model
         'quantity',
         'interaction_type',
     ];
-    
+
     protected $casts = [
         'interaction_type' => InteractionTypsEnum::class,
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

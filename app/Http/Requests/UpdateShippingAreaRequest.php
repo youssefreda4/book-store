@@ -22,8 +22,8 @@ class UpdateShippingAreaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name.en' => 'required|unique:shipping_areas,name->en,' . $this->route('area')->id,
-            'name.ar' => 'required|unique:shipping_areas,name->ar,' . $this->route('area')->id,
+            'name.en' => 'required|unique:shipping_areas,name->en,'.$this->route('area')->id,
+            'name.ar' => 'required|unique:shipping_areas,name->ar,'.$this->route('area')->id,
             'fee' => 'required|numeric|min:1',
         ];
     }

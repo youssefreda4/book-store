@@ -1,7 +1,6 @@
 <?php
 
-
-return[
+return [
     'all_categories' => 'كل الفئات',
     'create' => 'إنشاء',
     'create_category' => 'إنشاء فئة',

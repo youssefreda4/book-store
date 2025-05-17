@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Models\Discount;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DiscountRequest extends FormRequest
 {
@@ -28,7 +28,7 @@ class DiscountRequest extends FormRequest
                 'required',
                 'string',
                 'size:12',
-                Rule::unique(Discount::class)->ignore(request()->discount_id)
+                Rule::unique(Discount::class)->ignore(request()->discount_id),
             ],
             'quantity' => 'required|numeric|min:1|max:100',
             'precentage' => 'required|numeric|min:1|max:90',

@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
-use function PHPSTORM_META\map;
-
 class HomeController extends Controller
 {
     private $locale;
@@ -41,6 +39,7 @@ class HomeController extends Controller
         if (Auth::check()) {
             $recommended_books = $this->getRecommendedBooks(Auth::id());
         }
+
         return view('website.pages.index', compact('bestSellingBooks', 'books', 'recommended_books'));
     }
 
@@ -58,6 +57,7 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
     }
+
     public function getBooksFromSimilarUsers($userId, $interests)
     {
         return Book::with('author:id,name')->whereIn('id', function ($query) use ($userId) {
@@ -89,6 +89,7 @@ class HomeController extends Controller
             $preferenceBooks = $this->getBooksFromPreferences($userId, $interests);
             $similarUserBooks = $this->getBooksFromSimilarUsers($userId, $interests);
             $recommendations = $preferenceBooks->merge($similarUserBooks)->sortByDesc('rate');
+
             return $recommendations->take(10);
         });
     }
@@ -102,7 +103,7 @@ class HomeController extends Controller
     {
         ['search' => $searchParam, 'limit' => $limit] = $request->all();
         $nameMatches = $this->searchBooksByName($searchParam, $limit);
-        $nameMatches = $nameMatches->map(fn($book) => ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->name]);
+        $nameMatches = $nameMatches->map(fn ($book) => ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->name]);
 
         $remainingCount = $limit - $nameMatches->count();
         if ($remainingCount) {
@@ -113,9 +114,10 @@ class HomeController extends Controller
 
                 foreach ($sentences as $sentence) {
                     if (stripos($sentence, $searchParam) !== false) {
-                        $book->text = $book->name . ' - ' . $sentence;
+                        $book->text = $book->name.' - '.$sentence;
                     }
                 }
+
                 return ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->text];
             });
         }
@@ -125,12 +127,12 @@ class HomeController extends Controller
         $remainingCount = $limit - $books->count();
         if ($remainingCount) {
             $authorMatches = $this->searchBooksByAuthors($searchParam, $remainingCount);
-            $authorMatches = $authorMatches->map(fn($book) => [
+            $authorMatches = $authorMatches->map(fn ($book) => [
                 'id' => $book->id,
                 'slug' => $book->slug,
-                'text' => "{$book->name} By {$book->author_name}"
+                'text' => "{$book->name} By {$book->author_name}",
             ]);
-        };
+        }
 
         $books = $books->merge($authorMatches ?? null);
 
@@ -175,10 +177,11 @@ class HomeController extends Controller
             ->get();
     }
 
-    function searchForBooksUsingFulltext()
+    public function searchForBooksUsingFulltext()
     {
         ['search' => $searchParam, 'limit' => $limit] = request()->all();
-        $books = Book::search($searchParam)->select('id', 'slug', 'name_' . $this->locale, 'description_' . $this->locale)->limit($limit)->get();
+        $books = Book::search($searchParam)->select('id', 'slug', 'name_'.$this->locale, 'description_'.$this->locale)->limit($limit)->get();
+
         return $books;
     }
 }

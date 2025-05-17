@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     'all_authors' => 'All Authors',
     'create' => 'Create',
@@ -23,4 +22,3 @@ return [
     'author_updated_successfully' => 'Author updated successfully',
     'author_deleted_successfully' => 'Author deleted successfully',
 ];
-

@@ -17,7 +17,7 @@ class ShippingAreaExport implements FromCollection, WithHeadings, WithMapping, W
             1 => [
                 'font' => ['bold' => true, 'size' => 14, 'color' => ['rgb' => 'FFFFFF']],
                 'fill' => ['fillType' => 'solid', 'startColor' => ['rgb' => '4F81BD']],
-                'alignment' => ['horizontal' => 'center']
+                'alignment' => ['horizontal' => 'center'],
             ],
 
             'C' => ['font' => ['size' => 14, 'color' => ['rgb' => '333333']]],
@@ -27,6 +27,7 @@ class ShippingAreaExport implements FromCollection, WithHeadings, WithMapping, W
             ],
         ];
     }
+
     /**
      * @return \Illuminate\Support\Collection
      */

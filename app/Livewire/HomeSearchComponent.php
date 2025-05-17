@@ -19,18 +19,17 @@ class HomeSearchComponent extends Component
         return session()->get('locale') ?? 'en';
     }
 
-
     public function searchForBooks()
     {
         $limit = $this->limit;
         $searchParam = trim($this->searchParam);
 
-        if (!$searchParam || strlen($searchParam) < 2) {
+        if (! $searchParam || strlen($searchParam) < 2) {
             return collect();
         }
 
         $nameMatches = $this->searchBooksByName($searchParam, $this->limit);
-        $nameMatches = $nameMatches->map(fn($book) => ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->name]);
+        $nameMatches = $nameMatches->map(fn ($book) => ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->name]);
 
         $remainingCount = $limit - $nameMatches->count();
         if ($remainingCount) {
@@ -41,9 +40,10 @@ class HomeSearchComponent extends Component
 
                 foreach ($sentences as $sentence) {
                     if (stripos($sentence, $searchParam) !== false) {
-                        $book->text = $book->name . ' - ' . $sentence;
+                        $book->text = $book->name.' - '.$sentence;
                     }
                 }
+
                 return ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->text];
             });
         }
@@ -53,12 +53,12 @@ class HomeSearchComponent extends Component
         $remainingCount = $limit - $books->count();
         if ($remainingCount) {
             $authorMatches = $this->searchBooksByAuthors($searchParam, $remainingCount);
-            $authorMatches = $authorMatches->map(fn($book) => [
+            $authorMatches = $authorMatches->map(fn ($book) => [
                 'id' => $book->id,
                 'slug' => $book->slug,
-                'text' => "{$book->name} By {$book->author_name}"
+                'text' => "{$book->name} By {$book->author_name}",
             ]);
-        };
+        }
 
         $books = $books->merge($authorMatches ?? null);
 

@@ -8,8 +8,6 @@ use App\Http\Controllers\Website\Auth\SocialAuthController;
 use App\Http\Controllers\Website\Auth\VerifyAccountController;
 use Illuminate\Support\Facades\Route;
 
-
-
 Route::name('auth.')->group(function () {
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::get('/register', [RegisterController::class, 'index'])->name('register');
@@ -21,11 +19,11 @@ Route::name('auth.')->group(function () {
     Route::get('/auth/{driver}/callback', [SocialAuthController::class, 'callback'])->name('callback');
 
     Route::get('/forgot-password', [ForgotPasswordController::class, 'index'])->name('password.request');
-    Route::post("/forgot-password", [ForgotPasswordController::class, 'forget'])->name('password.email');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'forget'])->name('password.email');
 
     Route::get('/reset-password/{token}', [ResetPasswordController::class, 'index'])->name('password.reset');
-    Route::post("/reset-password", [ResetPasswordController::class, 'resetPassword'])->name('password.update');
+    Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 
-    Route::get("/verify-email/{email}", [VerifyAccountController::class, 'index'])->name('email.verify');
-    Route::post("/verify-email", [VerifyAccountController::class, 'verifyAccount'])->name('email.send.verify');
+    Route::get('/verify-email/{email}', [VerifyAccountController::class, 'index'])->name('email.verify');
+    Route::post('/verify-email', [VerifyAccountController::class, 'verifyAccount'])->name('email.send.verify');
 });

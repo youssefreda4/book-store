@@ -2,20 +2,22 @@
 
 namespace App\Services;
 
-use App\PaymentServiceInterface;
 use Illuminate\Support\Facades\Http;
 
 class PaymobService
 {
     protected $apiKey;
+
     protected $integrationIds;
+
     protected $iframeId;
+
     protected $baseUrl;
 
     public function __construct()
     {
         $this->apiKey = env('PAYMOB_API_KEY');
-        $this->integrationIds = explode(",", env('PAYMOB_INTEGRATION_ID'));
+        $this->integrationIds = explode(',', env('PAYMOB_INTEGRATION_ID'));
         $this->iframeId = env('PAYMOB_IFRAME_ID');
         $this->baseUrl = env('PAYMOB_BASE_URL');
     }
@@ -26,17 +28,18 @@ class PaymobService
         $amountCent = $data['price'] * 100;
         $authToken = $this->getAuthToken();
         $order = $this->createOrder($authToken, $amountCent, $order);
+
         // $paymentKey = $this->getPaymentKey($authToken, $order['id'], $amountCent, $data['billing_data']);
         return $order['url'];
         // return $this->getPaymentUrl($paymentKey['token']);
     }
 
-
     public function getAuthToken()
     {
-        $response = Http::post($this->baseUrl . '/auth/tokens', [
+        $response = Http::post($this->baseUrl.'/auth/tokens', [
             'api_key' => $this->apiKey,
         ]);
+
         return $response->json()['token'] ?? null;
     }
 
@@ -44,14 +47,14 @@ class PaymobService
     public function createOrder($authToken, $amountCents, $order)
     {
 
-        $items = $order->books->map(fn($book) => [
+        $items = $order->books->map(fn ($book) => [
             'name' => $book->name,
             'amount_cents' => (int) ($book->pivot->price_after_discount * 100) * $book->pivot->quantity,
             'quantity' => $book->pivot->quantity,
-            'description' => $book->description ?? ''
+            'description' => $book->description ?? '',
         ])->toArray();
         // dd($items);
-        $response = Http::post($this->baseUrl . '/ecommerce/orders', [
+        $response = Http::post($this->baseUrl.'/ecommerce/orders', [
             'auth_token' => $authToken,
             'api_source' => 'INVOICE',
             'delivery_needed' => false,
@@ -85,6 +88,7 @@ class PaymobService
 
         return $response->json();
     }
+
     // Step 4: Get Payment URL
     public function getPaymentUrl($paymentKey)
     {

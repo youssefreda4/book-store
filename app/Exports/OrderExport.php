@@ -42,7 +42,7 @@ class OrderExport implements FromCollection, WithHeadings, WithMapping, WithStyl
             $order->id,
             $order->number,
             $order->user_id,
-            $order->shipping_area_id ,
+            $order->shipping_area_id,
             // optional($order->shippingArea)?->getTranslation('name', 'en'),
             // optional($order->shippingArea)?->getTranslation('name', 'ar'),
             $order->status->value,
@@ -62,7 +62,7 @@ class OrderExport implements FromCollection, WithHeadings, WithMapping, WithStyl
             1 => [
                 'font' => ['bold' => true, 'size' => 14, 'color' => ['rgb' => 'FFFFFF']],
                 'fill' => ['fillType' => 'solid', 'startColor' => ['rgb' => '4F81BD']],
-                'alignment' => ['horizontal' => 'center']
+                'alignment' => ['horizontal' => 'center'],
             ],
             'A:Z' => [
                 'alignment' => ['horizontal' => 'center', 'vertical' => 'center'],

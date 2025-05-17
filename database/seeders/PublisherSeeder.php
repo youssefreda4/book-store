@@ -3,10 +3,8 @@
 namespace Database\Seeders;
 
 use Carbon\Carbon;
-use App\Models\Publisher;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class PublisherSeeder extends Seeder
 {

@@ -32,7 +32,7 @@ return [
     'active_dropdown' => 'نشط',
     'inactive_dropdown' => 'غير نشط',
 
-    'discount'=>'تخفيض', 
+    'discount' => 'تخفيض',
 
     'slug' => 'Slug',
     'quantity' => 'الكمية',
@@ -49,12 +49,11 @@ return [
     'available' => 'متاح',
     'not_available' => 'غير متوفر',
 
-    'select_discount_type'=> 'حدد نوع الخصم',
+    'select_discount_type' => 'حدد نوع الخصم',
     'select_category' => 'اختر الفئة',
     'select_author' => 'اختر المؤلف',
     'select_publisher' => 'اختر الناشر',
-    'select_discount'=>'تحديد الخصم',
-    'select_flashsale'=>'تحديد العرض',
-
+    'select_discount' => 'تحديد الخصم',
+    'select_flashsale' => 'تحديد العرض',
 
 ];

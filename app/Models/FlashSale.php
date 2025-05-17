@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use EloquentFilter\Filterable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class FlashSale extends Model
 {
     /** @use HasFactory<\Database\Factories\FlashSaleFactory> */
-    use HasFactory, Filterable, HasTranslations;
+    use Filterable, HasFactory, HasTranslations;
 
     protected $fillable = [
         'name',
@@ -26,16 +26,16 @@ class FlashSale extends Model
         'name' => 'array',
         'description' => 'array',
     ];
-    
 
     public $translatable = ['name', 'description'];
 
     public function isActive()
     {
         if ($this->is_active) {
-            return '<span class="badge bg-success rounded">' . __('flashsale.active') . '</span>';
+            return '<span class="badge bg-success rounded">'.__('flashsale.active').'</span>';
         }
-        return '<span class="badge bg-danger rounded">' . __('flashsale.not_active') . '</span>';
+
+        return '<span class="badge bg-danger rounded">'.__('flashsale.not_active').'</span>';
     }
 
     public function books()

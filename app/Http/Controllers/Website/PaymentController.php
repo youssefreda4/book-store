@@ -24,21 +24,21 @@ class PaymentController extends Controller
         $authToken = $this->paymobService->getAuthToken();
 
         // Step 2: Create Order
-        $orderData = Order::where('number','ORD-6712')->first();
-        $order = $this->paymobService->createOrder($authToken, $amountCents,$orderData);
+        $orderData = Order::where('number', 'ORD-6712')->first();
+        $order = $this->paymobService->createOrder($authToken, $amountCents, $orderData);
 
         // Step 3: Generate Payment Key
         $billingData = [
-            "first_name" => "John",
-            "last_name" => "Doe",
-            "email" => "john.doe@example.com",
-            "phone_number" => "+201234567890",
-            "city" => "Cairo",
-            "country" => "EG",
-            "street" => "NA",
-            "building" => "NA",
-            "floor" => "NA",
-            "apartment" => "NA",
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'email' => 'john.doe@example.com',
+            'phone_number' => '+201234567890',
+            'city' => 'Cairo',
+            'country' => 'EG',
+            'street' => 'NA',
+            'building' => 'NA',
+            'floor' => 'NA',
+            'apartment' => 'NA',
         ];
         $paymentKey = $this->paymobService->getPaymentKey($authToken, $order['id'], $amountCents, $billingData);
 

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Discount;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DiscountRequest;
+use App\Models\Discount;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class DiscountController extends Controller
 {
@@ -15,6 +15,7 @@ class DiscountController extends Controller
         $discounts = Discount::filter(request()->all())
             ->latest('id')
             ->paginate();
+
         return view('dashboard.discount.index', compact('discounts'));
     }
 
@@ -31,8 +32,9 @@ class DiscountController extends Controller
     public function store(DiscountRequest $request)
     {
         $data = $request->validated();
-        $data['code'] =  Str::upper($request->code);
+        $data['code'] = Str::upper($request->code);
         Discount::create($data);
+
         return redirect()->route('dashboard.discounts.index')->with('success', __('discount.discount_created_successfully'));
     }
 
@@ -46,13 +48,15 @@ class DiscountController extends Controller
         $data = $request->validated();
         $data['code'] = Str::upper($request->code);
         $discount->update($data);
+
         return redirect()->route('dashboard.discounts.index')->with('success', __('discount.discount_updated_successfully'));
     }
 
     public function destroy(Discount $discount)
     {
         $discount->delete();
-        return redirect()->route('dashboard.discounts.index')->with('success',  __('discount.discount_deleted_successfully'));
+
+        return redirect()->route('dashboard.discounts.index')->with('success', __('discount.discount_deleted_successfully'));
     }
 
     public function search(Request $request)
@@ -60,6 +64,7 @@ class DiscountController extends Controller
         $discounts = Discount::whereLike('code', "%$request->q%")
             ->orWhereLike('percentage', "%$request->q%")
             ->limit(10)->get();
+
         return response()->json(['data' => ['discounts' => $discounts]]);
     }
 }

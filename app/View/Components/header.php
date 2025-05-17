@@ -11,7 +11,7 @@ class header extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $title,public string $actions = '')
+    public function __construct(public string $title, public string $actions = '')
     {
         //
     }

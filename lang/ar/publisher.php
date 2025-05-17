@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     'all_publisher' => 'كل الناشرين',
     'create' => 'إنشاء',

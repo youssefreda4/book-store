@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
@@ -31,7 +30,7 @@ class ReportController extends Controller
             ->groupBy('date')
             ->orderBy('date')
             ->get();
-        
+
         $weeklyRevenue = DB::table('orders')
             ->selectRaw('YEARWEEK(created_at) as week, SUM(total) as revenue')
             ->where('created_at', '>=', now()->subWeeks(6))
@@ -46,9 +45,9 @@ class ReportController extends Controller
             ->orderBy('month')
             ->get();
 
-
         return view('dashboard.reports.sales.revenue', compact('dailyRevenue', 'weeklyRevenue', 'monthlyRevenue'));
     }
+
     public function trends()
     {
         //

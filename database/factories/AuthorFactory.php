@@ -23,7 +23,7 @@ class AuthorFactory extends Factory
             'name' => [
                 'en' => fake()->unique()->name(),
                 'ar' => fake()->unique()->name(),
-            ]
+            ],
         ];
     }
 }

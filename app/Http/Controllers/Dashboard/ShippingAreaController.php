@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ShippingAreaRequest;
 use App\Http\Requests\UpdateShippingAreaRequest;
 use App\Models\ShippingArea;
-use Illuminate\Http\Request;
 
 class ShippingAreaController extends Controller
 {
     public function index()
     {
         $areas = ShippingArea::filter(request()->all())->paginate();
+
         return view('dashboard.shipping-area.index', compact('areas'));
     }
 
@@ -20,7 +20,6 @@ class ShippingAreaController extends Controller
     {
         return view('dashboard.shipping-area.show', compact('area'));
     }
-
 
     public function create()
     {
@@ -30,6 +29,7 @@ class ShippingAreaController extends Controller
     public function store(ShippingAreaRequest $request)
     {
         ShippingArea::create($request->validated());
+
         return redirect()->route('dashboard.areas.index')->with('success', __('area.shipping_area_created_successfully'));
     }
 
@@ -41,12 +41,14 @@ class ShippingAreaController extends Controller
     public function update(UpdateShippingAreaRequest $request, ShippingArea $area)
     {
         $area->update($request->validated());
+
         return redirect()->route('dashboard.areas.index')->with('success', __('area.shipping_area_updated_successfully'));
     }
 
     public function destroy(ShippingArea $area)
     {
         $area->delete();
+
         return redirect()->route('dashboard.areas.index')->with('success', __('area.shipping_area_deleted_successfully'));
     }
 }

@@ -335,12 +335,12 @@ return [
                 [
                     'text' => 'Arabic',
                     'icon' => 'flag-icon flag-icon-eg',
-                    'url' => 'dashboard/change-language/ar'
+                    'url' => 'dashboard/change-language/ar',
                 ],
                 [
                     'text' => 'English',
                     'icon' => 'flag-icon flag-icon-us',
-                    'url' => 'dashboard/change-language/en'
+                    'url' => 'dashboard/change-language/en',
                 ],
             ],
         ],
@@ -352,12 +352,12 @@ return [
                 [
                     'text' => 'Admins',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/admins'
+                    'url' => 'dashboard/admins',
                 ],
                 [
                     'text' => 'Create Admin',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/admins/create'
+                    'url' => 'dashboard/admins/create',
                 ],
             ],
         ],
@@ -369,12 +369,12 @@ return [
                 [
                     'text' => 'Discounts',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/discounts'
+                    'url' => 'dashboard/discounts',
                 ],
                 [
                     'text' => 'Create Discount',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/discounts/create'
+                    'url' => 'dashboard/discounts/create',
                 ],
             ],
         ],
@@ -386,12 +386,12 @@ return [
                 [
                     'text' => 'Categories',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/categories'
+                    'url' => 'dashboard/categories',
                 ],
                 [
                     'text' => 'Create Category',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/categories/create'
+                    'url' => 'dashboard/categories/create',
                 ],
             ],
         ],
@@ -403,12 +403,12 @@ return [
                 [
                     'text' => 'Areas',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/areas'
+                    'url' => 'dashboard/areas',
                 ],
                 [
                     'text' => 'Create Area',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/areas/create'
+                    'url' => 'dashboard/areas/create',
                 ],
             ],
         ],
@@ -420,12 +420,12 @@ return [
                 [
                     'text' => 'Publishers',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/publishers'
+                    'url' => 'dashboard/publishers',
                 ],
                 [
                     'text' => 'Create Publisher',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/publishers/create'
+                    'url' => 'dashboard/publishers/create',
                 ],
             ],
         ],
@@ -437,12 +437,12 @@ return [
                 [
                     'text' => 'Authors',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/authors'
+                    'url' => 'dashboard/authors',
                 ],
                 [
                     'text' => 'Create Author',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/authors/create'
+                    'url' => 'dashboard/authors/create',
                 ],
             ],
         ],
@@ -454,12 +454,12 @@ return [
                 [
                     'text' => 'Flash Sale',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/flashsales'
+                    'url' => 'dashboard/flashsales',
                 ],
                 [
                     'text' => 'Create Flash Sale',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/flashsales/create'
+                    'url' => 'dashboard/flashsales/create',
                 ],
             ],
         ],
@@ -471,12 +471,12 @@ return [
                 [
                     'text' => 'Book',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/books'
+                    'url' => 'dashboard/books',
                 ],
                 [
                     'text' => 'Create Book',
                     'icon' => 'far fa-circle',
-                    'url' => 'dashboard/books/create'
+                    'url' => 'dashboard/books/create',
                 ],
             ],
         ],
@@ -498,17 +498,17 @@ return [
                         [
                             'text' => 'Books',
                             'icon' => 'far fa-circle',
-                            'url' => 'dashboard/reports/sales/books'
+                            'url' => 'dashboard/reports/sales/books',
                         ],
                         [
                             'text' => 'Total Revenue',
                             'icon' => 'far fa-circle',
-                            'url' => 'dashboard/reports/sales/revenue'
+                            'url' => 'dashboard/reports/sales/revenue',
                         ],
                         [
                             'text' => 'Sales Trends Over Time',
                             'icon' => 'far fa-circle',
-                            'url' => 'dashboard/reports/sales/trends'
+                            'url' => 'dashboard/reports/sales/trends',
                         ],
                     ],
                 ],
@@ -520,17 +520,17 @@ return [
                         [
                             'text' => 'Most Book Sold',
                             'icon' => 'far fa-circle',
-                            'url' => 'dashboard/reports/selling/book'
+                            'url' => 'dashboard/reports/selling/book',
                         ],
                         [
                             'text' => 'Most Category Sold',
                             'icon' => 'far fa-circle',
-                            'url' => 'dashboard/reports/selling/category'
+                            'url' => 'dashboard/reports/selling/category',
                         ],
                         [
                             'text' => 'Most Author Sold',
                             'icon' => 'far fa-circle',
-                            'url' => 'dashboard/reports/selling/author'
+                            'url' => 'dashboard/reports/selling/author',
                         ],
                     ],
                 ],

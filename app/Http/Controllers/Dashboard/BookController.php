@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Book;
-use App\Models\Author;
-use App\Models\Category;
-use App\Models\Publisher;
-use Illuminate\Http\Request;
-use App\Http\Requests\BookRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BookRequest;
+use App\Models\Book;
 
 class BookController extends Controller
 {
@@ -18,6 +14,7 @@ class BookController extends Controller
             ->with(['media', 'author', 'category', 'favorite', 'publisher', 'discountable'])
             ->latest('id')
             ->paginate();
+
         return view('dashboard.book.index', compact('books'));
     }
 
@@ -38,6 +35,7 @@ class BookController extends Controller
         if ($request->hasFile('image')) {
             $book->addMediaFromRequest('image')->toMediaCollection('book');
         }
+
         return redirect()->route('dashboard.books.index')->with('success', __('book.book_created_successfully'));
     }
 
@@ -55,12 +53,14 @@ class BookController extends Controller
         }
         $data = $request->validated();
         $book->update($data);
+
         return redirect()->route('dashboard.books.index')->with('success', __('book.book_updated_successfully'));
     }
 
     public function destroy(Book $book)
     {
         $book->delete();
+
         return redirect()->route('dashboard.books.index')->with('success', __('book.book_deleted_successfully'));
     }
 }

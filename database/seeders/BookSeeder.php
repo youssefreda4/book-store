@@ -6,7 +6,6 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -31,7 +30,7 @@ class BookSeeder extends Seeder
             if ($response->successful()) {
                 $books = $response->json('results');
                 foreach ($books as $bookData) {
-                    if (!isset($bookData['title']) || !isset($bookData['authors'])) {
+                    if (! isset($bookData['title']) || ! isset($bookData['authors'])) {
                         continue;
                     }
                     $title = mb_strimwidth($bookData['title'], 0, $maxNameLength, '');
@@ -43,7 +42,7 @@ class BookSeeder extends Seeder
                     $rate = round(mt_rand(30, 50) / 10, 1);
                     $publishYear = $bookData['download_count'] ? date('Y') - random_int(0, 100) : null;
                     $price = random_int(10, 100);
-                    $isAvailable = (bool)random_int(0, 1);
+                    $isAvailable = (bool) random_int(0, 1);
 
                     $category = Category::inRandomOrder()->first();
                     $publisher = Publisher::inRandomOrder()->first();

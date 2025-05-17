@@ -3,13 +3,13 @@
 namespace App\Exports;
 
 use App\Models\Category;
-use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class CategoryExport implements FromCollection, WithHeadings, WithMapping ,WithStyles
+class CategoryExport implements FromCollection, WithHeadings, WithMapping, WithStyles
 {
     public function styles(Worksheet $sheet)
     {
@@ -17,7 +17,7 @@ class CategoryExport implements FromCollection, WithHeadings, WithMapping ,WithS
             1 => [
                 'font' => ['bold' => true, 'size' => 14, 'color' => ['rgb' => 'FFFFFF']],
                 'fill' => ['fillType' => 'solid', 'startColor' => ['rgb' => '4F81BD']],
-                'alignment' => ['horizontal' => 'center']
+                'alignment' => ['horizontal' => 'center'],
             ],
 
             'C' => ['font' => ['size' => 14, 'color' => ['rgb' => '333333']]],
@@ -27,6 +27,7 @@ class CategoryExport implements FromCollection, WithHeadings, WithMapping ,WithS
             ],
         ];
     }
+
     /**
      * @return \Illuminate\Support\Collection
      */

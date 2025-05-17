@@ -18,11 +18,12 @@ class FavoriteController extends Controller
         if (Auth::guard('web')->check()) {
             $this->syncFavoriteFromSessionToDatabase();
             $favorites = AddToFavorite::where('user_id', $user_id)->get() ?? null;
-            $favoriteItems = $favorites->mapWithKeys(fn($item) => [$item->book_id => $item->quantity])->toArray();
+            $favoriteItems = $favorites->mapWithKeys(fn ($item) => [$item->book_id => $item->quantity])->toArray();
         } else {
             $favoriteItems = Session::get('favorite', []);
         }
         $books = Book::whereIn('id', array_keys($favoriteItems))->get();
+
         return view('website.pages.favorite.index', compact('books', 'favoriteItems'));
     }
 
@@ -35,6 +36,7 @@ class FavoriteController extends Controller
         if (Auth::guard('web')->check()) {
             if ($book->favorite()->where('user_id', $user_id)->exists()) {
                 AddToFavorite::where('user_id', $user_id)->where('book_id', $book_id)->delete();
+
                 return redirect()->back()->with('success', 'Book removed from favorite');
             } else {
                 AddToFavorite::updateOrCreate(['user_id' => $user_id, 'book_id' => $book_id], ['quantity' => $quantity]);
@@ -44,12 +46,14 @@ class FavoriteController extends Controller
             if (session('favorite') && array_key_exists($book_id, session('favorite'))) {
                 unset($favorite[$book_id]);
                 Session::put('favorite', $favorite);
+
                 return redirect()->back()->with('success', 'Book removed from favorite');
             } else {
                 $favorite[$book_id] = $quantity;
                 Session::put('favorite', $favorite);
             }
         }
+
         return redirect()->back()->with('success', 'Book added to favorite');
     }
 
@@ -68,10 +72,10 @@ class FavoriteController extends Controller
                 ->where('book_id', $book_id)
                 ->update(['quantity' => $quantity]);
         } else {
-            //else store item in session
+            // else store item in session
             $favorite = Session::get('favorite', []);
             if (array_key_exists($book_id, $favorite)) {
-                $favorite[$book_id] =  $quantity;
+                $favorite[$book_id] = $quantity;
             }
             Session::put('favorite', $favorite);
         }
@@ -96,7 +100,7 @@ class FavoriteController extends Controller
                 if ($book->favorite()->where('user_id', $user_id)->exists()) {
                     $favorite = Session::get('favorite', []);
 
-                    $favoriteRecord  = AddToFavorite::where('user_id', $user_id)->where('book_id', $book_id)->firstOrFail();
+                    $favoriteRecord = AddToFavorite::where('user_id', $user_id)->where('book_id', $book_id)->firstOrFail();
                     $bookQuantity = $favoriteRecord->quantity;
                     AddToCart::updateOrCreate(['user_id' => $user_id, 'book_id' => $book_id], [
                         'quantity' => $bookQuantity,
@@ -121,6 +125,7 @@ class FavoriteController extends Controller
                 Session::put('favorite', $favorite);
             }
         }
+
         return redirect()->back()->with('success', 'Book moved to cart successfully');
     }
 
@@ -129,7 +134,7 @@ class FavoriteController extends Controller
         $user_id = Auth::guard('web')->id();
         $favoriteItems = Session::get('favorite', []);
 
-        if (!empty($favoriteItems)) {
+        if (! empty($favoriteItems)) {
             foreach ($favoriteItems as $bookId) {
                 AddToFavorite::updateOrCreate(
                     ['user_id' => $user_id, 'book_id' => $bookId],

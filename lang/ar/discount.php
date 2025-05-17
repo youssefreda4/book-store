@@ -1,6 +1,5 @@
 <?php
 
-
 return [
 
     'all_discounts' => 'جميع الخصومات',

@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\Discount;
 use App\Traits\FullTextSearch;
 use Carbon\Carbon;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -20,7 +18,7 @@ use Spatie\Translatable\HasTranslations;
 class Book extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\BookFactory> */
-    use HasFactory, Filterable, HasTranslations, HasSlug, InteractsWithMedia, FullTextSearch;
+    use Filterable, FullTextSearch, HasFactory, HasSlug, HasTranslations, InteractsWithMedia;
 
     protected $fillable = [
         'name',
@@ -83,9 +81,10 @@ class Book extends Model implements HasMedia
     public function isAvailable()
     {
         if ($this->is_available) {
-            return '<span class="badge bg-success rounded">' . __('book.available') . '</span>';
+            return '<span class="badge bg-success rounded">'.__('book.available').'</span>';
         }
-        return '<span class="badge bg-danger rounded">' . __('book.not_available') . '</span>';
+
+        return '<span class="badge bg-danger rounded">'.__('book.not_available').'</span>';
     }
 
     public function category()
@@ -133,21 +132,28 @@ class Book extends Model implements HasMedia
     public function getValidDiscount()
     {
         $discount = $this->discountable;
-        //apply check if discount is currntly active
-        if ($discount && !$this->isDiscountExpired($discount)) return $discount;
+        // apply check if discount is currntly active
+        if ($discount && ! $this->isDiscountExpired($discount)) {
+            return $discount;
+        }
 
-        $category_discount =  $this->category->discount ?? null;
+        $category_discount = $this->category->discount ?? null;
 
-        if ($category_discount && !$this->isDiscountExpired($discount)) return $category_discount;
+        if ($category_discount && ! $this->isDiscountExpired($discount)) {
+            return $category_discount;
+        }
     }
 
     public function isDiscountExpired($discount)
     {
-        //discount
-        if ($discount instanceof Discount)  return $discount->quantity <= 0 || $discount->expiry_date->isPast();
+        // discount
+        if ($discount instanceof Discount) {
+            return $discount->quantity <= 0 || $discount->expiry_date->isPast();
+        }
 
-        //flashsale
-        $expiry_date = Carbon::createFromFormat("Y-m-d H:i:s", "$discount->date $discount->start_time")->addHours($discount->time);
-        return !$discount->is_active || $expiry_date->isPast();
+        // flashsale
+        $expiry_date = Carbon::createFromFormat('Y-m-d H:i:s', "$discount->date $discount->start_time")->addHours($discount->time);
+
+        return ! $discount->is_active || $expiry_date->isPast();
     }
 }

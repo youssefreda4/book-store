@@ -3,10 +3,10 @@
 namespace App\Exports;
 
 use App\Models\Author;
-use Maatwebsite\Excel\Concerns\WithStyles;
-use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class AuthorExport implements FromCollection, WithHeadings, WithMapping, WithStyles
@@ -17,7 +17,7 @@ class AuthorExport implements FromCollection, WithHeadings, WithMapping, WithSty
             1 => [
                 'font' => ['bold' => true, 'size' => 14, 'color' => ['rgb' => 'FFFFFF']],
                 'fill' => ['fillType' => 'solid', 'startColor' => ['rgb' => '4F81BD']],
-                'alignment' => ['horizontal' => 'center']
+                'alignment' => ['horizontal' => 'center'],
             ],
 
             'C' => ['font' => ['size' => 14, 'color' => ['rgb' => '333333']]],
@@ -27,6 +27,7 @@ class AuthorExport implements FromCollection, WithHeadings, WithMapping, WithSty
             ],
         ];
     }
+
     public function headings(): array
     {
         return [

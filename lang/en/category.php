@@ -1,6 +1,6 @@
 <?php
 
-return[
+return [
     'all_categories' => 'All Categories',
     'create' => 'Create',
     'create_category' => 'Create Category',

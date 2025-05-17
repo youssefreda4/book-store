@@ -7,6 +7,7 @@ use Livewire\Component;
 class CartListComponent extends Component
 {
     public $books;
+
     public $cartItems;
 
     public function render()

@@ -22,15 +22,15 @@ return [
     'status_cancelled' => 'Cancelled',
     'status_unknown' => 'Unknown',
 
-    'payment_status_cash'     => 'Cash',
-    'payment_status_unpaid'   => 'Unpaid',
-    'payment_status_paid'     => 'Paid',
+    'payment_status_cash' => 'Cash',
+    'payment_status_unpaid' => 'Unpaid',
+    'payment_status_paid' => 'Paid',
     'payment_status_refunded' => 'Refunded',
-    'payment_status_unknown'  => 'Unknown',
+    'payment_status_unknown' => 'Unknown',
 
-    'payment_type_cash'       => 'Cash',
-    'payment_type_visa'       => 'Visa',
-    'payment_type_unknown'    => 'Unknown',
+    'payment_type_cash' => 'Cash',
+    'payment_type_visa' => 'Visa',
+    'payment_type_unknown' => 'Unknown',
 
     'enter_order_number' => 'Enter order number',
     'select_status' => 'Select order status',

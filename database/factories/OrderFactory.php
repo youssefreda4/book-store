@@ -58,50 +58,53 @@ class OrderFactory extends Factory
 
     public function VisaRefunded(): static
     {
-        return $this->state(fn() => ['payment_type' => PaymentTypeEnum::Visa, 'payment_status' => PaymentStatusEnum::Refunded, 'status' => OrderStatusEnum::Cancelled, 'created_at' => Carbon::now()->subDays(rand(1, 30))]);
+        return $this->state(fn () => ['payment_type' => PaymentTypeEnum::Visa, 'payment_status' => PaymentStatusEnum::Refunded, 'status' => OrderStatusEnum::Cancelled, 'created_at' => Carbon::now()->subDays(rand(1, 30))]);
     }
 
     public function VisaUnpaid(): static
     {
-        return $this->state(fn() => ['payment_type' => PaymentTypeEnum::Visa, 'payment_status' => PaymentStatusEnum::Unpaid, 'status' => OrderStatusEnum::Pending, 'created_at' => Carbon::now()->subDays(rand(1, 30))]);
+        return $this->state(fn () => ['payment_type' => PaymentTypeEnum::Visa, 'payment_status' => PaymentStatusEnum::Unpaid, 'status' => OrderStatusEnum::Pending, 'created_at' => Carbon::now()->subDays(rand(1, 30))]);
     }
-    
+
     public function VisaPaid(): static
     {
-        return $this->state(fn() => ['payment_type' => PaymentTypeEnum::Visa, 'payment_status' => PaymentStatusEnum::Paid, 'status' => OrderStatusEnum::Confirmed, 'created_at' => Carbon::now()->subDays(rand(1, 30))]);
+        return $this->state(fn () => ['payment_type' => PaymentTypeEnum::Visa, 'payment_status' => PaymentStatusEnum::Paid, 'status' => OrderStatusEnum::Confirmed, 'created_at' => Carbon::now()->subDays(rand(1, 30))]);
     }
 
     public function cash(): static
     {
-        return $this->state(fn() => ['payment_type' => PaymentTypeEnum::Cash, 'payment_status' => PaymentStatusEnum::Cash, 'created_at' => Carbon::now()->subDays(rand(1, 30))]);
+        return $this->state(fn () => ['payment_type' => PaymentTypeEnum::Cash, 'payment_status' => PaymentStatusEnum::Cash, 'created_at' => Carbon::now()->subDays(rand(1, 30))]);
     }
 
     public function status(OrderStatusEnum $status): static
     {
-        return $this->state(fn() => ['status' => $status]);
+        return $this->state(fn () => ['status' => $status]);
     }
 
     public function SameShippingArea(): static
     {
         $shipping_area_id = ShippingArea::first()?->id ?? ShippingArea::factory()->create()->id;
-        return $this->state(fn() => ['shipping_area_id' => $shipping_area_id, 'created_at' => Carbon::now()->subDays(rand(1, 30))]);
+
+        return $this->state(fn () => ['shipping_area_id' => $shipping_area_id, 'created_at' => Carbon::now()->subDays(rand(1, 30))]);
     }
 
     public function today(): static
     {
-        return $this->state(fn() => ['created_at' => Carbon::now()]);
+        return $this->state(fn () => ['created_at' => Carbon::now()]);
     }
 
     public function previousWeeks($weeks = 0): static
     {
-        return $this->state(fn() => ['created_at' => Carbon::now()->subWeeks($weeks)]);
+        return $this->state(fn () => ['created_at' => Carbon::now()->subWeeks($weeks)]);
     }
+
     public function previousMonths($months = 0): static
     {
-        return $this->state(fn() => ['created_at' => Carbon::now()->subMonths($months)]);
+        return $this->state(fn () => ['created_at' => Carbon::now()->subMonths($months)]);
     }
+
     public function previousYears($years = 0): static
     {
-        return $this->state(fn() => ['created_at' => Carbon::now()->subYear($years)]);
+        return $this->state(fn () => ['created_at' => Carbon::now()->subYear($years)]);
     }
 }

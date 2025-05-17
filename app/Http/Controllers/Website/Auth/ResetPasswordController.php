@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Website\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ResetPasswordController extends Controller
 {
     public function index($token)
     {
-        return view('website.auth.reset-password',compact('token'));
+        return view('website.auth.reset-password', compact('token'));
     }
 
     public function resetPassword(ResetPasswordRequest $request)
@@ -22,7 +21,7 @@ class ResetPasswordController extends Controller
             ->where('token', $request->token)
             ->first();
 
-        if (!$result) {
+        if (! $result) {
             return back()->with('error', 'Invalid token or email address');
         }
 

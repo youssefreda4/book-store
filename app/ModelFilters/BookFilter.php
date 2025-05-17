@@ -30,11 +30,13 @@ class BookFilter extends ModelFilter
         });
     }
 
-    public function category($value){
-        return $this->whereIn('category_id',$value);
+    public function category($value)
+    {
+        return $this->whereIn('category_id', $value);
     }
 
-    public function publisher($value){
-        return $this->whereIn('publisher_id',$value);
+    public function publisher($value)
+    {
+        return $this->whereIn('publisher_id', $value);
     }
 }

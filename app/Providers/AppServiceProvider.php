@@ -39,11 +39,11 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('website.layouts.nav', function ($view) {
             if (Auth::guard('web')->check()) {
-                $cartCount  = AddToCart::where('user_id', auth('web')->id())->count();
-                $favoriteCount  = AddToFavorite::where('user_id', auth('web')->id())->count();
+                $cartCount = AddToCart::where('user_id', auth('web')->id())->count();
+                $favoriteCount = AddToFavorite::where('user_id', auth('web')->id())->count();
             } else {
-                $cartCount  = count(session('cart', []));
-                $favoriteCount  = count(session('favorite', []));
+                $cartCount = count(session('cart', []));
+                $favoriteCount = count(session('favorite', []));
             }
             $view->with([
                 'cartCount' => $cartCount,

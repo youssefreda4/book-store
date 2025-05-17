@@ -44,25 +44,28 @@
         <div class="d-flex gap-3 align-items-center mt-3">
             <div class="books_count d-flex gap-3 align-items-center">
                 <span class="decrement" wire:click='decrement'>-</span>
-                <p class="quantity">{{ $quantity }}</p>
+                <p class="quantity" wire:loading.remove>{{ $quantity }}</p>
+
+                <div class="spinner-grow spinner-grow-sm text-danger" role="status" wire:loading>
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+
                 <span class="increment" wire:click='increment'>+</span>
             </div>
         </div>
     </div>
     <div class="col-lg-2 col-md-4 col-sm-4 d-flex align-items-center">
-        <p class="fw-bold fs-5 mt-3 book-price">${{ $discount ? $book->price*$discount->percentage/100 :
-            $book->price }}</p>
+        <p class="fw-bold fs-5 mt-3 book-price">
+            ${{ $discount ? $book->price - ($book->price * $discount->percentage /100):$book->price }}</p>
     </div>
     <div class="sell-price col-lg-2 col-md-4 col-sm-4 d-flex align-items-center">
         <p class="fw-bold fs-5 mt-3 total-price">${{ $this->updateTotalPrice }}</p>
     </div>
     <div class="col-lg-1 col-md-4 col-sm-4 d-flex align-items-center">
-        <form action="{{ route('front.cart.remove',$book) }}" wire:submit='removeBook' method="POST">
-            @csrf
-            @method('DELETE')
+        <div class="fs-5 mt-3 del-item" wire:click="removeItem">
             <button class="fs-5 mt-3 btn btn-danger">
                 <i class="fa-solid fa-trash-can  "></i>
             </button>
-        </form>
+        </div>
     </div>
 </div>

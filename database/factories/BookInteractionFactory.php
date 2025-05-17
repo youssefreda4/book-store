@@ -22,7 +22,7 @@ class BookInteractionFactory extends Factory
         return [
             'user_id' => User::inRandomOrder()->first(),
             'book_id' => Book::inRandomOrder()->first(),
-            'quantity' => random_int(1,15),
+            'quantity' => random_int(1, 15),
             'interaction_type' => fake()->randomElement(InteractionTypsEnum::cases()),
         ];
     }

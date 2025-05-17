@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\ShippingArea;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +13,7 @@ class ShippingAreaSeeder extends Seeder
      */
     public function run(): void
     {
-         DB::table('shipping_areas')->insert([
+        DB::table('shipping_areas')->insert([
             [
                 'name' => json_encode(['en' => 'Cairo', 'ar' => 'القاهرة']),
                 'fee' => random_int(1, 50),

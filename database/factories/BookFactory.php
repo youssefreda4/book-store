@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\Author;
 use App\Models\Category;
 use App\Models\Publisher;
-use DateTime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -33,7 +32,7 @@ class BookFactory extends Factory
             'rate' => fake()->numberBetween(1, 100),
             'publish_year' => fake()->dateTime()->format('Y'),
             'price' => fake()->randomDigit(),
-            "is_available" => true,
+            'is_available' => true,
             'category_id' => Category::factory()->create(),
             'publisher_id' => Publisher::factory()->create(),
             'author_id' => Author::factory()->create(),

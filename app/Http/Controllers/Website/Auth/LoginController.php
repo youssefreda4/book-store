@@ -23,22 +23,24 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
         $user_data = $request->validated();
 
-        if (!$user) {
+        if (! $user) {
             return back()->with('errorForm', 'Invalid Credientials!');
         }
 
-        if (!Hash::check($user_data['password'], $user->password)) {
+        if (! Hash::check($user_data['password'], $user->password)) {
             return back()->with('errorForm', 'Invalid Credientials!');
         }
 
-        if (!$user->email_verified_at) {
+        if (! $user->email_verified_at) {
             Mail::to($user->email)->send(new VerifyAccountMail($user->otp, $user->email));
+
             return redirect()->route('front.auth.email.verify', $user->email);
         }
 
         if (Auth::guard('web')->attempt($user_data)) {
             return redirect()->intended('/');
         }
+
         return back()->with('errorForm', 'Invalid Credientials!');
     }
 

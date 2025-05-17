@@ -30,7 +30,8 @@ class AddToCart extends Model
         'interaction_type' => InteractionTypsEnum::class,
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->hasMany(User::class);
     }
 }

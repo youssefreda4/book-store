@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class BookRequest extends FormRequest
 {
@@ -46,8 +45,8 @@ class BookRequest extends FormRequest
         return [
             'name.en' => __('book.name_book_en'),
             'name.ar' => __('book.name_book_ar'),
-            'description.en' =>__('book.description_book_en') ,
-            'description.ar' =>__('book.description_book_ar') ,
+            'description.en' => __('book.description_book_en'),
+            'description.ar' => __('book.description_book_ar'),
             'quantity' => __('book.quantity'),
             'rate' => __('book.rate'),
             'publish_year' => __('book.publish_year'),
@@ -56,7 +55,7 @@ class BookRequest extends FormRequest
             'category_id' => __('book.category'),
             'publisher_id' => __('book.publisher'),
             'author_id' => __('book.author'),
-            'discountable_id'=>__('book.discount'),
+            'discountable_id' => __('book.discount'),
             'image' => __('adminlte::adminlte.image'),
         ];
     }

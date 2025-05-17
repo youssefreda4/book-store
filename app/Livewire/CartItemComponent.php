@@ -11,36 +11,26 @@ use Livewire\Component;
 class CartItemComponent extends Component
 {
     public $book;
+
     public $quantity;
+
     public $total_price;
 
     public function increment()
     {
         $this->quantity++;
-        $this->updateAddToCardQuantity(Auth::guard('web')->id(), $this->book->id, $this->quantity);
+        // $this->updateAddToCardQuantity(Auth::guard('web')->id(), $this->book->id, $this->quantity);
+        $this->dispatch('update-quantity', $this->book->id, $this->quantity)->to('cart-page-component');
     }
 
     public function decrement()
     {
-        if (!$this->quantity >= 1) {
-            $this->quantity--;
-            $this->updateAddToCardQuantity(Auth::guard('web')->id(), $this->book->id, $this->quantity);
+        if ($this->quantity <= 1) {
+            return;
         }
-    }
-
-    public function removeBook()
-    {
-        $user_id = Auth::guard('web')->id();
-        $book_id = $this->book->id;
-        if ($user_id) {
-            AddToCart::where('user_id', $user_id)->where('book_id', $book_id)->delete();
-        } else {
-            $cart = Session::get('cart', []);
-            unset($cart[$book_id]);
-            Session::put('cart', $cart);
-        }
-
-        session()->flash('success', 'Book deleted from cart.');
+        $this->quantity--;
+        // $this->updateAddToCardQuantity(Auth::guard('web')->id(), $this->book->id, $this->quantity);
+        $this->dispatch('update-quantity', $this->book->id, $this->quantity)->to('cart-page-component');
     }
 
     public function updateAddToCardQuantity($user_id, $book_id, $quantity)
@@ -56,10 +46,22 @@ class CartItemComponent extends Component
         }
     }
 
+    public function removeItem()
+    {
+        $this->dispatch('remove-book',
+            book_id: $this->book->id
+        )->to(CartPageComponent::class);
+    }
+
     #[Computed]
     public function updateTotalPrice()
     {
-        return $this->total_price = $this->quantity * $this->book->price;
+        $discount = $this->book->getValidDiscount();
+        $bookPrice = $discount
+            ? $this->book->price - ($this->book->price * $discount->percentage / 100)
+            : $this->book->price;
+
+        return $this->total_price = $this->quantity * $bookPrice;
     }
 
     public function render()

@@ -75,11 +75,10 @@ class CategoryProvider extends Base
         ['en' => 'Literary Fiction', 'ar' => 'أدب أدبي'],
     ];
 
-
     public function uniqueCategoryName()
     {
         $available = array_filter(static::$categories, function ($category) {
-            return !in_array($category['en'], static::$usedCategories);
+            return ! in_array($category['en'], static::$usedCategories);
         });
 
         if (empty($available)) {
@@ -93,7 +92,7 @@ class CategoryProvider extends Base
 
         return [
             'en' => $category['en'],
-            'ar' => $category['ar']
+            'ar' => $category['ar'],
         ];
     }
 
@@ -102,7 +101,7 @@ class CategoryProvider extends Base
         $available = array_diff(array_column(static::$categories, 'en'), static::$usedCategories);
 
         if (empty($available)) {
-            throw new \Exception("No unique categories left.");
+            throw new \Exception('No unique categories left.');
         }
 
         $category = static::randomElement($available);
@@ -110,12 +109,13 @@ class CategoryProvider extends Base
 
         return $category;
     }
+
     public function uniqueCategoryNameAr()
     {
         $available = array_diff(array_column(static::$categories, 'ar'), static::$usedCategories);
 
         if (empty($available)) {
-            throw new \Exception("No unique categories left.");
+            throw new \Exception('No unique categories left.');
         }
 
         $category = static::randomElement($available);

@@ -28,15 +28,14 @@ return [
     'flash_sale_created_successfully' => 'تم إنشاء العرض بنجاح',
     'flash_sale_updated_successfully' => 'تم تحديث العرض بنجاح',
     'flash_sale_deleted_successfully' => 'تم حذف العرض بنجاح',
-    "label_date" => 'تاريخ تطبيق العرض',
-    "label_time" => 'فتره تطبيق العرض',
-    "time_placeholder" => 'eg: 24, 48, 72 ..etc',
-    "time_identifier" => 'الساعات',
-    "is_active" => 'الحالة',
-    "active_dropdown" => 'نشط',
-    "inactive_dropdown" => 'غير نشط',
+    'label_date' => 'تاريخ تطبيق العرض',
+    'label_time' => 'فتره تطبيق العرض',
+    'time_placeholder' => 'eg: 24, 48, 72 ..etc',
+    'time_identifier' => 'الساعات',
+    'is_active' => 'الحالة',
+    'active_dropdown' => 'نشط',
+    'inactive_dropdown' => 'غير نشط',
 
     'active' => 'نشط',
     'not_active' => 'غير نشط',
 ];
-

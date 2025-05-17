@@ -34,7 +34,7 @@ return [
     'confirm_delete_admin' => 'Are you sure you want to delete this admin?',
     'no_admins_found' => 'No admins found.',
     'admin_type' => 'Admin Type',
-    'super_admin'=> 'Super Admin',
-    'content_management'=> 'Content Management',
+    'super_admin' => 'Super Admin',
+    'content_management' => 'Content Management',
     'select_admin_type' => 'Select admin type',
 ];

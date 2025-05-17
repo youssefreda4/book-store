@@ -11,7 +11,7 @@ class CrudActionButton extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $route,public string $model)
+    public function __construct(public string $route, public string $model)
     {
         //
     }

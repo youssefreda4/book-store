@@ -22,15 +22,15 @@ return [
     'status_cancelled' => 'تم الإلغاء',
     'status_unknown' => 'غير معروف',
 
-    'payment_status_cash'     => 'نقدًا',
-    'payment_status_unpaid'   => 'غير مدفوع',
-    'payment_status_paid'     => 'مدفوع',
+    'payment_status_cash' => 'نقدًا',
+    'payment_status_unpaid' => 'غير مدفوع',
+    'payment_status_paid' => 'مدفوع',
     'payment_status_refunded' => 'تم الاسترداد',
-    'payment_status_unknown'  => 'غير معروف',
+    'payment_status_unknown' => 'غير معروف',
 
-    'payment_type_cash'       => 'نقدًا',
-    'payment_type_visa'       => 'بطاقة فيزا',
-    'payment_type_unknown'    => 'غير معروف',
+    'payment_type_cash' => 'نقدًا',
+    'payment_type_visa' => 'بطاقة فيزا',
+    'payment_type_unknown' => 'غير معروف',
 
     'enter_order_number' => 'ادخل رقم الطلب',
     'select_status' => 'اختر حالة الطلب',
@@ -44,7 +44,5 @@ return [
 
     'user_name' => 'اسم المستخدم',
     'enter_user_name' => 'ادخل اسم المستخدم',
-
-
 
 ];

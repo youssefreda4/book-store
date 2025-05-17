@@ -2,9 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Admin;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AdminUpdateManagmentRequest extends FormRequest
 {
@@ -40,6 +39,6 @@ class AdminUpdateManagmentRequest extends FormRequest
             'password' => 'nullable|string|min:8|max:15|confirmed',
             'type' => 'required|string|in:super-admin,content-management',
         ];
-        
+
     }
 }

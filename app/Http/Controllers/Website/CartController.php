@@ -11,18 +11,18 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
-
     public function index()
     {
         $user_id = Auth::guard('web')->id();
         if (Auth::guard('web')->check()) {
             $this->syncCartFromSessionToDatabase();
             $carts = AddToCart::where('user_id', $user_id)->get() ?? null;
-            $cartItems = $carts->mapWithKeys(fn($item) => [$item->book_id => $item->quantity])->toArray();
+            $cartItems = $carts->mapWithKeys(fn ($item) => [$item->book_id => $item->quantity])->toArray();
         } else {
             $cartItems = Session::get('cart', []);
         }
         $books = Book::with(['author', 'category', 'media'])->whereIn('id', array_keys($cartItems))->get();
+
         return view('website.pages.cart.index', compact('books', 'cartItems'));
     }
 
@@ -31,18 +31,19 @@ class CartController extends Controller
         $quantity = $request->has('quantity') ? $request->has('quantity') : 1;
         $user_id = Auth::guard('web')->id();
         $book_id = $book->id;
-        //if user is authenticated 
+        // if user is authenticated
         if (Auth::guard('web')->check()) {
-            //if yes store item in database
+            // if yes store item in database
             AddToCart::updateOrCreate(['user_id' => $user_id, 'book_id' => $book_id], [
                 'quantity' => $quantity,
             ]);
         } else {
-            //else store item in session
+            // else store item in session
             $cart = Session::get('cart', []);
             $cart[$book->id] = $quantity;
             Session::put('cart', $cart);
         }
+
         return redirect()->back()->with('success', 'Book added to cart');
     }
 
@@ -61,7 +62,7 @@ class CartController extends Controller
                 ->where('book_id', $book_id)
                 ->update(['quantity' => $quantity]);
         } else {
-            //else store item in session
+            // else store item in session
             $cart = Session::get('cart', []);
             $cart[$book_id] = $quantity;
             Session::put('cart', $cart);
@@ -78,26 +79,26 @@ class CartController extends Controller
     {
         $user_id = Auth::guard('web')->id();
         $book_id = $book->id;
-        //if user is authenticated 
+        // if user is authenticated
         if (Auth::guard('web')->check()) {
-            //if yes delete item in database
+            // if yes delete item in database
             AddToCart::where('user_id', $user_id)->where('book_id', $book_id)->delete();
         } else {
-            //else deleted item in session
+            // else deleted item in session
             $cart = Session::get('cart', []);
             unset($cart[$book_id]);
             Session::put('cart', $cart);
         }
+
         return redirect()->back()->with('success', 'Book deleted from cart');
     }
-
 
     public function syncCartFromSessionToDatabase()
     {
         $user_id = Auth::guard('web')->id();
         $cartItems = Session::get('cart', []);
 
-        if (!empty($cartItems)) {
+        if (! empty($cartItems)) {
             foreach ($cartItems as $bookId => $quantity) {
                 AddToCart::updateOrCreate(
                     ['user_id' => $user_id, 'book_id' => $bookId],

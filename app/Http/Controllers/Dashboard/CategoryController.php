@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Models\Category;
 use App\Models\Discount;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -15,12 +15,14 @@ class CategoryController extends Controller
         $categories = Category::filter(request()->all())
             ->latest('id')
             ->paginate();
+
         return view('dashboard.category.index', compact('categories'));
     }
 
     public function show(Category $category)
     {
         $discounts = Discount::get();
+
         return view('dashboard.category.show', compact('category', 'discounts'));
     }
 
@@ -46,6 +48,7 @@ class CategoryController extends Controller
         if ($request->hasFile('image')) {
             $category->addMediaFromRequest('image')->toMediaCollection('image');
         }
+
         return redirect()->route('dashboard.categories.index')->with('success', __('category.category_created_successfully'));
     }
 
@@ -63,12 +66,14 @@ class CategoryController extends Controller
         }
         $data = $request->validated();
         $category->update($data);
+
         return redirect()->route('dashboard.categories.index')->with('success', __('category.category_updated_successfully'));
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
+
         return redirect()->route('dashboard.categories.index')->with('success', __('category.category_deleted_successfully'));
     }
 
@@ -77,6 +82,7 @@ class CategoryController extends Controller
         $categories = Category::whereLike('name->en', "%$request->q%")
             ->orWhereLike('name->ar', "%$request->q%")
             ->limit(10)->get();
+
         return response()->json(['data' => ['categories' => $categories]]);
     }
 }

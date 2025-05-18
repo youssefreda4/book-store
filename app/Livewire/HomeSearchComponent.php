@@ -24,7 +24,7 @@ class HomeSearchComponent extends Component
         $limit = $this->limit;
         $searchParam = trim($this->searchParam);
 
-        if (! $searchParam || strlen($searchParam) < 2) {
+        if (! $searchParam || strlen($searchParam) < 2 || $limit < 5) {
             return collect();
         }
 

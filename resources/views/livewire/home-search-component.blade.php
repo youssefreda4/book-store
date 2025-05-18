@@ -8,7 +8,7 @@
                             class="flex-grow" />
                         <!-- Limit Selection -->
                         <label for="limit" class="ml-2">Limit: </label>
-                        <input type="number" wire:model.blur='limit' class="w-16 ml-1">
+                        <input type="number" wire:model.blur='limit' class="w-16 ml-1" min="{{ $limit }}">
                         <button class="search_btn ml-2">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>

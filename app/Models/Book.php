@@ -81,10 +81,10 @@ class Book extends Model implements HasMedia
     public function isAvailable()
     {
         if ($this->is_available) {
-            return '<span class="badge bg-success rounded">'.__('book.available').'</span>';
+            return '<span class="badge bg-success rounded">' . __('book.available') . '</span>';
         }
 
-        return '<span class="badge bg-danger rounded">'.__('book.not_available').'</span>';
+        return '<span class="badge bg-danger rounded">' . __('book.not_available') . '</span>';
     }
 
     public function category()
@@ -155,5 +155,15 @@ class Book extends Model implements HasMedia
         $expiry_date = Carbon::createFromFormat('Y-m-d H:i:s', "$discount->date $discount->start_time")->addHours($discount->time);
 
         return ! $discount->is_active || $expiry_date->isPast();
+    }
+
+    function getPrice()
+    {
+        $discount = $this->getValidDiscount();
+        $bookPrice = $discount
+            ? $this->price - ($this->price * $discount->percentage / 100)
+            : $this->price;
+
+        return $bookPrice;
     }
 }

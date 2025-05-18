@@ -28,7 +28,7 @@ class PaymobService
         $amountCent = $data['price'] * 100;
         $authToken = $this->getAuthToken();
         $order = $this->createOrder($authToken, $amountCent, $order);
-
+        
         // $paymentKey = $this->getPaymentKey($authToken, $order['id'], $amountCent, $data['billing_data']);
         return $order['url'];
         // return $this->getPaymentUrl($paymentKey['token']);
@@ -58,7 +58,7 @@ class PaymobService
             'auth_token' => $authToken,
             'api_source' => 'INVOICE',
             'delivery_needed' => false,
-            'amount_cents' => $amountCents,
+            'amount_cents' => (int) $amountCents,
             'integrations' => $this->integrationIds,
             'currency' => 'EGP',
             'shipping_data' => [

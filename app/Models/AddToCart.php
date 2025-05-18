@@ -34,4 +34,9 @@ class AddToCart extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public  function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
 }

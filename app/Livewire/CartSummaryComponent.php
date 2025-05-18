@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Enum\PaymentTypeEnum;
 use App\Models\UserAddress;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Reactive;
 use Livewire\Component;
 
@@ -38,12 +39,6 @@ class CartSummaryComponent extends Component
         if (Auth::check()) {
             $this->user_addresses = UserAddress::where('user_id', Auth::id())->get();
         }
-        $this->calculateTax();
-        $this->calculateTotal();
-    }
-
-    public function updatedTotal()
-    {
         $this->calculateTax();
         $this->calculateTotal();
     }

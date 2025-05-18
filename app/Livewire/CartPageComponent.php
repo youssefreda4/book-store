@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\AddToCart;
+use App\Models\Book;
 use App\Models\ShippingArea;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -27,6 +28,7 @@ class CartPageComponent extends Component
     public function mount()
     {
         $this->shipping_areas = ShippingArea::select('id', 'name', 'fee')->get();
+        $this->loadCartItems();
         $this->calculateTotal();
     }
 
@@ -37,19 +39,19 @@ class CartPageComponent extends Component
         $this->calculateTotal();
     }
 
-    #[On('update-quantity')]
     public function handleUpdateQuantity($book_id, $quantity)
     {
-        // $user_id = Auth::guard('web')->id();
-        // if ($user_id) {
-        //     AddToCart::where('user_id', $user_id)
-        //         ->where('book_id', $book_id)
-        //         ->update(['quantity' => $quantity]);
-        // } else {
-        //     $cart = Session::get('cart', []);
-        //     $cart[$book_id] = $quantity;
-        //     Session::put('cart', $cart);
-        // }
+        $user_id = Auth::guard('web')->id();
+        if ($user_id) {
+            AddToCart::where('user_id', $user_id)
+                ->where('book_id', $book_id)
+                ->update(['quantity' => $quantity]);
+        } else {
+            $cart = Session::get('cart', []);
+            $cart[$book_id] = $quantity;
+            Session::put('cart', $cart);
+        }
+        $this->loadCartItems();
         $this->calculateTotal();
     }
 
@@ -65,9 +67,22 @@ class CartPageComponent extends Component
         }
     }
 
+    public function loadCartItems()
+    {
+        $user_id = Auth::guard('web')->id();
+        if ($user_id) {
+            $this->cartItems = AddToCart::where('user_id', $user_id)->pluck('quantity', 'book_id')->toArray();
+            $this->books = Book::whereIn('id', array_keys($this->cartItems))->get();
+        } else {
+            $this->cartItems = Session::get('cart', []);
+            $this->books = Book::whereIn('id', array_keys($this->cartItems))->get();
+        }
+    }
+
+
     public function removeBookFromList($book_id)
     {
-        $this->books = $this->books->reject(fn ($b) => $b->id == $book_id);
+        $this->books = $this->books->reject(fn($b) => $b->id == $book_id);
     }
 
     public function calculateTotal()

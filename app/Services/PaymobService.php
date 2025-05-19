@@ -29,9 +29,7 @@ class PaymobService
         $authToken = $this->getAuthToken();
         $order = $this->createOrder($authToken, $amountCent, $order);
         
-        // $paymentKey = $this->getPaymentKey($authToken, $order['id'], $amountCent, $data['billing_data']);
         return $order['url'];
-        // return $this->getPaymentUrl($paymentKey['token']);
     }
 
     public function getAuthToken()
@@ -53,7 +51,6 @@ class PaymobService
             'quantity' => $book->pivot->quantity,
             'description' => $book->description ?? '',
         ])->toArray();
-        // dd($items);
         $response = Http::post($this->baseUrl.'/ecommerce/orders', [
             'auth_token' => $authToken,
             'api_source' => 'INVOICE',
@@ -82,7 +79,7 @@ class PaymobService
             'expiration' => 3600,
             'order_id' => $orderId,
             'currency' => 'EGP',
-            'integration_id' => (int) $this->integrationIds[0],
+            'integration_id' => (int) $this->integrationIds,
             'billing_data' => $billingData,
         ]);
 

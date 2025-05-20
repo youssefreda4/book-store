@@ -29,6 +29,7 @@ class Order extends Model
         'shipping_area_id',
         'user_id',
         'discount',
+        'paymob_order_id',
     ];
 
     public function getRouteKeyName()
@@ -50,7 +51,7 @@ class Order extends Model
 
     public function books()
     {
-        return $this->belongsToMany(Book::class, 'book_orders')->withPivot('applied_discount', 'price', 'quantity');
+        return $this->belongsToMany(Book::class, 'book_orders')->withPivot('applied_discount', 'price', 'quantity')->withTimestamps();
     }
 
     public function getFormattedCreatedAtAttribute()

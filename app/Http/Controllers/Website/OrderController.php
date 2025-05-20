@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Builders\OrderBuilder;
+use App\Enum\PaymentStatusEnum;
 use App\Enum\PaymentTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -32,11 +33,15 @@ class OrderController extends Controller
                 ->setPaymentType(request()->payment_type)
                 ->build();
             if (request()->payment_type == PaymentTypeEnum::Visa->value) {
-                $data['billing_data'] = $this->getBillingData($order);
                 $data['price'] = $order->total;
-                $paymentUrl = $this->paymentService->processPayment($data, $order);
+                $paymentRsponse = $this->paymentService->processPayment($data, $order);
+
+                $order->update([
+                    'paymob_order_id' => $paymentRsponse['paymob_order_id'],
+                ]);
+
                 DB::commit();
-                return redirect()->away($paymentUrl);
+                return redirect()->away($paymentRsponse['url']);
             }
             DB::commit();
             return redirect()->route('front.order.show', $order);
@@ -46,13 +51,29 @@ class OrderController extends Controller
         }
     }
 
-    function getBillingData($order)
+    public function callback()
     {
-        return [
-            "first_name" => $order->user->first_name,
-            "last_name" => $order->user->last_name,
-            "email" => $order->user->email,
-            "city" => $order->address,
-        ];
+        $response = request()->all();
+
+        if (!isset($response['success'], $response['order'], $response['id'])) {
+            return redirect()->route('front.home.index')->with('error', 'Invalid data from payment gateway');
+        }
+
+        if ($response['success'] === 'true') {
+            $order = Order::where('paymob_order_id', $response['order'])->first();
+
+            if (!$order) {
+                return redirect()->route('front.home.index')->with('error', 'Order not found');
+            }
+
+            $order->update([
+                'payment_status' => PaymentStatusEnum::Paid->value,
+                'transaction_reference' => $response['id'],
+            ]);
+
+            return redirect()->route('front.order.show', $order)
+                ->with('success', 'Payment has been completed successfully. Thank you for shopping with us.');
+        }
+        return redirect()->route('front.home.index')->with('error', 'Payment failed.');
     }
 }

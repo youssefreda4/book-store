@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
+use App\Interfaces\PaymentServiceInterface;
 use Illuminate\Support\Facades\Http;
 
-class PaymobService
+class PaymobService implements PaymentServiceInterface
 {
     protected $apiKey;
 
@@ -23,18 +24,21 @@ class PaymobService
     }
 
     // Step 1: Get authentication token
-    public function processPayment($data, $order)
+    public function processPayment($data, $order): array
     {
         $amountCent = $data['price'] * 100;
         $authToken = $this->getAuthToken();
         $order = $this->createOrder($authToken, $amountCent, $order);
-        
-        return $order['url'];
+
+        return [
+            'url' => $order['url'],
+            'paymob_order_id' => $order['id'],
+        ];
     }
 
-    public function getAuthToken()
+    public function getAuthToken(): string
     {
-        $response = Http::post($this->baseUrl.'/auth/tokens', [
+        $response = Http::post($this->baseUrl . '/auth/tokens', [
             'api_key' => $this->apiKey,
         ]);
 
@@ -42,28 +46,23 @@ class PaymobService
     }
 
     // Step 2: Register order
-    public function createOrder($authToken, $amountCents, $order)
+    public function createOrder($authToken, $amountCents, $order): array
     {
 
-        $items = $order->books->map(fn ($book) => [
+        $items = $order->books->map(fn($book) => [
             'name' => $book->name,
             'amount_cents' => (int) ($book->pivot->price_after_discount * 100) * $book->pivot->quantity,
             'quantity' => $book->pivot->quantity,
             'description' => $book->description ?? '',
         ])->toArray();
-        $response = Http::post($this->baseUrl.'/ecommerce/orders', [
+        $response = Http::post($this->baseUrl . '/ecommerce/orders', [
             'auth_token' => $authToken,
             'api_source' => 'INVOICE',
             'delivery_needed' => false,
             'amount_cents' => (int) $amountCents,
             'integrations' => $this->integrationIds,
             'currency' => 'EGP',
-            'shipping_data' => [
-                'first_name' => $order->user->first_name,
-                'last_name' => $order->user->last_name,
-                'email' => $order->user->email,
-                'phone_number' => $order->user->phone,
-            ],
+            'shipping_data' => $this->buildBillingData($order),
             'items' => $items,
         ]);
 
@@ -71,11 +70,11 @@ class PaymobService
     }
 
     // Step 3: Get Payment Key
-    public function getPaymentKey($authToken, $orderId, $amountCents, $billingData)
+    public function getPaymentKey($authToken, $orderId, $amountCents, $billingData): array
     {
         $response = Http::post('https://accept.paymob.com/api/acceptance/payment_keys', [
             'auth_token' => $authToken,
-            'amount_cents' => $amountCents,
+            'amount_cents' => (int) $amountCents,
             'expiration' => 3600,
             'order_id' => $orderId,
             'currency' => 'EGP',
@@ -87,8 +86,28 @@ class PaymobService
     }
 
     // Step 4: Get Payment URL
-    public function getPaymentUrl($paymentKey)
+    public function getPaymentUrl($paymentKey): string
     {
         return "https://accept.paymob.com/api/acceptance/iframes/{$this->iframeId}?payment_token={$paymentKey}";
+    }
+
+    public function buildBillingData($order): array
+    {
+        return [
+            'first_name'   => $order->user->first_name,
+            'last_name'    => $order->user->last_name,
+            'email'        => $order->user->email,
+            'phone_number' => $order->user->phone,
+            "email" => $order->user->email,
+            "city" => $order->address,
+            'apartment'    => 'NA',
+            'floor'        => 'NA',
+            'street'       => 'NA',
+            'building'     => 'NA',
+            'country'      => 'EG',
+            'state'        => 'NA',
+            'postal_code' => 'NA',
+            'extra_description' => 'NA',
+        ];
     }
 }

@@ -84,7 +84,7 @@
                         @if ($order->discount)
                         <div class="d-flex justify-content-between mb-5">
                             <p class="text-muted mb-0"></p>
-                            <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> ${{$order->discount}}
+                            <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> %{{$order->discount}}
                             </p>
                         </div>
                         @endif

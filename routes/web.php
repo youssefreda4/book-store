@@ -51,7 +51,8 @@ Route::name('front.')->group(function () {
     });
 
     Route::get('/pay', [PaymentController::class, 'pay']);
-    Route::get('/callback', [PaymentController::class, 'callback']);
+    // Route::get('/callback', [PaymentController::class, 'callback']);
+    Route::get('/callback', [OrderController::class, 'callback']);
     require __DIR__ . '/auth.php';
 });
 

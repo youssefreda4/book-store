@@ -28,18 +28,7 @@ class PaymentController extends Controller
         $order = $this->paymobService->createOrder($authToken, $amountCents, $orderData);
 
         // Step 3: Generate Payment Key
-        $billingData = [
-            'first_name' => 'John',
-            'last_name' => 'Doe',
-            'email' => 'john.doe@example.com',
-            'phone_number' => '+201234567890',
-            'city' => 'Cairo',
-            'country' => 'EG',
-            'street' => 'NA',
-            'building' => 'NA',
-            'floor' => 'NA',
-            'apartment' => 'NA',
-        ];
+        $billingData = $this->paymobService->buildBillingData($order);
         $paymentKey = $this->paymobService->getPaymentKey($authToken, $order['id'], $amountCents, $billingData);
 
         // Step 4: Redirect to Payment Page

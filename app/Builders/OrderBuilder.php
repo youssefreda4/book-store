@@ -121,7 +121,6 @@ class OrderBuilder
                     'price' => $book['price'],
                     'applied_discount' => $book['discount'] ?? 0,
                     'price_after_discount' => $book['price_with_discount'],
-                    'created_at' => Carbon::now(),
                 ]);
             }
 

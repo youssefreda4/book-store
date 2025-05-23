@@ -20,7 +20,7 @@
             @if($books->isNotEmpty())
             <div class="list-group" style="max-height: 300px; overflow-y: auto;">
                 @foreach($books as $book)
-                <a href="#" class="list-group-item list-group-item-action">
+                <a href="{{ route('front.books.show',$book['slug']) }}" class="list-group-item list-group-item-action">
                     {{ $book['text'] }}
                 </a>
                 @endforeach

@@ -21,6 +21,7 @@ Route::name('front.')->group(function () {
 
     Route::name('books.')->prefix('books')->controller(BookController::class)->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/{book}', 'show')->name('show');
     });
 
     Route::name('about.')->controller(AboutController::class)->group(function () {

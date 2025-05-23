@@ -1,110 +1,21 @@
-<div class="row">
-    <div class="col-12 col-lg-3">
-        <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Categories
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body d-flex flex-column gap-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex gap-3 align-items-center">
-                                <input type="checkbox" name="categories" id="categories" />
-                                <label for="categories">All Categories</label>
-                            </div>
-                            <p>({{ $this->categories->count() }})</p>
-                        </div>
-                        @foreach ($this->categories as $category)
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex gap-3 align-items-center">
-                                <input type="checkbox" value="{{ $category->id }}" wire:model.live="categories_id" />
-                                <label for="business">{{$category->name}}</label>
-                            </div>
-                            <p>({{$category->books_count}})</p>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item my-3">
-                <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Publisher
-                    </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body d-flex flex-column gap-3">
-                        @foreach ($this->publishers as $publisher)
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex gap-3 align-items-center">
-                                <input type="checkbox" value="{{ $publisher->id }}" wire:model.live="publishers_id" />
-                                <label for="business">{{$publisher->name}}</label>
-                            </div>
-                            <p>({{$publisher->books_count}})</p>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        Year
-                    </button>
-                </h2>
-                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <div class="mb-3">
-                            <label for="startYear" class="form-label">Start Year</label>
-                            <input type="number" class="form-control" id="startYear" wire:model.blur="start_year"
-                                placeholder="e.g. 2015">
-                        </div>
-                        <div class="mb-3">
-                            <label for="endYear" class="form-label">End Year</label>
-                            <input type="number" class="form-control" id="endYear" wire:model.blur="end_year"
-                                placeholder="e.g. 2025">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-lg-9">
-        <div class="swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide swiper-slide_category active">
-                    Business
-                </div>
-                <div class="swiper-slide swiper-slide_category">Self Help</div>
-                <div class="swiper-slide swiper-slide_category">History</div>
-                <div class="swiper-slide swiper-slide_category">Romance</div>
-                <div class="swiper-slide swiper-slide_category">Fantasy</div>
-                <div class="swiper-slide swiper-slide_category">Art</div>
-                <div class="swiper-slide swiper-slide_category">Kids</div>
-                <div class="swiper-slide swiper-slide_category">Music</div>
-                <div class="swiper-slide swiper-slide_category">Cooking</div>
-            </div>
-        </div>
-        @foreach ($books as $book)
+@extends('website.layouts.main')
+@push('css')
+<link rel="stylesheet" href="{{ asset('front-assets') }}/css/books.css" />
+@endpush
+@section('title', 'Book')
+
+@section('content')
+<section class="library my-5">
+    <div class="container">
         <div class="row books_book">
             <div class="col-lg-3">
-                <a href="{{ route('front.books.show',$book->slug) }}">
-                    <div class="book_image">
-                        @if (empty($book->getFirstMediaUrl('book', 'preview')))
-                        <img src="https://dummyimage.com/512x768/000/fff" alt="" class="w-100 h-100" />
-                        @else
-                        <img src="{{  $book->getFirstMediaUrl('book', 'preview') }}" alt="" class="w-100 h-100" />
-                        @endif
-                    </div>
-                </a>
+                <div class="book_image">
+                    @if (empty($book->getFirstMediaUrl('book', 'preview')))
+                    <img src="https://dummyimage.com/512x768/000/fff" alt="" class="w-100 h-100" />
+                    @else
+                    <img src="{{  $book->getFirstMediaUrl('book', 'preview') }}" alt="" class="w-100 h-100" />
+                    @endif
+                </div>
             </div>
             <div class="col-12 col-lg-9">
                 <div class="book_detailes">
@@ -214,7 +125,6 @@
                 </div>
             </div>
         </div>
-        @endforeach
     </div>
-    {{$books->links()}}
-</div>
+</section>
+@endsection

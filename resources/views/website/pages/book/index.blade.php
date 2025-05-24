@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="{{ asset('front-assets') }}/css/books.css" />
 @endpush
-@section('title', 'Library')
+@section('title', __('website/books.library'))
 
 @section('content')
     <section class="library my-5">

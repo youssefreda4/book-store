@@ -2,6 +2,8 @@
 
 
 return [
+    'home' => 'Home',
+
     'search' => 'Search',
     'limit' => 'Limit',
 

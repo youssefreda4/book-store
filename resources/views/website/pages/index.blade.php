@@ -2,7 +2,7 @@
 @push('css')
 <link rel="stylesheet" href="{{ asset('front-assets') }}/css/home.css" />
 @endpush
-@section('title', 'Home')
+@section('title', __('website/home.home'))
 @section('hero_content')
 @livewire('home-search-component')
 @endsection

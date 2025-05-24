@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'library' => 'Library',
     'categories' => 'Categories',
     'all_categories' => 'All Categories',
     'publisher' => 'Publisher',

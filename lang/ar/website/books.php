@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'library' => 'المكتبة',
     'categories' => 'الفئات',
     'all_categories' => 'كل الفئات',
     'publisher' => 'الناشر',

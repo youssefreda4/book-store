@@ -83,6 +83,14 @@ body {
   color: #fff;
 }
 
+.recommended_card__rate span, .review, .rate .rate-value{
+    font-size: 14px;
+    color: #ff0000fb;
+    font-weight: 400;
+    margin: 0;
+}
+
+
 @media (max-width: 768px) {
   .book_detailes div {
     flex-wrap: wrap;

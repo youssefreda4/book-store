@@ -12,11 +12,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-Route::name('front.')->group(function () {
+Route::name('front.')->middleware('front')->group(function () {
 
-    Route::controller(HomeController::class)->group(function () {
-        Route::get('/', 'index')->name('home.index');
-        Route::get('/search', 'searchForBooks')->name('home.search');
+    Route::name('home.')->controller(HomeController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/search', 'searchForBooks')->name('search');
+        Route::get('change-language/{lang}', 'changeLanguage')->name('change.language');
     });
 
     Route::name('books.')->prefix('books')->controller(BookController::class)->group(function () {

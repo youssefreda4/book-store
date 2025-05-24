@@ -1,5 +1,13 @@
+@php
+$locale = App::getLocale();
+$dir = 'ltr';
+if ($locale === 'ar') {
+    $dir = 'rtl';
+}
+@endphp
+
 <!DOCTYPE html>
-<html lang="en">
+<html dir="{{ $dir }}" lang="{{ $locale }}">
 
 @include('website.layouts.header')
 

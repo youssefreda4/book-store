@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\BookInteraction;
 use App\Models\UserPrefrence;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -30,9 +32,12 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
 
+        $now = Carbon::now()->format('Y-m-d H:i:s');
+
         $books = Book::with('author', 'media')->where('discountable_type', 'App\Models\FlashSale')
             ->join('flash_sales', 'flash_sales.id', '=', 'books.discountable_id')
             ->where('flash_sales.is_active', true)
+            ->whereRaw("DATE_ADD(CONCAT(flash_sales.date, ' ', flash_sales.start_time), INTERVAL flash_sales.time HOUR) > ?", [$now])
             ->get();
 
         $recommended_books = collect([]);
@@ -51,7 +56,7 @@ class HomeController extends Controller
             ->orWhereHas('author', function ($query) use ($userId) {
                 $query->whereIn('id', UserPrefrence::where('user_id', $userId)->pluck('author_id'));
             })
-            ->select('id', 'name', 'description', 'rate', 'price', 'author_id')
+            ->select('id', 'slug', 'name', 'quantity' ,'description', 'rate', 'price', 'author_id')
             ->whereNotIn('id', $interests)
             ->inRandomOrder()
             ->limit(10)
@@ -75,7 +80,7 @@ class HomeController extends Controller
                 });
             // ->where('rate', '>=', 4);
         })
-            ->select('id', 'name', 'description', 'rate', 'price', 'author_id')
+            ->select('id', 'slug', 'name', 'quantity' ,'description', 'rate', 'price', 'author_id')
             ->whereNotIn('id', $interests)
             ->orderByDesc('rate')
             ->limit(10)
@@ -103,7 +108,7 @@ class HomeController extends Controller
     {
         ['search' => $searchParam, 'limit' => $limit] = $request->all();
         $nameMatches = $this->searchBooksByName($searchParam, $limit);
-        $nameMatches = $nameMatches->map(fn ($book) => ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->name]);
+        $nameMatches = $nameMatches->map(fn($book) => ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->name]);
 
         $remainingCount = $limit - $nameMatches->count();
         if ($remainingCount) {
@@ -114,7 +119,7 @@ class HomeController extends Controller
 
                 foreach ($sentences as $sentence) {
                     if (stripos($sentence, $searchParam) !== false) {
-                        $book->text = $book->name.' - '.$sentence;
+                        $book->text = $book->name . ' - ' . $sentence;
                     }
                 }
 
@@ -127,7 +132,7 @@ class HomeController extends Controller
         $remainingCount = $limit - $books->count();
         if ($remainingCount) {
             $authorMatches = $this->searchBooksByAuthors($searchParam, $remainingCount);
-            $authorMatches = $authorMatches->map(fn ($book) => [
+            $authorMatches = $authorMatches->map(fn($book) => [
                 'id' => $book->id,
                 'slug' => $book->slug,
                 'text' => "{$book->name} By {$book->author_name}",
@@ -180,8 +185,16 @@ class HomeController extends Controller
     public function searchForBooksUsingFulltext()
     {
         ['search' => $searchParam, 'limit' => $limit] = request()->all();
-        $books = Book::search($searchParam)->select('id', 'slug', 'name_'.$this->locale, 'description_'.$this->locale)->limit($limit)->get();
+        $books = Book::search($searchParam)->select('id', 'slug', 'name_' . $this->locale, 'description_' . $this->locale)->limit($limit)->get();
 
         return $books;
+    }
+
+    public function changeLanguage($lang)
+    {
+        if (in_array($lang, ['en', 'ar'])) {
+            Session::put('locale', $lang);
+        }
+        return redirect()->back();
     }
 }

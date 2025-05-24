@@ -157,6 +157,33 @@ class Book extends Model implements HasMedia
         return ! $discount->is_active || $expiry_date->isPast();
     }
 
+    public function getFlashSaleRemainingTimeFormatted($discount)
+    {
+        try {
+            $startDateTime = Carbon::createFromFormat('Y-m-d H:i:s', $discount->date . ' ' . $discount->start_time);
+            $expiryDateTime = $startDateTime->copy()->addHours($discount->time);
+            $now = Carbon::now();
+
+            if (!$discount->is_active) {
+                return '00:00:00';
+            }
+
+            $remainingSeconds = $now->diffInSeconds($expiryDateTime, false);
+
+            if ($remainingSeconds <= 0) {
+                return '00:00:00';
+            }
+
+            $h = floor($remainingSeconds / 3600);
+            $m = floor(($remainingSeconds % 3600) / 60);
+            $s = $remainingSeconds % 60;
+
+            return sprintf('%02d:%02d:%02d', $h, $m, $s);
+        } catch (\Exception $e) {
+            return '00:00:00';
+        }
+    }
+
     function getPrice()
     {
         $discount = $this->getValidDiscount();

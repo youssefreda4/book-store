@@ -29,7 +29,7 @@ class HomeSearchComponent extends Component
         }
 
         $nameMatches = $this->searchBooksByName($searchParam, $this->limit);
-        $nameMatches = $nameMatches->map(fn ($book) => ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->name]);
+        $nameMatches = $nameMatches->map(fn($book) => ['id' => $book->id, 'slug' => $book->slug, 'text' => $book->name]);
 
         $remainingCount = $limit - $nameMatches->count();
         if ($remainingCount) {
@@ -40,7 +40,7 @@ class HomeSearchComponent extends Component
 
                 foreach ($sentences as $sentence) {
                     if (stripos($sentence, $searchParam) !== false) {
-                        $book->text = $book->name.' - '.$sentence;
+                        $book->text = $book->name . ' - ' . $sentence;
                     }
                 }
 
@@ -53,7 +53,7 @@ class HomeSearchComponent extends Component
         $remainingCount = $limit - $books->count();
         if ($remainingCount) {
             $authorMatches = $this->searchBooksByAuthors($searchParam, $remainingCount);
-            $authorMatches = $authorMatches->map(fn ($book) => [
+            $authorMatches = $authorMatches->map(fn($book) => [
                 'id' => $book->id,
                 'slug' => $book->slug,
                 'text' => "{$book->name} By {$book->author_name}",
@@ -69,7 +69,12 @@ class HomeSearchComponent extends Component
     {
         return DB::table('books')
             ->whereLike('name', "%$search%")
-            ->selectRaw("id , JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"{$this->getLocale()}\"')) as name  ,slug")
+            ->selectRaw("id ,
+             COALESCE(
+                JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"{$this->getLocale()}\"')),
+                JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"en\"'))
+            ) as name
+            ,slug")
             ->limit($limit)
             ->get();
     }
@@ -80,9 +85,15 @@ class HomeSearchComponent extends Component
             ->whereLike('description', "%$search%")
             ->selectRaw(
                 "id ,
-                JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"{$this->getLocale()}\"')) as name,
+                COALESCE(
+                    JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"{$this->getLocale()}\"')),
+                    JSON_UNQUOTE(JSON_EXTRACT(name, '$.\"en\"'))
+                )  as name,
                 slug ,
-                JSON_UNQUOTE(JSON_EXTRACT(description, '$.\"{$this->getLocale()}\"')) as description"
+                COALESCE(
+                    JSON_UNQUOTE(JSON_EXTRACT(description, '$.\"{$this->getLocale()}\"')),
+                    JSON_UNQUOTE(JSON_EXTRACT(description, '$.\"en\"'))
+                ) as description"
             )
             ->limit($count)
             ->get();
@@ -95,9 +106,15 @@ class HomeSearchComponent extends Component
             ->whereLike('authors.name', "%$search%")
             ->selectRaw(
                 "books.id as id ,
-                JSON_UNQUOTE(JSON_EXTRACT(books.name, '$.\"{$this->getLocale()}\"')) as name,
+                 COALESCE(
+                    JSON_UNQUOTE(JSON_EXTRACT(books.name, '$.\"{$this->getLocale()}\"')),
+                    JSON_UNQUOTE(JSON_EXTRACT(books.name, '$.\"en\"'))
+                ) as name,
                 books.slug as slug, 
-                JSON_UNQUOTE(JSON_EXTRACT(authors.name, '$.\"{$this->getLocale()}\"')) as author_name"
+                COALESCE(
+                    JSON_UNQUOTE(JSON_EXTRACT(authors.name, '$.\"{$this->getLocale()}\"')),
+                    JSON_UNQUOTE(JSON_EXTRACT(authors.name, '$.\"en\"'))
+                ) as author_name"
             )
             ->limit($count)
             ->get();

@@ -13,7 +13,7 @@ body {
 
 .search_input {
   background-color: #fff;
-  padding-left: 1rem;
+  /* padding-left: 1rem; */
   border-radius: 50px;
   overflow: hidden;
   width: 500px;
@@ -93,6 +93,21 @@ body {
 
 /* recommended */
 
+.recommended_card {
+  height: 320px;    
+  display: flex;  
+  gap: 1.5rem;   
+  padding: 1rem;   
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.recomended_card__image {
+  flex: 0 0 140px;  
+  height: 100%;
+  overflow: hidden;
+}
+
 .recomended_card__image {
   height: 100%;
   width: 100%;
@@ -101,7 +116,7 @@ body {
 .recomended_card__image img {
   height: 100%;
   width: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 .recommended_title {
   font-size: 26px;
@@ -155,6 +170,52 @@ body {
   flex-grow: 1;
 }
 
+
+.recommended_card__rate span, .review, .rate .rate-value{
+    font-size: 14px;
+    color: #ff0000fb;
+    font-weight: 400;
+    margin: 0;
+}
+
+.books-sale_card {
+  position: relative;
+  background: #1e1e2f;
+  border-radius: 12px;
+  color: #fff;
+  overflow: hidden;
+}
+
+.countdown-timer {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(255, 69, 58, 0.85); /* لون أحمر شبه شفاف */
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-align: center;
+  min-width: 90px;
+  font-family: 'Courier New', Courier, monospace;
+  box-shadow: 0 0 8px rgba(255, 69, 58, 0.7);
+  user-select: none;
+}
+
+.countdown-timer p.countdown {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.countdown-label {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 2px;
+  color: #ffb3ab;
+  font-weight: 600;
+  text-transform: uppercase;
+}
 
 
 

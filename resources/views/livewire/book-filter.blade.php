@@ -168,22 +168,22 @@
 
                                     {{-- Cart --}}
                                     @if ($book->quantity)
-                                    @if ( session()->get('cart')[$book->id] ?? false || $book->cartForCurrentUser)
-                                    <span class="text-center main_btn light cart-btn w-50">
-                                        Added To Cart
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                    </span>
+                                        @if ( session()->get('cart')[$book->id] ?? false || $book->cartForCurrentUser)
+                                            <span class="text-center main_btn light cart-btn w-50">
+                                                Added To Cart
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            </span>
+                                        @else
+                                            <form action="{{ route('front.cart.add',$book) }}" method="POST">
+                                                @csrf
+                                                <button class="text-center main_btn cart-btn w-100  flex-grow-1">
+                                                    <span>Add To Cart</span>
+                                                    <i class="fa-solid fa-cart-shopping"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                     @else
-                                    <form action="{{ route('front.cart.add',$book) }}" method="POST">
-                                        @csrf
-                                        <button class="text-center main_btn cart-btn w-100  flex-grow-1">
-                                            <span>Add To Cart</span>
-                                            <i class="fa-solid fa-cart-shopping"></i>
-                                        </button>
-                                    </form>
-                                    @endif
-                                    @else
-                                    <span class="text-center main_btn light cart-btn w-50">Not Available</span>
+                                        <span class="text-center main_btn light cart-btn w-50">Not Available</span>
                                     @endif
 
                                     {{-- Favorite --}}

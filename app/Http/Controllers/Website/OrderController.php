@@ -15,8 +15,22 @@ class OrderController extends Controller
 {
     public function __construct(public PaymobService $paymentService) {}
 
-    function show(Order $order)
+    public function index()
     {
+        $userId = auth('web')->id();
+        $status = request()->input('status', 'all');
+        $query = Order::where('user_id', $userId);
+
+        if ($status !== 'all') {
+            $query->where('status', $status);
+        }
+        $orders = $query->paginate()->appends(['status' => $status]);
+        return view('website.pages.order.index', compact('orders', 'status'));
+    }
+
+    public function show(Order $order)
+    {
+        $order->load(['books.author', 'books.category', 'books.media']);
         return view('website.pages.order.order-details', compact('order'));
     }
 

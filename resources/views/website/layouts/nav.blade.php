@@ -48,7 +48,7 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="profile.html">{{ __('website/nav.profile') }}</a></li>
-                            <li><a class="dropdown-item" href="orders.html">{{ __('website/nav.order_history') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('front.order.index') }}">{{ __('website/nav.order_history') }}</a></li>
                             <li>
                                 <form method="POST" action="{{ route('front.auth.logout') }}">
                                     @csrf

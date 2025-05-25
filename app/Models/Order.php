@@ -75,6 +75,9 @@ class Order extends Model
             OrderStatusEnum::Pending => 30,
             OrderStatusEnum::OutForDelivery => 60,
             OrderStatusEnum::Delivered => 100,
+            OrderStatusEnum::Confirmed => 80,
+            OrderStatusEnum::Cancelled => 0,
+            default => 0,
         };
     }
 

@@ -2,16 +2,16 @@
     <div class="container">
         <div class="row py-4 table_head">
             <div class="col-5">
-                <p>Item</p>
+                <p>{{__('website/cart-list.item')}}</p>
             </div>
             <div class="col-2">
-                <p>Quantity</p>
+                <p>{{__('website/cart-list.quantity')}}</p>
             </div>
             <div class="col-2">
-                <p>Price</p>
+                <p>{{__('website/cart-list.price')}}</p>
             </div>
             <div class="col-3">
-                <p>Total Price</p>
+                <p>{{__('website/cart-list.total_price')}}</p>
             </div>
         </div>
 
@@ -23,7 +23,7 @@
                     <div class="container">
                         <div class="col-12">
                             <h1 class="text-center text-danger fw-bold display-4">
-                                No Book Added Yet!
+                               {{__('website/cart-list.no_books')}}
                             </h1>
                         </div>
                     </div>

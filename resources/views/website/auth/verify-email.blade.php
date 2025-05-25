@@ -3,14 +3,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="{{ asset('front-assets') }}/css/books.css" />
 @endpush
-@section('title', 'OTP')
+@section('title', __('website/auth.verify_email'))
 
 @section('content')
 <section class="library my-5">
     <div class="container">
         <section class="py-5">
             <div class="container">
-                <p class="text-center main_text fw-bold py-4">Verify Your Email</p>
+                <p class="text-center main_text fw-bold py-4">{{  __('website/auth.verify_your_email') }}</p>
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-6">
 
@@ -24,7 +24,7 @@
                             @endforeach
                         @endif
 
-                        <p class="text-center text-muted mb-4">Enter the 6-digit OTP sent to your email</p>
+                        <p class="text-center text-muted mb-4">{{  __('website/auth.enter_the_six_digit_otp_sent_to_your_email') }}</p>
 
                         <form id="otpForm" action="{{ route('front.auth.email.send.verify') }}" method="POST">
                             @csrf
@@ -45,7 +45,7 @@
                             </div>
 
                             <div class="d-flex justify-content-center">
-                                <button type="submit" class="main_btn px-5">Verify</button>
+                                <button type="submit" class="main_btn px-5">{{  __('website/auth.verify') }}</button>
                             </div>
                         </form>
 

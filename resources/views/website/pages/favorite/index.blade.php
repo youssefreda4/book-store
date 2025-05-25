@@ -1,27 +1,32 @@
 @extends('website.layouts.main')
+
 @push('css')
 <link rel="stylesheet" href="{{ asset('front-assets') }}/css/wishlist.css" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endpush
-@section('title', 'Favorite')
+
+@section('title', __('website/favorite.title'))
 
 @section('content')
 
 @if($books->isNotEmpty())
+@php
+$locale = app()->getLocale();
+@endphp
 <section class="my-5">
     <div class="container">
         <div class="row py-4 table_head">
             <div class="col-5">
-                <p>Item</p>
+                <p>{{ __('website/favorite.item') }}</p>
             </div>
             <div class="col-2">
-                <p>Quantity</p>
+                <p>{{ __('website/favorite.quantity') }}</p>
             </div>
             <div class="col-2">
-                <p>Price</p>
+                <p>{{ __('website/favorite.price') }}</p>
             </div>
             <div class="col-3">
-                <p>Total Price</p>
+                <p>{{ __('website/favorite.total_price') }}</p>
             </div>
         </div>
 
@@ -39,16 +44,14 @@
                         <div class="item-description d-flex flex-column gap-2">
                             <p class="fw-bold">{{ $book->name }}</p>
                             <p class="description">
-                                Author:
+                                {{ __('website/favorite.author') }}
                                 <span class="fw-bold text-dark">{{ $book->author->name }}</span>
                             </p>
-                            <p class="description book-description">
-                                {{ $book->description }}
-                            </p>
+                            <p class="description book-description">{{ $book->description }}</p>
                             <div class="dlivery d-flex gap-3">
                                 <img src="{{ asset('front-assets') }}/images/shipping.png" alt="" width="20"
                                     height="20" />
-                                <p class="description">Free Shipping Today</p>
+                                <p class="description">{{ __('website/favorite.free_shipping') }}</p>
                             </div>
                             @php
                             $discount = $book->getValidDiscount();
@@ -59,8 +62,10 @@
                             </div>
                             <p class="description">
                                 @if ($discount->code)
-                                <span class="sell-code description fw-bold fs-5"> Discount code :</span> {{
-                                $discount->code}}
+                                <span class="sell-code description fw-bold fs-5">
+                                    {{ __('website/favorite.discount_code') }} :
+                                </span>
+                                {{ $discount->code }}
                                 @endif
                             </p>
                             @endif
@@ -87,7 +92,7 @@
                             @csrf
                             <button class="fs-5 del-item border-0 bg-transparent text-danger">
                                 <i class="fa-solid fa-trash-can main_text"></i>
-                                <p class="remove">Remove</p>
+                                <p class="remove">{{ __('website/favorite.remove') }}</p>
                             </button>
                         </form>
                     </div>
@@ -95,48 +100,41 @@
                 @endforeach
             </div>
 
-            <div class="d-flex gap-3 justify-content-center mt-4 flex-wrap ">
-                {{-- @dd($books) --}}
+            <div class="d-flex gap-3 justify-content-center mt-4 flex-wrap">
                 <form action="{{ route('front.favorite.move') }}" method="POST" class="w-50">
                     @csrf
                     @foreach ($books as $book)
-                        <input type="hidden" name="books[]" value="{{ $book->slug }}">
+                    <input type="hidden" name="books[]" value="{{ $book->slug }}">
                     @endforeach
                     <button
-                        class="main_btn d-flex  justify-content-between align-items-center col-12 col-md-5 col-lg-4 w-100">
-                        <div>
-                            <div class="checkout-btn">
-                                <p>{{ $books->count() }} Item</p>
-                                <p class="subtotal-amount"></p>
-                            </div>
+                        class="main_btn d-flex justify-content-between align-items-center col-12 col-md-5 col-lg-4 w-100">
+                        <div class="checkout-btn">
+                            <p>{{ __('website/favorite.items_count', ['count' =>
+                                translateNumberToLocale($locale,$books->count(),0)]) }}</p>
+                            <p class="subtotal-amount"></p>
                         </div>
                         <div>
-                            <p class="fs-6 fw-bold"> Move to cart</p>
+                            <p class="fs-6 fw-bold">{{ __('website/favorite.move_to_cart') }}</p>
                         </div>
-                        <div class="arrow-icon">
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </div>
+                        <div class="arrow-icon"><i class="fa-solid fa-arrow-right"></i></div>
                     </button>
                 </form>
             </div>
         </div>
     </div>
 </section>
-
-
 @else
-
 <section class="my-5 d-flex justify-content-center align-items-center" style="min-height: 50vh;">
     <div class="container">
         <div class="col-12">
             <h1 class="text-center text-danger fw-bold display-4">
-                No Book Added Yet!
+                {{ __('website/favorite.no_books') }}
             </h1>
         </div>
     </div>
 </section>
-
 @endif
+
 @endsection
 
 @push('js')
@@ -153,7 +151,7 @@
 
         const subtotalAmount= document.querySelector('.subtotal-amount');
         
-        if (subtotalAmount) subtotalAmount.textContent = `$${(subtotal || 0).toFixed(2)}`;
+        if (subtotalAmount) subtotalAmount.textContent = $${(subtotal || 0).toFixed(2)};
     }
     
     document.querySelectorAll('.item-cart').forEach(cartItem => {
@@ -168,12 +166,12 @@
 
         function calcTotalPrice() {
             const finalPrice = quantity * bookPriceValue;
-            totalPrice.textContent = `$${finalPrice.toFixed(2)}`;
+            totalPrice.textContent = $${finalPrice.toFixed(2)};
             updateCartTotal()
         }
 
         const bookSlug = cartItem.querySelector('#book').value;
-        const updateCartUrl =  `/favorite/item/${bookSlug}`
+        const updateCartUrl =  /favorite/item/${bookSlug}
         
         increment.addEventListener('click', () => {
             quantity++;
@@ -234,5 +232,4 @@
 
     updateCartTotal()
 </script>
-
 @endpush

@@ -16,6 +16,7 @@ use App\Http\Controllers\Dashboard\ShippingAreaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 Route::middleware('dashboard')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('index');
     Route::get('change-language/{lang}', [HomeController::class, 'changeLanguage'])->name('change.language');

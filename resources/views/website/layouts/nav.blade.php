@@ -40,19 +40,29 @@
                 @auth
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
-                            <img src="{{ auth()->user()->image ?? 'https://fakeimg.pl/100x100' }}" alt="Profile" class="rounded-circle" width="40" height="40">
+                            @php
+                                $image = null;
+                                if(auth()->user()->getFirstMediaUrl('profile')){
+                                    $image = auth()->user()->getFirstMediaUrl('profile');
+                                }elseif (!auth()->user()->image) {
+                                  $image = 'https://fakeimg.pl/100x100';
+                                }else {
+                                    $image = auth()->user()->image;
+                                }
+                            @endphp
+                            <img src="{{ $image }}" alt="Profile" class="rounded-circle" width="40" height="40">
                             <div class="text-start">
                                 <div class="fw-bold">{{ auth()->user()->username }}</div>
                                 <div class="small text-muted">{{ auth()->user()->email }}</div>
                             </div>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="profile.html">{{ __('website/nav.profile') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('front.profile.index') }}">{{ __('website/nav.profile') }}</a></li>
                             <li><a class="dropdown-item" href="{{ route('front.order.index') }}">{{ __('website/nav.order_history') }}</a></li>
                             <li>
                                 <form method="POST" action="{{ route('front.auth.logout') }}">
                                     @csrf
-                                    <button class="dropdown-item">{{ __('website/nav.log_out') }}</button>
+                                    <button class="dropdown-item text-danger">{{ __('website/nav.log_out') }}</button>
                                 </form>
                             </li>
                         </ul>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Website\FavoriteController;
 use App\Http\Controllers\Website\HomeController;
 use App\Http\Controllers\Website\OrderController;
 use App\Http\Controllers\Website\PaymentController;
+use App\Http\Controllers\Website\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,16 +48,23 @@ Route::name('front.')->middleware('front')->group(function () {
         Route::post('item/move/cart', 'moveToCart')->name('move');
     });
 
-    Route::name('order.')->prefix('order')->controller(OrderController::class)->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::post('/', 'create')->name('create');
-        Route::get('/{order:number}', 'show')->name('show');
-    });
+    Route::middleware(['guest.redirect'])->group(function () {
+        Route::name('order.')->prefix('order')->controller(OrderController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'create')->name('create');
+            Route::get('/{order:number}', 'show')->name('show');
+        });
 
-    Route::get('/pay', [PaymentController::class, 'pay']);
-    // Route::get('/callback', [PaymentController::class, 'callback']);
-    Route::get('/callback', [OrderController::class, 'callback']);
-    require __DIR__ . '/auth.php';
+        Route::name('profile.')->prefix('profile')->controller(ProfileController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::put('/', 'update')->name('update');
+        });
+
+        Route::get('/pay', [PaymentController::class, 'pay']);
+        // Route::get('/callback', [PaymentController::class, 'callback']);
+        Route::get('/callback', [OrderController::class, 'callback']);
+    });
 });
+require __DIR__ . '/auth.php';
 
 // Auth::routes();

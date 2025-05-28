@@ -7,6 +7,7 @@ use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -42,6 +43,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'guest.redirect' => RedirectGuestToLogin::class,
             'authenticated' => RedirectIfAuthenticated::class,
         ]);
+        $middleware->redirectGuestsTo(function () {
+            return redirect('/login');
+        });
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

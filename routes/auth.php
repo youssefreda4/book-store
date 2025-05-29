@@ -9,7 +9,7 @@ use App\Http\Controllers\Website\Auth\VerifyAccountController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::name('front.auth.')->middleware('front')->group(function () {
+Route::middleware('front')->group(function () {
     Route::middleware(['authenticated'])->group(function () {
         Route::get('/login', [LoginController::class, 'index'])->name('login');
         Route::get('/register', [RegisterController::class, 'index'])->name('register');
@@ -26,7 +26,7 @@ Route::name('front.auth.')->middleware('front')->group(function () {
         Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
     });
 
-    Route::middleware(['guest.redirect'])->group(function () {
+    Route::middleware('auth:web')->group(function () {
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
         Route::get('/verify-email/{email}', [VerifyAccountController::class, 'index'])->name('email.verify');

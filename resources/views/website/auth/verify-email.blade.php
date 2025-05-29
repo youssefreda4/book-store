@@ -26,7 +26,7 @@
 
                         <p class="text-center text-muted mb-4">{{  __('website/auth.enter_the_six_digit_otp_sent_to_your_email') }}</p>
 
-                        <form id="otpForm" action="{{ route('front.auth.email.send.verify') }}" method="POST">
+                        <form id="otpForm" action="{{ route('email.send.verify') }}" method="POST">
                             @csrf
                             <input type="hidden" name="email" value="{{ $email }}">
 

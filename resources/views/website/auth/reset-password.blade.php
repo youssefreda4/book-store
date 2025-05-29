@@ -17,7 +17,7 @@
                             <div class="alert alert-danger">{{ session('error') }}</div>
                         @endif
 
-                        <form action="{{ route('front.auth.password.update') }}" method="POST" class="login-form">
+                        <form action="{{ route('password.update') }}" method="POST" class="login-form">
                             @csrf
                             <input type="hidden" name="token" value="{{ $token }}">
 
@@ -53,7 +53,7 @@
                         </form>
 
                         <p class="mt-4 text-center">
-                           {{ __('website/auth.go_back_to') }} <a href="{{ route('front.auth.login') }}" class="main_text">{{ __('website/auth.login') }}</a>
+                           {{ __('website/auth.go_back_to') }} <a href="{{ route('login') }}" class="main_text">{{ __('website/auth.login') }}</a>
                         </p>
                     </div>
                 </div>

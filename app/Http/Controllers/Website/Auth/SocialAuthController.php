@@ -14,7 +14,7 @@ class SocialAuthController extends Controller
     public function redirect(string $driver)
     {
         if (! array_key_exists($driver, config('social.providers'))) {
-            return redirect()->route('front.auth.login')->with('error', 'Invalid Driver');
+            return redirect()->route('login')->with('error', 'Invalid Driver');
         }
 
         return Socialite::driver($driver)->redirect();
@@ -23,13 +23,13 @@ class SocialAuthController extends Controller
     public function callback(string $driver)
     {
         if (! array_key_exists($driver, config('social.providers'))) {
-            return redirect()->route('front.auth.login')->with('error', 'Invalid Driver');
+            return redirect()->route('login')->with('error', 'Invalid Driver');
         }
 
         try {
             $socialUser = Socialite::driver($driver)->user();
         } catch (\Exception $e) {
-            return redirect()->route('front.auth.login')->with('error', 'Authentication Failed');
+            return redirect()->route('login')->with('error', 'Authentication Failed');
         }
         $fullNameSplit = explode(' ', $socialUser->name);
         $user = User::firstOrCreate(

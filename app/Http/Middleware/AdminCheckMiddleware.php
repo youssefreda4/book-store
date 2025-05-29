@@ -7,19 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class RedirectGuestToLogin
+class AdminCheckMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $guard = 'web'): Response
+    public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard($guard)->check()) {
-            $request->session()->put('url.intended', $request->fullUrl());
-
-            return redirect()->route('login');
+        if (!Auth::guard('admin')->check()) {
+            return redirect('/');
         }
 
         return $next($request);

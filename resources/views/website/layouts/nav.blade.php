@@ -60,7 +60,7 @@
                             <li><a class="dropdown-item" href="{{ route('front.profile.index') }}">{{ __('website/nav.profile') }}</a></li>
                             <li><a class="dropdown-item" href="{{ route('front.order.index') }}">{{ __('website/nav.order_history') }}</a></li>
                             <li>
-                                <form method="POST" action="{{ route('front.auth.logout') }}">
+                                <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button class="dropdown-item text-danger">{{ __('website/nav.log_out') }}</button>
                                 </form>
@@ -84,8 +84,8 @@
                 </a>
 
                 @guest
-                    <a class="main_btn login_btn" href="{{ route('front.auth.login') }}">{{ __('website/nav.login') }}</a>
-                    <a class="primary_btn" href="{{ route('front.auth.register') }}">{{ __('website/nav.register') }}</a>
+                    <a class="main_btn login_btn" href="{{ route('login') }}">{{ __('website/nav.login') }}</a>
+                    <a class="primary_btn" href="{{ route('register') }}">{{ __('website/nav.register') }}</a>
                 @endguest
 
                 <div class="dropdown">

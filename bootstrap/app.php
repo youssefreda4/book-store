@@ -1,13 +1,13 @@
 <?php
 
 use Alkoumi\LaravelArabicNumbers\Http\Middleware\ConvertArabicDigitsToEnlishMiddleware;
+use App\Http\Middleware\AdminCheckMiddleware;
 use App\Http\Middleware\RedirectGuestToLogin;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,7 +30,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->appendToGroup('dashboard', [
-            'guest.redirect:admin',
+            'auth:admin',
+            'admin.check',
             SetLocale::class,
             ConvertArabicDigitsToEnlishMiddleware::class,
         ]);
@@ -42,10 +43,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'guest.redirect' => RedirectGuestToLogin::class,
             'authenticated' => RedirectIfAuthenticated::class,
+            'admin.check' => AdminCheckMiddleware::class,
         ]);
-        $middleware->redirectGuestsTo(function () {
-            return redirect('/login');
-        });
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

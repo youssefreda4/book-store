@@ -23,6 +23,6 @@ class VerifyAccountController extends Controller
         $user->email_verified_at = now();
         $user->save();
 
-        return redirect()->route('front.auth.login')->with('success', 'Email verified successfully, you can login now');
+        return redirect()->route('login')->with('success', 'Email verified successfully, you can login now');
     }
 }

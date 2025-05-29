@@ -19,7 +19,7 @@ class SendResetLinkMail extends Mailable
      */
     public function __construct(string $token)
     {
-        $this->resetUrl = route('front.auth.password.reset', $token);
+        $this->resetUrl = route('password.reset', $token);
     }
 
     /**

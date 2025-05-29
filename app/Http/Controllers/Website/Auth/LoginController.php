@@ -34,7 +34,7 @@ class LoginController extends Controller
         if (! $user->email_verified_at) {
             Mail::to($user->email)->send(new VerifyAccountMail($user->otp, $user->email));
 
-            return redirect()->route('front.auth.email.verify', $user->email);
+            return redirect()->route('email.verify', $user->email);
         }
 
         if (Auth::guard('web')->attempt($user_data)) {

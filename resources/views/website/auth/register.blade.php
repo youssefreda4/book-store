@@ -11,7 +11,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-6">
-                        <form method="POST" class="login-form" action="{{ route('front.auth.register.store') }}">
+                        <form method="POST" class="login-form" action="{{ route('register.store') }}">
                             @csrf
                             <div class="d-flex flex-column gap-2 my-3 col-12">
                                 <label for="username">{{ __('website/auth.username') }}</label>
@@ -87,7 +87,7 @@
 
                         <p class="mt-4 text-center">
                             {{ __('website/auth.already_have_account') }}
-                            <a href="{{ route('front.auth.login') }}" class="main_text">{{ __('website/auth.login')
+                            <a href="{{ route('login') }}" class="main_text">{{ __('website/auth.login')
                                 }}</a>
                         </p>
                     </div>

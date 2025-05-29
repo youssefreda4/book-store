@@ -48,7 +48,7 @@ Route::name('front.')->middleware('front')->group(function () {
         Route::post('item/move/cart', 'moveToCart')->name('move');
     });
 
-    Route::middleware(['guest.redirect'])->group(function () {
+    Route::middleware(['auth:web','guest.redirect'])->group(function () {
         Route::name('order.')->prefix('order')->controller(OrderController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::post('/', 'create')->name('create');

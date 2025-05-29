@@ -34,6 +34,6 @@ class ResetPasswordController extends Controller
             'password' => $request->password,
         ]);
 
-        return redirect()->route('front.auth.login')->with('success', 'Password reset successfully you can login now');
+        return redirect()->route('login')->with('success', 'Password reset successfully you can login now');
     }
 }

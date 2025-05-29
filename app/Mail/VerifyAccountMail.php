@@ -22,7 +22,7 @@ class VerifyAccountMail extends Mailable
     public function __construct(int $otp, string $email)
     {
         $this->otp = $otp;
-        $this->verifyUrl = route('front.auth.email.verify', $email);
+        $this->verifyUrl = route('email.verify', $email);
     }
 
     /**

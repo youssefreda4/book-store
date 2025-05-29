@@ -18,7 +18,7 @@
                         <div class="alert alert-danger">{{ session('errorForm') }}</div>
                         @endsession
 
-                        <form action="{{ route('front.auth.login.check') }}" method="POST" class="login-form">
+                        <form action="{{ route('login.check') }}" method="POST" class="login-form">
                             @csrf
                             <div class="d-flex flex-column gap-2">
                                 <label for="email">{{ __('website/auth.email') }}</label>
@@ -43,13 +43,13 @@
                                 <div>
                                     {{-- <label for="rememberMe">Remember me</label> --}}
                                 </div>
-                                <a href="{{route("front.auth.password.request")}}" class="main_text">{{ __('website/auth.forget_password') }}</a>
+                                <a href="{{route("password.request")}}" class="main_text">{{ __('website/auth.forget_password') }}</a>
                             </div>
 
                             <!-- Social Login Buttons Row -->
                             <div class="d-flex justify-content-between mt-4">
                                 @foreach (config('social.providers') as $provider)
-                                <a href="{{ route('front.auth.redirect',['driver' => $provider['driver']]) }}"
+                                <a href="{{ route('redirect',['driver' => $provider['driver']]) }}"
                                     class="test-center flex-grow-1 me-2  {{ $provider['color'] }} text-white ">
                                     <i class="{{ $provider['icon'] }} me-2"></i>
                                     {{ __('website/auth.login_with_'.strtolower($provider['name'])) }}
@@ -65,7 +65,7 @@
                         </form>
                         <p class="mt-4 text-center">
                           {{  __('website/auth.dont_have_account') }}
-                            <a href="{{ route('front.auth.register') }}" class="main_text">{{  __('website/auth.signup') }}</a>
+                            <a href="{{ route('register') }}" class="main_text">{{  __('website/auth.signup') }}</a>
                         </p>
                     </div>
                 </div>

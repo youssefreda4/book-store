@@ -22,7 +22,7 @@
                             <div class="alert alert-danger">{{ session('errorForm') }}</div>
                         @endif
 
-                        <form action="{{ route('front.auth.password.email') }}" method="POST" class="login-form" novalidate>
+                        <form action="{{ route('password.email') }}" method="POST" class="login-form" novalidate>
                             @csrf
                             <div class="d-flex flex-column gap-2">
                                 <label for="email">{{ __('website/auth.email') }}</label>
@@ -42,7 +42,7 @@
 
                         <p class="mt-4 text-center">
                            {{__('website/auth.remembered_your_password')}}
-                            <a href="{{ route('front.auth.login') }}" class="main_text">{{ __('website/auth.login') }}</a>
+                            <a href="{{ route('login') }}" class="main_text">{{ __('website/auth.login') }}</a>
                         </p>
                     </div>
                 </div>

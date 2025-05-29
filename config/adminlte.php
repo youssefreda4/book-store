@@ -514,13 +514,13 @@ return [
                 ],
                 [
                     'text' => 'Best Selling',
-                    'url' => 'dashboard/reports/selling',
+                    'url' => 'dashboard/reports/selling/books',
                     'icon' => 'fas fa-cart-plus',
                     'submenu' => [
                         [
                             'text' => 'Most Book Sold',
                             'icon' => 'far fa-circle',
-                            'url' => 'dashboard/reports/selling/book',
+                            'url' => 'dashboard/reports/sold/books',
                         ],
                         [
                             'text' => 'Most Category Sold',

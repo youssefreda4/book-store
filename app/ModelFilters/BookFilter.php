@@ -39,4 +39,14 @@ class BookFilter extends ModelFilter
     {
         return $this->whereIn('publisher_id', $value);
     }
+
+    public function totalQuantitySoldFrom($value)
+    {
+        return $this->having('total_quantity_sold', '>=', $value);
+    }
+
+    public function totalQuantitySoldTo($value)
+    {
+        return $this->having('total_quantity_sold', '<=', $value);
+    }
 }

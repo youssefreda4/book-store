@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -51,5 +52,25 @@ class ReportController extends Controller
     public function trends()
     {
         //
+    }
+
+    public function soldBooks()
+    {
+        $min = request('total_quantity_sold_from');
+        $max = request('total_quantity_sold_to');
+        $bestSellingBooks = Book::with('media')
+            ->select('books.id', 'books.name', 'books.slug')
+            ->join('book_orders', 'books.id', '=', 'book_orders.book_id')
+            ->selectRaw('SUM(book_orders.quantity) as total_quantity_sold')
+            ->groupBy('books.id')
+            ->orderByDesc('total_quantity_sold')
+            ->filter(request()->only(['total_quantity_sold_from', 'total_quantity_sold_to']))
+            ->paginate()
+            ->appends([
+                'total_quantity_sold_from' => $min,
+                'total_quantity_sold_to' => $max
+            ]);
+
+        return view('dashboard.reports.sold.books', compact('bestSellingBooks'));
     }
 }

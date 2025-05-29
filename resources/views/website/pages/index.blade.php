@@ -94,7 +94,9 @@
             <ul class="splide__list">
                 @foreach ($bestSellingBooks as $book)
                 <li class="splide__slide">
-                    <img src="{{ $book->getFirstMediaUrl('book', 'preview') }}" alt="" />
+                    <a href="{{ route('front.books.show',$book->slug) }}">
+                        <img src="{{ $book->getFirstMediaUrl('book', 'preview') }}" alt="" />
+                    </a>
                 </li>
                 @endforeach
             </ul>

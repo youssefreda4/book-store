@@ -24,7 +24,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $bestSellingBooks = Book::with('media')->select('books.id', 'books.name')
+        $bestSellingBooks = Book::with('media')->select('books.id', 'books.name','books.slug')
             ->join('book_orders', 'books.id', '=', 'book_orders.book_id')
             ->selectRaw('SUM(book_orders.quantity) as total_quantity_sold')
             ->groupBy('books.id')

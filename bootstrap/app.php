@@ -2,13 +2,14 @@
 
 use Alkoumi\LaravelArabicNumbers\Http\Middleware\ConvertArabicDigitsToEnlishMiddleware;
 use App\Http\Middleware\AdminCheckMiddleware;
-use App\Http\Middleware\RedirectGuestToLogin;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\SetLocale;
+use App\Http\Middleware\UserCheckMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -36,14 +37,15 @@ return Application::configure(basePath: dirname(__DIR__))
             ConvertArabicDigitsToEnlishMiddleware::class,
         ]);
         $middleware->appendToGroup('front', [
+            'user.check',
             SetLocale::class,
             ConvertArabicDigitsToEnlishMiddleware::class,
         ]);
 
         $middleware->alias([
-            'guest.redirect' => RedirectGuestToLogin::class,
             'authenticated' => RedirectIfAuthenticated::class,
             'admin.check' => AdminCheckMiddleware::class,
+            'user.check' => UserCheckMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

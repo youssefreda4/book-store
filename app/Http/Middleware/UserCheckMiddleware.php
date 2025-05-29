@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthWeb
+class UserCheckMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,8 @@ class AuthWeb
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::guard('web')->check()) {
-            return redirect('/login');
+        if (Auth::guard('admin')->check()) {
+            return redirect('/dashboard');
         }
 
         return $next($request);

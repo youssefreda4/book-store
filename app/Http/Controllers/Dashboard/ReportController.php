@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\BookOrder;
 use App\Models\Category;
 use App\Models\Order;
 use Carbon\Carbon;
@@ -53,7 +54,27 @@ class ReportController extends Controller
 
     public function trends()
     {
-        //
+        $min = request('total_quantity_sold_from');
+        $max = request('total_quantity_sold_to');
+        $trendingSales = Book::leftJoin('book_orders', 'books.id', '=', 'book_orders.book_id')
+            ->select(
+                'books.id',
+                'books.slug',
+                'books.name',
+                DB::raw('YEAR(book_orders.created_at) as year'),
+                DB::raw('WEEK(book_orders.created_at) as week_number'),
+                DB::raw('SUM(book_orders.quantity) as total_quantity_sold')
+            )
+            ->orderByDesc('total_quantity_sold')
+            ->groupBy('books.id', 'books.slug', 'name', 'year', 'week_number')
+            ->filter(request()->only(['book_name','total_quantity_sold_from', 'total_quantity_sold_to']))
+            ->paginate()
+            ->appends([
+                'total_quantity_sold_from' => $min,
+                'total_quantity_sold_to' => $max
+            ]);
+
+        return view('dashboard.reports.sales.trends', compact('trendingSales'));
     }
 
     public function soldBooks()

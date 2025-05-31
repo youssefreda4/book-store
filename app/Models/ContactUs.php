@@ -9,4 +9,10 @@ class ContactUs extends Model
 {
     /** @use HasFactory<\Database\Factories\ContactUsFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'message',
+    ];
 }

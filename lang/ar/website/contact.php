@@ -10,4 +10,6 @@ return [
     'message' => 'رسالتك',
     'send_message' => 'إرسال الرسالة',
     'address_text' => '123 شارع الكتب، الإسكندرية، مصر',
+
+    'your_message_send_successfully' => 'تم إرسال رسالتك بنجاح',
 ];

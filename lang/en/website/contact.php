@@ -10,4 +10,6 @@ return [
     'message' => 'Your Message',
     'send_message' => 'Send Message',
     'address_text' => '123 Book Street, Alexandria, Egypt',
+
+    'your_message_send_successfully' => 'Your message send successfully',
 ];

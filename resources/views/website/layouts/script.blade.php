@@ -6,7 +6,7 @@
     @if (session('success'))
         Swal.fire({
             icon: 'success',
-            title: 'Success',
+            title:'{{  __("website/main.success") }}',
             text: "{{ session('success') }}",
             timer: 3000,
             showConfirmButton: false
@@ -15,7 +15,7 @@
     @if (session('error'))
         Swal.fire({
             icon: 'error',
-            title: 'Error',
+            title: '{{ __("website/main.error") }}',
             text: "{{ session('error') }}",
             timer: 3000,
             showConfirmButton: false

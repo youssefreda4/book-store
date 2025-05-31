@@ -32,6 +32,7 @@ Route::name('front.')->middleware('front')->group(function () {
 
     Route::name('contact.')->controller(ContactController::class)->group(function () {
         Route::get('/contact', 'index')->name('index');
+        Route::post('/contact', 'store')->name('store');
     });
 
     Route::name('cart.')->prefix('cart')->controller(CartController::class)->group(function () {

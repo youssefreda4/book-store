@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Order;
@@ -84,9 +85,8 @@ class ReportController extends Controller
             ->join('book_orders', 'books.id', '=', 'book_orders.book_id')
             ->selectRaw('SUM(book_orders.quantity) as total_quantity_sold')
             ->groupBy('categories.id', 'categories.name')
-            ->filter(request()->only('category_name'))
             ->orderByDesc('total_quantity_sold')
-            // ->filter(request()->only(['category_name', 'total_quantity_sold_from', 'total_quantity_sold_to']))
+            ->filter(request()->only(['category_name', 'total_quantity_sold_from', 'total_quantity_sold_to']))
             ->paginate()
             ->appends([
                 'total_quantity_sold_from' => $min,
@@ -94,5 +94,24 @@ class ReportController extends Controller
             ]);
 
         return view('dashboard.reports.sold.categories', compact('bestSellingCategories'));
+    }
+
+    public function soldAuthor()
+    {
+        $min = request('total_quantity_sold_from');
+        $max = request('total_quantity_sold_to');
+        $bestSellingAuthors = Author::select('authors.id', 'authors.name')
+            ->join('books', 'authors.id', '=', 'books.author_id')
+            ->join('book_orders', 'books.id', '=', 'book_orders.book_id')
+            ->selectRaw('SUM(book_orders.quantity) as total_quantity_sold')
+            ->groupBy('authors.id', 'authors.name')
+            ->orderByDesc('total_quantity_sold')
+            ->filter(request()->only(['author_name', 'total_quantity_sold_from', 'total_quantity_sold_to']))
+            ->paginate()
+            ->appends([
+                'total_quantity_sold_from' => $min,
+                'total_quantity_sold_to' => $max
+            ]);
+        return view('dashboard.reports.sold.authors', compact('bestSellingAuthors'));
     }
 }

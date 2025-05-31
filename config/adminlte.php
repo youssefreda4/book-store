@@ -530,7 +530,7 @@ return [
                         [
                             'text' => 'Most Author Sold',
                             'icon' => 'far fa-circle',
-                            'url' => 'dashboard/reports/selling/author',
+                            'url' => 'dashboard/reports/sold/authors',
                         ],
                     ],
                 ],

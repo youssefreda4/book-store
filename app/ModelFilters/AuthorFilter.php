@@ -17,8 +17,18 @@ class AuthorFilter extends ModelFilter
     public function authorName($name)
     {
         return $this->where(function ($q) use ($name) {
-            $q->where('name->ar', 'LIKE', "%$name%")
-                ->orWhere('name->en', 'LIKE', "%$name%");
+            $q->where('authors.name->ar', 'LIKE', "%$name%")
+                ->orWhere('authors.name->en', 'LIKE', "%$name%");
         });
+    }
+
+    public function totalQuantitySoldFrom($value)
+    {
+        return $this->having('total_quantity_sold', '>=', $value);
+    }
+
+    public function totalQuantitySoldTo($value)
+    {
+        return $this->having('total_quantity_sold', '<=', $value);
     }
 }

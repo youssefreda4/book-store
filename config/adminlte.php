@@ -525,7 +525,7 @@ return [
                         [
                             'text' => 'Most Category Sold',
                             'icon' => 'far fa-circle',
-                            'url' => 'dashboard/reports/selling/category',
+                            'url' => 'dashboard/reports/sold/category',
                         ],
                         [
                             'text' => 'Most Author Sold',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -72,5 +73,26 @@ class ReportController extends Controller
             ]);
 
         return view('dashboard.reports.sold.books', compact('bestSellingBooks'));
+    }
+
+    public function soldCategory()
+    {
+        $min = request('total_quantity_sold_from');
+        $max = request('total_quantity_sold_to');
+        $bestSellingCategories = Category::select('categories.id', 'categories.name')
+            ->join('books', 'categories.id', '=', 'books.category_id')
+            ->join('book_orders', 'books.id', '=', 'book_orders.book_id')
+            ->selectRaw('SUM(book_orders.quantity) as total_quantity_sold')
+            ->groupBy('categories.id', 'categories.name')
+            ->filter(request()->only('category_name'))
+            ->orderByDesc('total_quantity_sold')
+            // ->filter(request()->only(['category_name', 'total_quantity_sold_from', 'total_quantity_sold_to']))
+            ->paginate()
+            ->appends([
+                'total_quantity_sold_from' => $min,
+                'total_quantity_sold_to' => $max
+            ]);
+
+        return view('dashboard.reports.sold.categories', compact('bestSellingCategories'));
     }
 }

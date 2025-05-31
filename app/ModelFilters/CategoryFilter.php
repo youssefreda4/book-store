@@ -17,8 +17,8 @@ class CategoryFilter extends ModelFilter
     public function categoryName($name)
     {
         return $this->where(function ($q) use ($name) {
-            $q->where('name->ar', 'LIKE', "%$name%")
-                ->orWhere('name->en', 'LIKE', "%$name%");
+            $q->where('categories.name->ar', 'LIKE', "%$name%")
+                ->orWhere('categories.name->en', 'LIKE', "%$name%");
         });
     }
 
@@ -29,5 +29,15 @@ class CategoryFilter extends ModelFilter
         } else {
             return $this->whereNull('discount_id');
         }
+    }
+
+    public function totalQuantitySoldFrom($value)
+    {
+        return $this->having('total_quantity_sold', '>=', $value);
+    }
+
+    public function totalQuantitySoldTo($value)
+    {
+        return $this->having('total_quantity_sold', '<=', $value);
     }
 }

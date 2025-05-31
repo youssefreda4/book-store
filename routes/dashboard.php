@@ -136,6 +136,7 @@ Route::middleware('dashboard')->group(function () {
         });
         Route::prefix('sold')->name('most.selling.')->group(function () {
             Route::get('/books', 'soldBooks')->name('books');
+            Route::get('/category', 'soldCategory')->name('categories');
         });
     });
 });

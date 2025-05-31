@@ -8,7 +8,7 @@ $locale = session()->get('locale');
 
 @section('content_header')
 <x-header :title="__('soldBooksReport.most_sold_books')"></x-header>
-@include('dashboard.reports.partials.filter',['locale' => $locale])
+@include('dashboard.reports.partials.books-filter',['locale' => $locale])
 @stop
 
 @section('content')

@@ -45,7 +45,7 @@
                         <div class="d-flex justify-content-between align-items-center py-3">
                             <p class="text-secondary fs-5">{{ __('website/cart-summary.address') }}</p>
                             <p class="fs-4 fw-bold col-7">
-                                @if ($user_addresses->count())
+                                @if (count($user_addresses))
                                 <select class="form-select my-2" wire:change="selectAddress($event.target.value)"
                                     name="address" aria-label="Default select example" required>
                                     <option selected disabled>{{ __('website/cart-summary.select_address') }}</option>

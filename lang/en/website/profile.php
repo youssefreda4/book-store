@@ -19,4 +19,6 @@ return [
         'address' => 'Enter your address',
         'new_address' => 'Add a new address',
     ],
+
+    'your_profile_updated_successfully' => 'Your profile updated successfully!',
 ];

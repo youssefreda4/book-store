@@ -33,4 +33,12 @@ return [
     'tax_amount' => 'قيمة الضريبة',
     'discount' => 'الخصم',
     'total_paid' => 'الإجمالي المدفوع',
+
+    //Success
+    'payment_has_been_completed_successfully' => 'تم إكمال عملية الدفع بنجاح',
+    //Error
+    'something_went_wrong' => 'حدث خطأ ما',
+    'invalid_data_from_payment_gateway' => 'بيانات غير صالحة من بوابة الدفع',
+    'order_not_found' => 'لم يتم العثور على الطلب',
+    'payment_failed' => 'فشل الدفع',
 ];

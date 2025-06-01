@@ -26,4 +26,9 @@ return [
     'quantity_updated' => 'تم تحديث الكمية بنجاح',
     'update_failed' => 'فشل في التحديث:',
     'ajax_error' => 'خطأ في الاتصال:',
+
+    //Success
+    'book_removed_from_favorite' => 'تمت إزالة الكتاب من المفضلة',
+    'book_added_to_favorite' => 'تمت إضافة الكتاب إلى المفضلة',
+    'book_moved_to_cart_successfully' => 'تم نقل الكتاب إلى سلة التسوق بنجاح',
 ];

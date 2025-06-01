@@ -44,7 +44,7 @@ class CartController extends Controller
             Session::put('cart', $cart);
         }
 
-        return redirect()->back()->with('success', 'Book added to cart');
+        return redirect()->back()->with('success', __('website/books.book_added_to_cart'));
     }
 
     public function updateItem(Request $request, Book $book)

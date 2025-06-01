@@ -37,7 +37,7 @@ class FavoriteController extends Controller
             if ($book->favorite()->where('user_id', $user_id)->exists()) {
                 AddToFavorite::where('user_id', $user_id)->where('book_id', $book_id)->delete();
 
-                return redirect()->back()->with('success', 'Book removed from favorite');
+                return redirect()->back()->with('success', __('website/favorite.book_removed_from_favorite'));
             } else {
                 AddToFavorite::updateOrCreate(['user_id' => $user_id, 'book_id' => $book_id], ['quantity' => $quantity]);
             }
@@ -47,14 +47,14 @@ class FavoriteController extends Controller
                 unset($favorite[$book_id]);
                 Session::put('favorite', $favorite);
 
-                return redirect()->back()->with('success', 'Book removed from favorite');
+                return redirect()->back()->with('success',  __('website/favorite.book_removed_from_favorite'));
             } else {
                 $favorite[$book_id] = $quantity;
                 Session::put('favorite', $favorite);
             }
         }
 
-        return redirect()->back()->with('success', 'Book added to favorite');
+        return redirect()->back()->with('success',  __('website/favorite.book_added_to_favorite'));
     }
 
     public function updateItem(Request $request, Book $book)
@@ -105,7 +105,7 @@ class FavoriteController extends Controller
                     AddToCart::updateOrCreate(['user_id' => $user_id, 'book_id' => $book_id], [
                         'quantity' => $bookQuantity,
                     ]);
-                    redirect()->back()->with('success', 'Book moved to cart successfully');
+                    redirect()->back()->with('success', __('website/favorite.book_moved_to_cart_successfully'));
                 } else {
                     AddToCart::updateOrCreate(['user_id' => $user_id, 'book_id' => $book_id], ['quantity' => $bookQuantity]);
                 }
@@ -126,7 +126,7 @@ class FavoriteController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Book moved to cart successfully');
+        return redirect()->back()->with('success', __('website/favorite.book_moved_to_cart_successfully'));
     }
 
     public function syncFavoriteFromSessionToDatabase()

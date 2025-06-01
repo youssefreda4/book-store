@@ -33,4 +33,13 @@ return [
     'tax_amount' => 'Tax Amount',
     'discount' => 'Discount',
     'total_paid' => 'Total paid',
+
+    //Success
+    'payment_has_been_completed_successfully' => 'Payment has been completed successfully. Thank you for shopping with us.',
+
+    //Error
+    'something_went_wrong' => 'something went wrong',
+    'invalid_data_from_payment_gateway' => 'Invalid data from payment gateway',
+    'order_not_found' =>  'Order not found',
+    'payment_failed' =>  'Payment failed.',
 ];

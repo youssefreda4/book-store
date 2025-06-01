@@ -20,4 +20,6 @@ return [
     'added_to_cart' => 'Added To Cart',
     'not_available' => 'Not Available',
 
+    'book_added_to_cart' => 'Book added to cart',
+
 ];

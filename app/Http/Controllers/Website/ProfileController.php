@@ -57,6 +57,6 @@ class ProfileController extends Controller
             ]);
         }
 
-        return redirect()->back()->with(['success' => 'Your profile updated successfully!']);
+        return redirect()->back()->with(['success' => __('website/profile.your_profile_updated_successfully')]);
     }
 }

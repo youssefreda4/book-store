@@ -19,4 +19,6 @@ return [
         'address' => 'أدخل العنوان',
         'new_address' => 'إضافة عنوان جديد',
     ],
+
+    'your_profile_updated_successfully' => 'تم تحديث ملفك الشخصي بنجاح',
 ];

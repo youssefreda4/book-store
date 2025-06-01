@@ -20,4 +20,5 @@ return [
     'added_to_cart' => 'تمت الإضافة للسلة',
     'not_available' => 'غير متوفر',
 
+    'book_added_to_cart' => 'تمت إضافة الكتاب إلى سلة التسوق',
 ];

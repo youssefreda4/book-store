@@ -61,7 +61,7 @@ class OrderController extends Controller
             return redirect()->route('front.order.show', $order);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'something went wrong');
+            return redirect()->back()->with('error',  __('website/orders.something_went_wrong'));
         }
     }
 
@@ -70,14 +70,14 @@ class OrderController extends Controller
         $response = request()->all();
 
         if (!isset($response['success'], $response['order'], $response['id'])) {
-            return redirect()->route('front.home.index')->with('error', 'Invalid data from payment gateway');
+            return redirect()->route('front.home.index')->with('error', __('website/orders.invalid_data_from_payment_gateway'));
         }
 
         if ($response['success'] === 'true') {
             $order = Order::where('paymob_order_id', $response['order'])->first();
 
             if (!$order) {
-                return redirect()->route('front.home.index')->with('error', 'Order not found');
+                return redirect()->route('front.home.index')->with('error',  __('website/orders.order_not_found'));
             }
 
             $order->update([
@@ -86,8 +86,8 @@ class OrderController extends Controller
             ]);
 
             return redirect()->route('front.order.show', $order)
-                ->with('success', 'Payment has been completed successfully. Thank you for shopping with us.');
+                ->with('success', __('website/orders.payment_has_been_completed_successfully'));
         }
-        return redirect()->route('front.home.index')->with('error', 'Payment failed.');
+        return redirect()->route('front.home.index')->with('error', __('website/orders.payment_failed'));
     }
 }

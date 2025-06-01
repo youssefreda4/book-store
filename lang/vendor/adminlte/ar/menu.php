@@ -7,6 +7,8 @@ return [
     'Discounts' => 'الخضومات',
     'Create Discount' => 'إنشاء خصم',
 
+    'Admin Management' => 'إدارة المسؤلين',
+
     'Categories' => 'الفئات',
     'Create Category' => 'إنشاء فئة',
 
@@ -40,5 +42,5 @@ return [
     'Most Category Sold' => 'أكثر الكتب مبيعًا حسب الفئة',
     'Most Author Sold' => 'أكثر الكتب مبيعًا حسب المؤلف',
 
-    
+    'Messages' => 'رسائل',
 ];

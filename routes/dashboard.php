@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\AdminManagementController;
 use App\Http\Controllers\Dashboard\AuthorController;
 use App\Http\Controllers\Dashboard\BookController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\ContactController;
 use App\Http\Controllers\Dashboard\DiscountController;
 use App\Http\Controllers\Dashboard\ExportExcelController;
 use App\Http\Controllers\Dashboard\FlashSaleController;
@@ -113,6 +114,10 @@ Route::middleware('dashboard')->group(function () {
     });
 
     Route::name('orders.')->prefix('orders')->controller(OrderController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+    });
+
+    Route::name('messages.')->prefix('messages')->controller(ContactController::class)->group(function () {
         Route::get('/', 'index')->name('index');
     });
 

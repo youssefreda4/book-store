@@ -536,6 +536,11 @@ return [
                 ],
             ],
         ],
+        [
+            'text' => 'Messages',
+            'url' => 'dashboard/messages',
+            'icon' => 'fas fa-comment-alt',
+        ],
         // ['header' => 'account_settings'],
         // [
         //     'text' => 'profile',

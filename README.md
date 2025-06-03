@@ -69,8 +69,8 @@ npm install && npm run dev
 
 ### 3. Set up environment file
 
-cp .env.example .env
 ```bash
+cp .env.example .env
 php artisan key:generate
 ```
 

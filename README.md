@@ -78,7 +78,9 @@ php artisan key:generate
 Open the .env file and configure the following:
 
 -✅ Database Settings
+
 -🔑 Paymob API Keys
+
 -🔐 Socialite Credentials (Google, Facebook, GitHub)
 
 ### 5. Run migrations and seeders

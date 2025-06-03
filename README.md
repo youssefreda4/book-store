@@ -11,11 +11,17 @@ A powerful, multilingual online bookstore built with a clean and modern frontend
 - 🌐 Multilingual Support (e.g., English / Arabic)
 - 🔍 Live Search on Homepage (using Livewire)
 - 🏷️ Home Sections: Best Sellers, Recommended Books, Flash Sale with Countdown
-- 📚 Books Page with Wishlist, Add to Cart, Filters (Category, Publisher, Year)
+- 📚 Books Page with:
+  - Add to Wishlist
+  - Add to Cart
+  - Filters (Category, Publisher, Year Range)
 - 🛒 Cart Page with Livewire updates
 - 💳 Secure Checkout with Paymob (Builder Design Pattern)
-- 🔐 Social Login (Facebook, Google, GitHub) via Socialite
-- 🔁 Email Verification, Password Reset, Full Authentication System
+- 🔐 Authentication:
+  - Login/Register
+  - Social Login (Facebook, Google, GitHub) via Laravel Socialite
+  - Email Verification
+  - Forgot Password
 - 🙍‍♂️ Profile Page & Order History
 - 📄 About Us & Contact Us Pages
 
@@ -46,42 +52,40 @@ A powerful, multilingual online bookstore built with a clean and modern frontend
 
 ---
 
-## 📦 Installation
+Follow the steps below to run the project locally.
 
-Clone the repository:
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/youssefreda4/book-store.git
 cd book-store
+```
 
-Install dependencies:
+### 2. Install dependencies
 ```bash
 composer install
 npm install && npm run dev
+```
 
-Set up environment variables:
+### 3. Set up environment file
+
 cp .env.example .env
+```bash
 php artisan key:generate
-Configure your .env file:
+```
 
-Set your database credentials
+### 4. Configure .env
+Open the .env file and configure the following:
 
-Add Paymob API keys
+-✅ Database Settings
+-🔑 Paymob API Keys
+-🔐 Socialite Credentials (Google, Facebook, GitHub)
 
-Add Socialite credentials (Google, Facebook, GitHub)
-
-Run migrations and seeders:
-
-bash
-Copy
-Edit
+### 5. Run migrations and seeders
+```bash
 php artisan migrate --seed
-Link storage and serve the app:
-
-bash
-Copy
-Edit
-php artisan storage:link
+```
+### 6. Link storage and serve the app
+```bash
 php artisan serve
-You can now access the app at http://127.0.0.1:8000.
-
+```
